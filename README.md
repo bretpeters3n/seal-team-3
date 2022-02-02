@@ -7,5 +7,6 @@ Group project w/ freeCodeCamp Dallas
 3. Paul Paik
 4. Benjamin Cho
 5. William Lee
+6. Mack Nwandu
 
 And counting :-)
