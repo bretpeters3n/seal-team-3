@@ -6,3 +6,5 @@ Group project w/ freeCodeCamp Dallas
 2. Jonathan Martinez
 3. Paul Paik
 4. Benjamin Cho
+
+And counting :-)
