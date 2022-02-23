@@ -11,3 +11,8 @@ html {
   font-family: "Urbanist", sans-serif;
   width: 100vw;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+}
