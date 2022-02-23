@@ -16,7 +16,7 @@ const Login = () => {
       <Logo src={logo} alt="Budgety Logo" />
       <LoginForm>
         <InputGroup>
-          <Input />
+          <Input type="email" />
           <Label>Email</Label>
         </InputGroup>
         <InputGroup>
