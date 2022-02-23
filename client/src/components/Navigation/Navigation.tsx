@@ -1,67 +1,19 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import {
+  Container,
+  Logo,
+  HamburgerIcon,
+  Sidebar,
+  SidebarWrapper,
+  NavIcon,
+} from "./styles";
+
+// ICON IMPORTS
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCancelCircle } from "react-icons/im";
 import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineAttachMoney, MdOutlineMoneyOffCsred } from "react-icons/md";
 import { FaRegHandshake } from "react-icons/fa";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-
-const Container = styled.div`
-  height: 70px;
-  background-color: #d3ae8b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-`;
-
-const Logo = styled(Link)`
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 1.7rem;
-  font-weight: 700;
-`;
-
-const HamburgerIcon = styled.div`
-  cursor: pointer;
-  position: absolute;
-  right: 15px;
-`;
-
-const Sidebar = styled(motion.div)`
-  width: 250px;
-  height: 100vh;
-  position: fixed;
-  top: 70px;
-  background-color: #d3ae8b;
-  right: 0;
-  padding: 2em 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-`;
-
-const SidebarWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1em;
-  padding: 2px;
-  transition: 0.2s ease all;
-
-  &:hover {
-    transform: scale(1.02);
-  }
-`;
-
-const NavIcon = styled(Link)`
-  margin-left: 2em;
-  display: flex;
-  align-items: center;
-  gap: 1em;
-`;
 
 const variants = {
   open: { opacity: 1, x: 0 },
