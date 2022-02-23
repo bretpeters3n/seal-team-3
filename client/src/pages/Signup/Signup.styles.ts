@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {Link} from 'react-router-dom';
 
 export const Container = styled.div`
   width: 100%;
@@ -7,7 +8,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2em;
+  gap: 1em;
   padding: 1em;
 `;
 
@@ -18,7 +19,7 @@ export const Logo = styled.img`
 export const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: .5em;
   position: relative;
 `;
 
@@ -52,4 +53,10 @@ export const Button = styled.button`
     background-color: black;
     color: white;
   }
+`;
+
+export const Question = styled(Link)`
+  color: blue;
+  text-align: center;
+  font-size: .8rem;
 `;

@@ -8,7 +8,8 @@ import {
   Label,
   Input,
   Button,
-} from "./styles";
+  Question
+} from "./Login.styles";
 
 const Login = () => {
   return (
@@ -24,6 +25,7 @@ const Login = () => {
           <Label>Password</Label>
         </InputGroup>
         <Button>Login</Button>
+        <Question to='/signup'>Need to register for a new account?</Question>
       </LoginForm>
     </Container>
   );

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {Link} from 'react-router-dom';
 
 export const Container = styled.div`
   width: 100%;
@@ -18,7 +19,7 @@ export const Logo = styled.img`
 export const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: .5em;
 `;
 
 export const InputGroup = styled.div``;
@@ -51,4 +52,10 @@ export const Button = styled.button`
     background-color: black;
     color: white;
   }
+`;
+
+export const Question = styled(Link)`
+  color: blue;
+  text-align: center;
+  font-size: .8rem;
 `;

@@ -6,7 +6,7 @@ import {
   Sidebar,
   SidebarWrapper,
   NavIcon,
-} from "./styles";
+} from "./Navigation.styles";
 
 // ICON IMPORTS
 import { GiHamburgerMenu } from "react-icons/gi";

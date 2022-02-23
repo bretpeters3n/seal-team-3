@@ -8,7 +8,8 @@ import {
   Label,
   Input,
   Button,
-} from "./styles";
+  Question
+} from "./Signup.styles";
 
 const Signup = () => {
   const [firstPassword, setFirstPassword] = useState<string>("");
@@ -49,7 +50,7 @@ const Signup = () => {
           <Input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e:React.FormEvent) => setEmail((e.target as HTMLInputElement).value)}
           />
           <Label>Email</Label>
         </InputGroup>
@@ -57,7 +58,7 @@ const Signup = () => {
           <Input
             type="password"
             value={firstPassword}
-            onChange={(e) => setFirstPassword(e.target.value)}
+            onChange={(e:React.FormEvent) => setFirstPassword((e.target as HTMLInputElement).value)}
           />
           <Label>Password</Label>
         </InputGroup>
@@ -65,11 +66,12 @@ const Signup = () => {
           <Input
             type="password"
             value={secondPassword}
-            onChange={(e) => setSecondPassword(e.target.value)}
+            onChange={(e:React.FormEvent) => setSecondPassword((e.target as HTMLInputElement).value)}
           />
           <Label>Confirm Password</Label>
         </InputGroup>
         <Button>Register</Button>
+        <Question to='/login'>Already have an account?</Question>
       </LoginForm>
     </Container>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../assets/budgety_logo.png";
-import { Container, Logo, Description, Buttons, Button } from "./styles";
+import { Container, Logo, Description, Buttons, Button } from "./Welcome.styles";
 
 const WelcomePage = () => {
   return (
