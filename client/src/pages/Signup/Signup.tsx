@@ -8,7 +8,7 @@ import {
   Label,
   Input,
   Button,
-  Question
+  Question,
 } from "./Signup.styles";
 
 const Signup = () => {
@@ -43,14 +43,21 @@ const Signup = () => {
   console.log(email);
 
   return (
-    <Container>
+    <Container
+      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.35 }}
+      exit={{ opacity: 0, y: -20 }}
+    >
       <Logo src={logo} alt="Budgety Logo" />
       <LoginForm onSubmit={(e: React.FormEvent) => handleSubmit(e)}>
         <InputGroup>
           <Input
             type="email"
             value={email}
-            onChange={(e:React.FormEvent) => setEmail((e.target as HTMLInputElement).value)}
+            onChange={(e: React.FormEvent) =>
+              setEmail((e.target as HTMLInputElement).value)
+            }
           />
           <Label>Email</Label>
         </InputGroup>
@@ -58,7 +65,9 @@ const Signup = () => {
           <Input
             type="password"
             value={firstPassword}
-            onChange={(e:React.FormEvent) => setFirstPassword((e.target as HTMLInputElement).value)}
+            onChange={(e: React.FormEvent) =>
+              setFirstPassword((e.target as HTMLInputElement).value)
+            }
           />
           <Label>Password</Label>
         </InputGroup>
@@ -66,12 +75,14 @@ const Signup = () => {
           <Input
             type="password"
             value={secondPassword}
-            onChange={(e:React.FormEvent) => setSecondPassword((e.target as HTMLInputElement).value)}
+            onChange={(e: React.FormEvent) =>
+              setSecondPassword((e.target as HTMLInputElement).value)
+            }
           />
           <Label>Confirm Password</Label>
         </InputGroup>
         <Button>Register</Button>
-        <Question to='/login'>Already have an account?</Question>
+        <Question to="/login">Already have an account?</Question>
       </LoginForm>
     </Container>
   );

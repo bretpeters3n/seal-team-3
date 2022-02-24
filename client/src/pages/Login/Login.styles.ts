@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
-export const Container = styled.div`
+export const Container = styled(motion.div)`
   width: 100%;
   height: calc(100vh - 70px);
   display: flex;
@@ -19,7 +20,7 @@ export const Logo = styled.img`
 export const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: .5em;
+  gap: 0.5em;
 `;
 
 export const InputGroup = styled.div``;
@@ -57,5 +58,5 @@ export const Button = styled.button`
 export const Question = styled(Link)`
   color: blue;
   text-align: center;
-  font-size: .8rem;
+  font-size: 0.8rem;
 `;

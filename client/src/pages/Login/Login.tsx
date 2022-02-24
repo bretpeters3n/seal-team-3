@@ -8,12 +8,17 @@ import {
   Label,
   Input,
   Button,
-  Question
+  Question,
 } from "./Login.styles";
 
 const Login = () => {
   return (
-    <Container>
+    <Container
+      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.35 }}
+      exit={{ opacity: 0, y: -20 }}
+    >
       <Logo src={logo} alt="Budgety Logo" />
       <LoginForm>
         <InputGroup>
@@ -25,7 +30,7 @@ const Login = () => {
           <Label>Password</Label>
         </InputGroup>
         <Button>Login</Button>
-        <Question to='/signup'>Need to register for a new account?</Question>
+        <Question to="/signup">Need to register for a new account?</Question>
       </LoginForm>
     </Container>
   );

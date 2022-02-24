@@ -2,6 +2,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
+interface Props {
+  filled?: boolean;
+  outlined?: boolean;
+}
+
 export const Container = styled.div`
   height: 70px;
   background-color: #d3ae8b;
@@ -9,6 +14,11 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+  padding: 0 2em;
+
+  @media (min-width: 800px) {
+    justify-content: space-between;
+  }
 `;
 
 export const Logo = styled(Link)`
@@ -22,6 +32,18 @@ export const HamburgerIcon = styled.div`
   cursor: pointer;
   position: absolute;
   right: 15px;
+
+  @media (min-width: 800px) {
+    display: none;
+  }
+`;
+
+export const DesktopNav = styled.div`
+  display: none;
+
+  @media (min-width: 800px) {
+    display: flex;
+  }
 `;
 
 export const Sidebar = styled(motion.div)`
@@ -48,11 +70,24 @@ export const SidebarWrapper = styled.div`
   &:hover {
     transform: scale(1.02);
   }
+
+  @media (min-width: 800px) {
+    padding: unset;
+  }
 `;
 
-export const NavIcon = styled(Link)`
+export const NavIcon = styled(Link)<Props>`
   margin-left: 2em;
   display: flex;
   align-items: center;
   gap: 1em;
+  background-color: ${(props) => (props.filled ? "black" : "transparent")};
+  color: ${(props) => (props.filled ? "white" : "black")};
+  border-radius: 50px;
+  padding: 0.5em 1em;
+  font-size: 0.8rem;
+
+  @media (min-width: 800px) {
+    margin-left: 1em;
+  }
 `;
