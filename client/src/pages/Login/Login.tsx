@@ -8,25 +8,39 @@ import {
   Label,
   Input,
   Button,
-  Question
+  Question,
+  LogoSection,
+  FormSection,
+  Title,
 } from "./Login.styles";
 
 const Login = () => {
   return (
-    <Container>
-      <Logo src={logo} alt="Budgety Logo" />
-      <LoginForm>
-        <InputGroup>
-          <Input type="email" />
-          <Label>Email</Label>
-        </InputGroup>
-        <InputGroup>
-          <Input type="password" />
-          <Label>Password</Label>
-        </InputGroup>
-        <Button>Login</Button>
-        <Question to='/signup'>Need to register for a new account?</Question>
-      </LoginForm>
+    <Container
+      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.35 }}
+      exit={{ opacity: 0, y: -20 }}
+    >
+      <FormSection>
+        <LoginForm>
+          <Title>Login</Title>
+          <InputGroup>
+            <Input type="email" placeholder="Email@mail.com" />
+            <Label>Email</Label>
+          </InputGroup>
+          <InputGroup>
+            <Input type="password" placeholder="********" />
+            <Label>Password</Label>
+          </InputGroup>
+          <Button>Login</Button>
+          <Question to="/signup">Don't have an account? Sign up</Question>
+        </LoginForm>
+      </FormSection>
+
+      <LogoSection>
+        <Logo src={logo} alt="Budgety Logo" />
+      </LogoSection>
     </Container>
   );
 };

@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { device } from "../../utils/Breakpoints";
+
+// This is to use props from styled components from Navigation.ts file
+interface Props {
+  filled?: boolean;
+  outlined?: boolean;
+}
 
 export const Container = styled.div`
   height: 70px;
@@ -9,6 +16,11 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+  padding: 0 2em;
+
+  @media ${device.desktop} {
+    justify-content: space-between;
+  }
 `;
 
 export const Logo = styled(Link)`
@@ -16,12 +28,30 @@ export const Logo = styled(Link)`
   letter-spacing: 0.2em;
   font-size: 1.7rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
 `;
+
+export const LogoImg = styled.img``;
 
 export const HamburgerIcon = styled.div`
   cursor: pointer;
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   right: 15px;
+
+  @media ${device.desktop} {
+    display: none;
+  }
+`;
+
+export const DesktopNav = styled.div`
+  display: none;
+
+  @media ${device.desktop} {
+    display: flex;
+  }
 `;
 
 export const Sidebar = styled(motion.div)`
@@ -48,11 +78,24 @@ export const SidebarWrapper = styled.div`
   &:hover {
     transform: scale(1.02);
   }
+
+  @media ${device.desktop} {
+    padding: unset;
+  }
 `;
 
-export const NavIcon = styled(Link)`
+export const NavIcon = styled(Link)<Props>`
   margin-left: 2em;
   display: flex;
   align-items: center;
   gap: 1em;
+  background-color: ${(props) => (props.filled ? "black" : "transparent")};
+  color: ${(props) => (props.filled ? "white" : "black")};
+  border-radius: 50px;
+  padding: 0.5em 1em;
+  font-size: 0.8rem;
+
+  @media (min-width: 800px) {
+    margin-left: 1em;
+  }
 `;
