@@ -9,6 +9,9 @@ import {
   Input,
   Button,
   Question,
+  Title,
+  LogoSection,
+  FormSection,
 } from "./Signup.styles";
 
 const Signup = () => {
@@ -49,41 +52,49 @@ const Signup = () => {
       transition={{ duration: 0.35 }}
       exit={{ opacity: 0, y: -20 }}
     >
-      <Logo src={logo} alt="Budgety Logo" />
-      <LoginForm onSubmit={(e: React.FormEvent) => handleSubmit(e)}>
-        <InputGroup>
-          <Input
-            type="email"
-            value={email}
-            onChange={(e: React.FormEvent) =>
-              setEmail((e.target as HTMLInputElement).value)
-            }
-          />
-          <Label>Email</Label>
-        </InputGroup>
-        <InputGroup>
-          <Input
-            type="password"
-            value={firstPassword}
-            onChange={(e: React.FormEvent) =>
-              setFirstPassword((e.target as HTMLInputElement).value)
-            }
-          />
-          <Label>Password</Label>
-        </InputGroup>
-        <InputGroup>
-          <Input
-            type="password"
-            value={secondPassword}
-            onChange={(e: React.FormEvent) =>
-              setSecondPassword((e.target as HTMLInputElement).value)
-            }
-          />
-          <Label>Confirm Password</Label>
-        </InputGroup>
-        <Button>Register</Button>
-        <Question to="/login">Already have an account?</Question>
-      </LoginForm>
+      <FormSection>
+        <LoginForm onSubmit={(e: React.FormEvent) => handleSubmit(e)}>
+          <Title>Create an account</Title>
+          <InputGroup>
+            <Input
+              type="email"
+              value={email}
+              placeholder="Email@mail.com"
+              onChange={(e: React.FormEvent) =>
+                setEmail((e.target as HTMLInputElement).value)
+              }
+            />
+            <Label>Email</Label>
+          </InputGroup>
+          <InputGroup>
+            <Input
+              type="password"
+              value={firstPassword}
+              placeholder="********"
+              onChange={(e: React.FormEvent) =>
+                setFirstPassword((e.target as HTMLInputElement).value)
+              }
+            />
+            <Label>Password</Label>
+          </InputGroup>
+          <InputGroup>
+            <Input
+              type="password"
+              value={secondPassword}
+              placeholder="********"
+              onChange={(e: React.FormEvent) =>
+                setSecondPassword((e.target as HTMLInputElement).value)
+              }
+            />
+            <Label>Confirm Password</Label>
+          </InputGroup>
+          <Button>Register</Button>
+          <Question to="/login">Already have an account?</Question>
+        </LoginForm>
+      </FormSection>
+      <LogoSection>
+        <Logo src={logo} alt="Budgety Logo" />
+      </LogoSection>
     </Container>
   );
 };

@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { device } from "../../utils/Breakpoints";
 
+// This is to use props from styled components from Navigation.ts file
 interface Props {
   filled?: boolean;
   outlined?: boolean;
@@ -16,7 +18,7 @@ export const Container = styled.div`
   position: relative;
   padding: 0 2em;
 
-  @media (min-width: 800px) {
+  @media ${device.desktop} {
     justify-content: space-between;
   }
 `;
@@ -26,14 +28,20 @@ export const Logo = styled(Link)`
   letter-spacing: 0.2em;
   font-size: 1.7rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
 `;
+
+export const LogoImg = styled.img``;
 
 export const HamburgerIcon = styled.div`
   cursor: pointer;
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   right: 15px;
 
-  @media (min-width: 800px) {
+  @media ${device.desktop} {
     display: none;
   }
 `;
@@ -41,7 +49,7 @@ export const HamburgerIcon = styled.div`
 export const DesktopNav = styled.div`
   display: none;
 
-  @media (min-width: 800px) {
+  @media ${device.desktop} {
     display: flex;
   }
 `;
@@ -71,7 +79,7 @@ export const SidebarWrapper = styled.div`
     transform: scale(1.02);
   }
 
-  @media (min-width: 800px) {
+  @media ${device.desktop} {
     padding: unset;
   }
 `;

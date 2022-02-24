@@ -21,12 +21,20 @@ function App() {
       <Router>
         <Navigation user={user} setUser={setUser} />
         <Routes>
-          <Route path="/" element={user ? <Home /> : <Welcome />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/income" element={<Income />} />
-          <Route path="/expenses" element={<Expenses />} />
-          <Route path="/combined" element={<Combined />} />
+          {user ? (
+            <>
+              <Route path="/" element={<Home />} />
+              <Route path="/income" element={<Income />} />
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/combined" element={<Combined />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<Welcome />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </>
+          )}
         </Routes>
       </Router>
     </div>

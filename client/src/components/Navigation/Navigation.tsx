@@ -7,14 +7,17 @@ import {
   SidebarWrapper,
   NavIcon,
   DesktopNav,
+  LogoImg,
 } from "./Navigation.styles";
+import logo from "../../assets/budgety_small_logo.png";
 // ICON IMPORTS
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCancelCircle } from "react-icons/im";
 import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineAttachMoney, MdOutlineMoneyOffCsred } from "react-icons/md";
 import { FaRegHandshake } from "react-icons/fa";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut, BiLogIn } from "react-icons/bi";
+import { HiOutlineUserAdd } from "react-icons/hi";
 
 // VARIANTS FOR SIDEBAR FRAMER MOTION
 const animationVariants = {
@@ -36,7 +39,9 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
 
   return (
     <Container>
-      <Logo to="/">Budgety</Logo>
+      <Logo to="/">
+        <LogoImg src={logo} alt="budgety" />
+      </Logo>
 
       {/* NAV FOR DESKTOP VIEW - breakpoint at 800px */}
       <DesktopNav>
@@ -140,11 +145,13 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
           <>
             <SidebarWrapper>
               <NavIcon to="/login">
+                <BiLogIn size="1.5rem" />
                 <h2>Login</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
               <NavIcon to="/signup">
+                <HiOutlineUserAdd size="1.5rem" />
                 <h2>Signup</h2>
               </NavIcon>
             </SidebarWrapper>

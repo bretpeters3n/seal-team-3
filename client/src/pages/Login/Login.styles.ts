@@ -1,26 +1,73 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { device } from "../../utils/Breakpoints";
 
 export const Container = styled(motion.div)`
   width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
   height: calc(100vh - 70px);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 2em;
   padding: 1em;
+  position: relative;
+
+  @media ${device.desktop} {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+`;
+
+export const LogoSection = styled.div`
+  /* position: absolute;
+  top: 0;
+  z-index: -1; */
+  display: none;
+  @media ${device.desktop} {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: unset;
+  }
+`;
+
+export const FormSection = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  @media ${device.desktop} {
+    flex: 1;
+    justify-content: center;
+    height: unset;
+  }
+`;
+
+export const Title = styled.h1`
+  margin-bottom: 0.4em;
 `;
 
 export const Logo = styled.img`
-  width: 250px;
+  width: 200px;
+  @media ${device.desktop} {
+    width: 400px;
+  }
 `;
 
 export const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.5em;
+  width: 90%;
+  max-width: 350px;
+
+  @media ${device.desktop} {
+    width: 80%;
+    max-width: 350px;
+  }
 `;
 
 export const InputGroup = styled.div``;
@@ -31,11 +78,18 @@ export const Label = styled.p`
 `;
 
 export const Input = styled.input`
-  font-size: 1.5rem;
-  padding: 0.3em;
+  font-size: 1rem;
+  padding: 0.5em 0.2em;
   outline: none;
   border: none;
   border-bottom: 1px solid black;
+  width: 100%;
+  transition: 0.3s ease all;
+
+  &:focus {
+    box-shadow: 0 0 5px rgba(211, 174, 139, 1);
+    border-radius: 3px;
+  }
 `;
 
 export const Button = styled.button`
