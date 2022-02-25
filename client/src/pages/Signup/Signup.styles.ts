@@ -82,12 +82,14 @@ export const Input = styled.input`
   padding: 0.5em 0.2em;
   outline: none;
   border: none;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
+  outline: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
   width: 100%;
   transition: 0.3s ease all;
 
   &:focus {
-    box-shadow: 0 0 5px rgba(211, 174, 139, 1);
+    box-shadow: 0 0 15px rgba(211, 174, 139, 1);
     border-radius: 3px;
   }
 `;
@@ -112,5 +114,5 @@ export const Button = styled.button`
 export const Question = styled(Link)`
   color: blue;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1rem;
 `;

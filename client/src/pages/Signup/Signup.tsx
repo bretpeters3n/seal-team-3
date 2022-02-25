@@ -18,6 +18,8 @@ const Signup = () => {
   const [firstPassword, setFirstPassword] = useState<string>("");
   const [secondPassword, setSecondPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,37 +58,54 @@ const Signup = () => {
         <LoginForm onSubmit={(e: React.FormEvent) => handleSubmit(e)}>
           <Title>Create an account</Title>
           <InputGroup>
+            <Label>First Name</Label>
+            <Input
+              type="text"
+              value={firstName}
+              onChange={(e: React.FormEvent) =>
+                setFirstName((e.target as HTMLInputElement).value)
+              }
+            />
+          </InputGroup>
+          <InputGroup>
+            <Label>Last Name</Label>
+            <Input
+              type="text"
+              value={lastName}
+              onChange={(e: React.FormEvent) =>
+                setLastName((e.target as HTMLInputElement).value)
+              }
+            />
+          </InputGroup>
+          <InputGroup>
+            <Label>Email</Label>
             <Input
               type="email"
               value={email}
-              placeholder="Email@mail.com"
               onChange={(e: React.FormEvent) =>
                 setEmail((e.target as HTMLInputElement).value)
               }
             />
-            <Label>Email</Label>
           </InputGroup>
           <InputGroup>
+            <Label>Password</Label>
             <Input
               type="password"
               value={firstPassword}
-              placeholder="********"
               onChange={(e: React.FormEvent) =>
                 setFirstPassword((e.target as HTMLInputElement).value)
               }
             />
-            <Label>Password</Label>
           </InputGroup>
           <InputGroup>
+            <Label>Confirm Password</Label>
             <Input
               type="password"
               value={secondPassword}
-              placeholder="********"
               onChange={(e: React.FormEvent) =>
                 setSecondPassword((e.target as HTMLInputElement).value)
               }
             />
-            <Label>Confirm Password</Label>
           </InputGroup>
           <Button>Register</Button>
           <Question to="/login">Already have an account?</Question>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/budgety_logo.png";
 import {
   Container,
@@ -15,6 +15,14 @@ import {
 } from "./Login.styles";
 
 const Login = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    // code to validate login and password
+    e.preventDefault();
+  };
+
   return (
     <Container
       animate={{ opacity: 1, y: 0 }}
@@ -23,15 +31,27 @@ const Login = () => {
       exit={{ opacity: 0, y: -20 }}
     >
       <FormSection>
-        <LoginForm>
+        <LoginForm onSubmit={(e: React.FormEvent) => handleSubmit(e)}>
           <Title>Login</Title>
           <InputGroup>
-            <Input type="email" placeholder="Email@mail.com" />
             <Label>Email</Label>
+            <Input
+              type="email"
+              value={email}
+              onChange={(e: React.FormEvent) =>
+                setEmail((e.target as HTMLInputElement).value)
+              }
+            />
           </InputGroup>
           <InputGroup>
-            <Input type="password" placeholder="********" />
             <Label>Password</Label>
+            <Input
+              type="password"
+              value={password}
+              onChange={(e: React.FormEvent) =>
+                setPassword((e.target as HTMLInputElement).value)
+              }
+            />
           </InputGroup>
           <Button>Login</Button>
           <Question to="/signup">Don't have an account? Sign up</Question>
