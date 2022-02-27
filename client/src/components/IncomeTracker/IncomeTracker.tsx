@@ -15,7 +15,7 @@ interface IncomeData {
   amount: number;
 }
 
-interface Props {
+interface IncomeTrackerProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -38,7 +38,7 @@ const dummyIncomeData: Array<IncomeData> = [
   },
 ];
 
-const IncomeTracker: React.FC<Props> = ({ setDisplayAdder }) => {
+const IncomeTracker: React.FC<IncomeTrackerProps> = ({ setDisplayAdder }) => {
   return (
     <Container>
       <IncomeContainer>
