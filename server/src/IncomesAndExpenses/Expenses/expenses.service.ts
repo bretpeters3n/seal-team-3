@@ -2,11 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { dateStamp } from 'src/utils/dateStamp';
-import {
-  IncomeOrExpense,
-  IncomesAndExpenseInterface,
-} from '../interfaces/I&E.interfaces';
+import { IncomeOrExpense, IncomesAndExpenseInterface } from '../I&E.interfaces';
 import { ExpenseDTO } from './dto/Expense.dto';
+import { MongoDBID } from 'src/shared/types';
 
 @Injectable()
 export class ExpenseServices {
@@ -26,7 +24,7 @@ export class ExpenseServices {
     return newExpense.save();
   }
 
-  async getExpense(expenseID): Promise<IncomesAndExpenseInterface> {
+  async getExpense(expenseID: MongoDBID): Promise<IncomesAndExpenseInterface> {
     const expense = this.expenseModel.findById(expenseID).exec();
     return expense;
   }
@@ -37,7 +35,7 @@ export class ExpenseServices {
   }
 
   async editExpense(
-    expenseID,
+    expenseID: MongoDBID,
     ExpenseDTO: ExpenseDTO
   ): Promise<IncomesAndExpenseInterface> {
     const editableExpense = await this.expenseModel.findByIdAndUpdate(
@@ -49,7 +47,11 @@ export class ExpenseServices {
     return editableExpense;
   }
 
-  async deleteExpense(expenseID): Promise<any> {
+  async deleteExpense(expenseID: MongoDBID): Promise<
+    IncomesAndExpenseInterface & {
+      _id: MongoDBID;
+    }
+  > {
     const deletableExpense = await this.expenseModel.findByIdAndRemove(
       expenseID
     );
