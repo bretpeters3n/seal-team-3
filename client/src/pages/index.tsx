@@ -5,3 +5,5 @@ export { default as Home } from "./Home/Home";
 export { default as Income } from "./Income/Income";
 export { default as Expenses } from "./Expenses/Expenses";
 export { default as Combined } from "./Combined/Combined";
+export { default as Budget } from "./Budget/Budget";
+export { default as ErrorPage } from "./ErrorPage/ErrorPage";

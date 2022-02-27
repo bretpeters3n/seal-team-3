@@ -14,7 +14,11 @@ import logo from "../../assets/budgety_small_logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCancelCircle } from "react-icons/im";
 import { AiOutlineHome } from "react-icons/ai";
-import { MdOutlineAttachMoney, MdOutlineMoneyOffCsred } from "react-icons/md";
+import {
+  MdOutlineAttachMoney,
+  MdOutlineMoneyOffCsred,
+  MdOutlineEventNote,
+} from "react-icons/md";
 import { FaRegHandshake } from "react-icons/fa";
 import { BiLogOut, BiLogIn } from "react-icons/bi";
 import { HiOutlineUserAdd } from "react-icons/hi";
@@ -48,20 +52,27 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
         {user ? (
           <>
             <SidebarWrapper>
-              <NavIcon to="/income">
+              <NavIcon to="/budget">
+                <h2>My Budget</h2>
+              </NavIcon>
+            </SidebarWrapper>
+
+            {/* 
+            <SidebarWrapper>
+              <NavIcon to="/budget/income">
                 <h2>Income</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon to="/expenses">
+              <NavIcon to="/budget/expenses">
                 <h2>Expenses</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon to="/combined">
+              <NavIcon to="/budget/combined">
                 <h2>Combined</h2>
               </NavIcon>
-            </SidebarWrapper>
+            </SidebarWrapper> */}
             <SidebarWrapper>
               <NavIcon
                 to="/"
@@ -105,29 +116,35 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
         {user ? (
           <>
             <SidebarWrapper>
-              <NavIcon to="/">
+              <NavIcon to="/" onClick={() => setSidebar(false)}>
                 <AiOutlineHome size="2rem" />
                 <h2>Home</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon to="/income">
+              <NavIcon to="/budget" onClick={() => setSidebar(false)}>
+                <MdOutlineEventNote size="2rem" />
+                <h2>My Budget</h2>
+              </NavIcon>
+            </SidebarWrapper>
+            {/* <SidebarWrapper>
+              <NavIcon to="/budget/income" onClick={() => setSidebar(false)}>
                 <MdOutlineAttachMoney size="2rem" />
                 <h2>Income</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon to="/expenses">
+              <NavIcon to="/budget/expenses" onClick={() => setSidebar(false)}>
                 <MdOutlineMoneyOffCsred size="2rem" />
                 <h2>Expenses</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon to="/combined">
+              <NavIcon to="/budget/combined" onClick={() => setSidebar(false)}>
                 <FaRegHandshake size="2rem" />
                 <h2>Combined</h2>
               </NavIcon>
-            </SidebarWrapper>
+            </SidebarWrapper> */}
             <SidebarWrapper>
               <NavIcon
                 to="/"
