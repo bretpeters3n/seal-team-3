@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-interface Props {
+interface InputBoxModifier {
   long?: boolean;
 }
 
@@ -38,7 +38,7 @@ export const InputContainer = styled.div`
   gap: 1em;
 `;
 
-export const InputGroup = styled.div<Props>`
+export const InputGroup = styled.div<InputBoxModifier>`
   flex: ${(props) => (props.long ? "2" : "1")};
 `;
 

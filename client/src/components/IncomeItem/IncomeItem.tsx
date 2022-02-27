@@ -1,13 +1,13 @@
 import React from "react";
 import { Container, ItemName, ItemAmount } from "./IncomeItem.styles";
 
-interface Props {
+interface ItemData {
   id: number;
   title: string;
   amount: number;
 }
 
-const IncomeItem: React.FC<Props> = ({ id, title, amount }) => {
+const IncomeItem: React.FC<ItemData> = ({ id, title, amount }) => {
   return (
     <Container>
       <ItemName>{title}</ItemName>

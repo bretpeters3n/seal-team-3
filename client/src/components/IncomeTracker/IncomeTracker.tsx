@@ -9,7 +9,7 @@ import {
   Button,
 } from "./IncomeTracker.styles";
 
-interface Income {
+interface IncomeData {
   id: number;
   title: string;
   amount: number;
@@ -20,7 +20,7 @@ interface Props {
 }
 
 // Static dummy DATA for example list
-const dummyIncomeData: Array<Income> = [
+const dummyIncomeData: Array<IncomeData> = [
   {
     id: 1,
     title: "Weekly Check",

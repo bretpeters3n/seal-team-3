@@ -13,11 +13,11 @@ import {
 } from "./IncomeAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 
-interface Props {
+interface IncomeAdderProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const IncomeAdder: React.FC<Props> = ({ setDisplayAdder }) => {
+const IncomeAdder: React.FC<IncomeAdderProps> = ({ setDisplayAdder }) => {
   const handleSubmit = () => {};
 
   return (
