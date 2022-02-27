@@ -1,4 +1,4 @@
-import { IncomeOrExpense } from 'src/IncomesAndExpenses/interfaces/I&E.interfaces';
+import { IncomeOrExpense } from 'src/IncomesAndExpenses/I&E.interfaces';
 
 export class IncomeDTO {
   readonly title: string;

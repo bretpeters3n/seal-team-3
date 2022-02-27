@@ -10,7 +10,9 @@ import {
   Delete,
   Patch,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { ValidateObjectId } from 'src/shared/pipes/validate-object-id.pipes';
+import { MongoDBID } from 'src/shared/types';
 import { IncomeDTO } from './dto/income.dto';
 import { IncomeServices } from './income.service';
 
@@ -21,7 +23,7 @@ export class IncomeController {
   //INCOME METHODS
   // Submit an income
   @Post('/postIncome')
-  async addIncome(@Res() res, @Body() incomeDTO: IncomeDTO) {
+  async addIncome(@Res() res: Response, @Body() incomeDTO: IncomeDTO) {
     const newIncome = await this.IncomeServices.addIncome(incomeDTO);
     return res.status(HttpStatus.OK).json({
       message: 'Income has been successfully added!',
@@ -32,8 +34,8 @@ export class IncomeController {
   // Fetch a particular income using its ID
   @Get('/postIncome/:incomeID')
   async getIncome(
-    @Res() res,
-    @Param('incomeID', new ValidateObjectId()) incomeID
+    @Res() res: Response,
+    @Param('incomeID', new ValidateObjectId()) incomeID: MongoDBID
   ) {
     const income = await this.IncomeServices.getIncome(incomeID);
     if (!income) {
@@ -44,7 +46,7 @@ export class IncomeController {
 
   // Fetch all incomes
   @Get('/allIncomes')
-  async getAllIncomes(@Res() res) {
+  async getAllIncomes(@Res() res: Response) {
     const allIncomes = await this.IncomeServices.getAllIncomes();
     return res.status(HttpStatus.OK).json(allIncomes);
   }
@@ -52,8 +54,8 @@ export class IncomeController {
   // Edit an income using its ID
   @Patch('/editIncome/:incomeID')
   async editIncome(
-    @Res() res,
-    @Param('incomeID', new ValidateObjectId()) incomeID,
+    @Res() res: Response,
+    @Param('incomeID', new ValidateObjectId()) incomeID: MongoDBID,
     @Body() incomeDTO: IncomeDTO
   ) {
     const editableIncome = await this.IncomeServices.editIncome(
@@ -72,8 +74,8 @@ export class IncomeController {
   // Delete an income using its ID
   @Delete('/deleteIncome/:incomeID')
   async deleteIncome(
-    @Res() res,
-    @Param('incomeID', new ValidateObjectId()) incomeID
+    @Res() res: Response,
+    @Param('incomeID', new ValidateObjectId()) incomeID: MongoDBID
   ) {
     const deletableIncome = await this.IncomeServices.deleteIncome(incomeID);
     if (!deletableIncome) {
