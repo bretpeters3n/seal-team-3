@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { Container, List, ListItem } from "./BudgetNavbar.styles";
+import React, { useEffect, useState, createContext } from "react";
+import { Container, List, ListItem, ListItemText } from "./BudgetNavbar.styles";
+import { Link } from "react-router-dom";
 
-const IENav = () => {
+const BudgetNavbar = () => {
   const tabs = ["Income", "Expenses", "Combined"];
 
   const [selectedTab, setSelectedTab] = useState<string>(tabs[0]);
-
-  console.log(selectedTab);
 
   return (
     <Container>
@@ -17,7 +16,12 @@ const IENav = () => {
             className={item === selectedTab ? "selected" : ""}
             onClick={() => setSelectedTab(item)}
           >
-            {item}
+            <ListItemText
+              to={`/budget/${item.toLowerCase()}`}
+              className={item === selectedTab ? "selected" : ""}
+            >
+              {item}
+            </ListItemText>
           </ListItem>
         ))}
       </List>
@@ -25,4 +29,4 @@ const IENav = () => {
   );
 };
 
-export default IENav;
+export default BudgetNavbar;

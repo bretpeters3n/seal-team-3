@@ -8,6 +8,8 @@ import {
   Income,
   Expenses,
   Combined,
+  Budget,
+  ErrorPage,
 } from "./pages";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -24,9 +26,14 @@ function App() {
           {user ? (
             <>
               <Route path="/" element={<Home />} />
-              <Route path="/income" element={<Income />} />
-              <Route path="/expenses" element={<Expenses />} />
-              <Route path="/combined" element={<Combined />} />
+              {/* USING NESTED ROUTES  */}
+              <Route path="budget" element={<Budget />}>
+                <Route index element={<Income />} />
+                <Route path="income" element={<Income />} />
+                <Route path="expenses" element={<Expenses />} />
+                <Route path="combined" element={<Combined />} />
+                <Route path="*" element={<ErrorPage />} />
+              </Route>
             </>
           ) : (
             <>

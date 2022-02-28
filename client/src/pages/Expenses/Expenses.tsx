@@ -1,11 +1,8 @@
 import React from "react";
 import { Container } from "./Expenses.styles";
+import { BudgetNavbar } from "../../components";
 const Expenses = () => {
-  return (
-    <Container>
-      <h1>Expenses Page</h1>
-    </Container>
-  );
+  return <Container>Expenses</Container>;
 };
 
 export default Expenses;
