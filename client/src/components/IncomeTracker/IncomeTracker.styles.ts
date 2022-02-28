@@ -26,4 +26,5 @@ export const Title = styled.h1``;
 export const Button = styled.button`
   background: none;
   border: none;
+  cursor: pointer;
 `;

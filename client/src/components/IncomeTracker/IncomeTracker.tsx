@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IncomeItem, BudgetNavbar } from "../../components";
 import { BsPlusCircle } from "react-icons/bs";
 import {
@@ -39,6 +39,17 @@ const dummyIncomeData: Array<IncomeData> = [
 ];
 
 const IncomeTracker: React.FC<IncomeTrackerProps> = ({ setDisplayAdder }) => {
+  const [filteredIncomeData, setFilteredIncomeData] =
+    useState<Array<IncomeData>>(dummyIncomeData);
+
+  useEffect(() => {}, [filteredIncomeData]);
+
+  const deleteItem = (targetId: number) => {
+    setFilteredIncomeData(
+      filteredIncomeData.filter((item) => item.id !== targetId)
+    );
+  };
+
   return (
     <Container>
       <IncomeContainer>
@@ -48,12 +59,13 @@ const IncomeTracker: React.FC<IncomeTrackerProps> = ({ setDisplayAdder }) => {
             <BsPlusCircle size="2rem" />
           </Button>
         </TitleContainer>
-        {dummyIncomeData.map((item) => (
+        {filteredIncomeData?.map((item) => (
           <IncomeItem
             key={item.id}
             id={item.id}
             title={item.title}
             amount={item.amount}
+            // deleteItem={deleteItem}
           />
         ))}
       </IncomeContainer>
