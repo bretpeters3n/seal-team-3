@@ -8,6 +8,7 @@ import {
   Title,
   Button,
 } from "./IncomeTracker.styles";
+import { AnimatePresence } from "framer-motion";
 
 interface IncomeData {
   id: number;
@@ -50,6 +51,10 @@ const IncomeTracker: React.FC<IncomeTrackerProps> = ({ setDisplayAdder }) => {
     );
   };
 
+  const addItem = (newItem: IncomeData) => {
+    setFilteredIncomeData([...filteredIncomeData, newItem]);
+  };
+
   return (
     <Container>
       <IncomeContainer>
@@ -59,15 +64,17 @@ const IncomeTracker: React.FC<IncomeTrackerProps> = ({ setDisplayAdder }) => {
             <BsPlusCircle size="2rem" />
           </Button>
         </TitleContainer>
-        {filteredIncomeData?.map((item) => (
-          <IncomeItem
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            amount={item.amount}
-            // deleteItem={deleteItem}
-          />
-        ))}
+        <AnimatePresence>
+          {filteredIncomeData?.map((item) => (
+            <IncomeItem
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              amount={item.amount}
+              deleteItem={deleteItem}
+            />
+          ))}
+        </AnimatePresence>
       </IncomeContainer>
     </Container>
   );

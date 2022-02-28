@@ -10,29 +10,36 @@ import {
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { AnimatePresence } from "framer-motion";
 
-interface ItemData {
+interface ItemDataProps {
   id: number;
   title: string;
   amount: number;
-  // deleteItem: () => void;
+  deleteItem: (targetId: number) => void;
 }
 
-const IncomeItem: React.FC<ItemData> = ({ id, title, amount }) => {
+const IncomeItem: React.FC<ItemDataProps> = ({
+  id,
+  title,
+  amount,
+  deleteItem,
+}) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
 
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
   const handleEdit = () => {};
 
-  const handleDelete = () => {};
+  const handleDelete = (id: number) => {
+    deleteItem(id);
+  };
 
   return (
-    <Container>
+    <Container exit={{ opacity: 0, x: 500, transition: { duration: 0.2 } }}>
       <ItemContainer onClick={toggleItemOptions}>
         <ItemName>{title}</ItemName>
         <ItemAmount>{`$${amount.toFixed(2)}`}</ItemAmount>
       </ItemContainer>
-      {/* Item Options comes out on click */}
+      {/* Item Options slides out on Click of each item */}
       {itemOptions && (
         <ItemOptionsContainer
           initial={{ x: 20, opacity: 0 }}
@@ -43,7 +50,7 @@ const IncomeItem: React.FC<ItemData> = ({ id, title, amount }) => {
           <ItemOption blueHover onClick={handleEdit}>
             <RiEditLine size="1.5rem" />
           </ItemOption>
-          <ItemOption onClick={handleDelete}>
+          <ItemOption onClick={() => handleDelete(id)}>
             <RiDeleteBin6Line size="1.5rem" />
           </ItemOption>
         </ItemOptionsContainer>
