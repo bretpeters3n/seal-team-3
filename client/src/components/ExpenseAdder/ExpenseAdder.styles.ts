@@ -52,7 +52,6 @@ export const Input = styled.input`
   padding: 0.5em 0.2em;
   outline: none;
   border: none;
-  /* border-bottom: 1px solid black; */
   outline: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   width: 100%;
