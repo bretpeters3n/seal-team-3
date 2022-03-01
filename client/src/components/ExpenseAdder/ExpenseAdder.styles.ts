@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-interface Props {
+interface ExpenseProps {
     long?: boolean;
 }
 
@@ -41,8 +41,8 @@ export const InputContainer = styled.div`
   gap: 1em;
 `;
 
-export const InputGroup = styled.div<Props>`
-  flex: ${(props) => (props.long ? "2" : "1")};
+export const InputGroup = styled.div<ExpenseProps>`
+  flex: ${(ExpenseProps) => (ExpenseProps.long ? "2" : "1")};
 `;
 
 export const Label = styled.h4``;
