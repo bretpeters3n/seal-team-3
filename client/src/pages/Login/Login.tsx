@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import React, { useState } from "react";
 import logo from "../../assets/budgety_logo.png";
 import {

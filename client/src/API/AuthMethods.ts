@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LoginData, UserInfoData, URL } from "./Constants";
+import { LoginData, UserInfoData, URL } from "../constants";
 
 export const signUp = async (userInfo: UserInfoData) => {
   try {
