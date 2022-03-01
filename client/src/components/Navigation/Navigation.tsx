@@ -52,27 +52,15 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
         {user ? (
           <>
             <SidebarWrapper>
+              <NavIcon to="/">
+                <h2>Dashboard</h2>
+              </NavIcon>
+            </SidebarWrapper>
+            <SidebarWrapper>
               <NavIcon to="/budget">
                 <h2>My Budget</h2>
               </NavIcon>
             </SidebarWrapper>
-
-            {/* 
-            <SidebarWrapper>
-              <NavIcon to="/budget/income">
-                <h2>Income</h2>
-              </NavIcon>
-            </SidebarWrapper>
-            <SidebarWrapper>
-              <NavIcon to="/budget/expenses">
-                <h2>Expenses</h2>
-              </NavIcon>
-            </SidebarWrapper>
-            <SidebarWrapper>
-              <NavIcon to="/budget/combined">
-                <h2>Combined</h2>
-              </NavIcon>
-            </SidebarWrapper> */}
             <SidebarWrapper>
               <NavIcon
                 to="/"
@@ -86,6 +74,7 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
             </SidebarWrapper>
           </>
         ) : (
+          // DESKTOP - when user does not exist
           <>
             <SidebarWrapper>
               <NavIcon to="/login" outlined>
@@ -118,7 +107,7 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
             <SidebarWrapper>
               <NavIcon to="/" onClick={() => setSidebar(false)}>
                 <AiOutlineHome size="2rem" />
-                <h2>Home</h2>
+                <h2>Dashboard</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
@@ -127,24 +116,6 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
                 <h2>My Budget</h2>
               </NavIcon>
             </SidebarWrapper>
-            {/* <SidebarWrapper>
-              <NavIcon to="/budget/income" onClick={() => setSidebar(false)}>
-                <MdOutlineAttachMoney size="2rem" />
-                <h2>Income</h2>
-              </NavIcon>
-            </SidebarWrapper>
-            <SidebarWrapper>
-              <NavIcon to="/budget/expenses" onClick={() => setSidebar(false)}>
-                <MdOutlineMoneyOffCsred size="2rem" />
-                <h2>Expenses</h2>
-              </NavIcon>
-            </SidebarWrapper>
-            <SidebarWrapper>
-              <NavIcon to="/budget/combined" onClick={() => setSidebar(false)}>
-                <FaRegHandshake size="2rem" />
-                <h2>Combined</h2>
-              </NavIcon>
-            </SidebarWrapper> */}
             <SidebarWrapper>
               <NavIcon
                 to="/"
@@ -161,13 +132,13 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
         ) : (
           <>
             <SidebarWrapper>
-              <NavIcon to="/login">
+              <NavIcon to="/login" onClick={() => setSidebar(false)}>
                 <BiLogIn size="1.5rem" />
                 <h2>Login</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon to="/signup">
+              <NavIcon to="/signup" onClick={() => setSidebar(false)}>
                 <HiOutlineUserAdd size="1.5rem" />
                 <h2>Signup</h2>
               </NavIcon>

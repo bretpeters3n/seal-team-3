@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IncomeItem, BudgetNavbar } from "../../components";
 import { BsPlusCircle } from "react-icons/bs";
 import {
@@ -8,37 +8,20 @@ import {
   Title,
   Button,
 } from "./IncomeTracker.styles";
-
-interface IncomeData {
-  id: number;
-  title: string;
-  amount: number;
-}
+import { AnimatePresence } from "framer-motion";
+import { IncomeData } from "../../pages/Income/Income";
 
 interface IncomeTrackerProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteItem: (targetId: number) => void;
+  filteredIncomeData: IncomeData[];
 }
 
-// Static dummy DATA for example list
-const dummyIncomeData: Array<IncomeData> = [
-  {
-    id: 1,
-    title: "Weekly Check",
-    amount: 1200,
-  },
-  {
-    id: 2,
-    title: "Tax Return",
-    amount: 3500,
-  },
-  {
-    id: 3,
-    title: "Gifted",
-    amount: 600,
-  },
-];
-
-const IncomeTracker: React.FC<IncomeTrackerProps> = ({ setDisplayAdder }) => {
+const IncomeTracker: React.FC<IncomeTrackerProps> = ({
+  setDisplayAdder,
+  deleteItem,
+  filteredIncomeData,
+}) => {
   return (
     <Container>
       <IncomeContainer>
@@ -48,14 +31,17 @@ const IncomeTracker: React.FC<IncomeTrackerProps> = ({ setDisplayAdder }) => {
             <BsPlusCircle size="2rem" />
           </Button>
         </TitleContainer>
-        {dummyIncomeData.map((item) => (
-          <IncomeItem
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            amount={item.amount}
-          />
-        ))}
+        <AnimatePresence>
+          {filteredIncomeData?.map((item) => (
+            <IncomeItem
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              amount={item.amount}
+              deleteItem={deleteItem}
+            />
+          ))}
+        </AnimatePresence>
       </IncomeContainer>
     </Container>
   );

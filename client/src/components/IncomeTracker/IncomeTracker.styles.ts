@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
+  margin-bottom: 1em;
 `;
 
 export const IncomeContainer = styled.div`
@@ -26,4 +27,5 @@ export const Title = styled.h1``;
 export const Button = styled.button`
   background: none;
   border: none;
+  cursor: pointer;
 `;
