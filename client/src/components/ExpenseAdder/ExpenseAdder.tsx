@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   TitleContainer,
@@ -12,13 +12,29 @@ import {
   FormButton,
 } from "./ExpenseAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
+import { ExpenseData } from "../../pages/Expenses/Expenses";
 
-interface ExpenseProps {
-    setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
+interface ExpenseAdderProps {
+  setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
+  addItem: (newItem: ExpenseData) => void;
 }
 
-const ExpenseAdder: React.FC<ExpenseProps> = ({ setDisplayAdder }) => {
-  const handleSubmit = () => {};
+const ExpenseAdder: React.FC<ExpenseAdderProps> = ({
+  setDisplayAdder,
+  addItem,
+}) => {
+  const [title, setTitle] = useState<string>("");
+  const [amount, setAmount] = useState<number>(0);
+
+  const handleSubmit = (
+    newItem: ExpenseData,
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    addItem(newItem);
+    setTitle("");
+    setAmount(0);
+  };
 
   return (
     <Container
@@ -28,21 +44,31 @@ const ExpenseAdder: React.FC<ExpenseProps> = ({ setDisplayAdder }) => {
       exit={{ y: -20, opacity: 0, transition: { duration: 0.1 } }}
     >
       <TitleContainer>
-        <Title>Add your Expense</Title>
+        <Title>Add your income</Title>
         <Button onClick={() => setDisplayAdder(false)}>
-          <MdOutlineCancel size="1.5rem" />
+          <MdOutlineCancel size="2rem" />
         </Button>
       </TitleContainer>
 
-      <ExpenseForm onSubmit={handleSubmit}>
+      <ExpenseForm
+        onSubmit={(e) => handleSubmit({ id: 123, title, amount }, e)}
+      >
         <InputContainer>
           <InputGroup long>
             <Label>Title</Label>
-            <Input type="text" />
+            <Input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <Input type="number" />
+            <Input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(parseFloat(e.target.value))}
+            />
           </InputGroup>
         </InputContainer>
         <FormButton type="submit">Add Expense</FormButton>

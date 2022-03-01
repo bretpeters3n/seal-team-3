@@ -27,7 +27,7 @@ export const ItemName = styled.h3`
 `;
 
 export const ItemAmount = styled.h3`
-  color: green;
+  color: #25a244;
 `;
 
 export const ItemOptionsContainer = styled(motion.div)`

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { IncomeItem, BudgetNavbar } from "../../components";
+import React from "react";
+import { IncomeItem } from "../../components";
 import { BsPlusCircle } from "react-icons/bs";
 import {
   Container,

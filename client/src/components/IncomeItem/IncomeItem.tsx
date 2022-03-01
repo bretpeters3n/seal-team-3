@@ -8,7 +8,6 @@ import {
   ItemOption,
 } from "./IncomeItem.styles";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
-import { AnimatePresence } from "framer-motion";
 
 interface ItemDataProps {
   id: number;
@@ -44,7 +43,7 @@ const IncomeItem: React.FC<ItemDataProps> = ({
     >
       <ItemContainer onClick={toggleItemOptions}>
         <ItemName>{title}</ItemName>
-        <ItemAmount>{`$${amount.toFixed(2)}`}</ItemAmount>
+        <ItemAmount>{`$ ${amount.toFixed(2)}`}</ItemAmount>
       </ItemContainer>
       {/* Item Options slides out on Click of each item */}
       {itemOptions && (

@@ -26,7 +26,10 @@ export const Title = styled.h1``;
 export const Button = styled.button`
   background: none;
   border: none;
-  cursor: pointer;
+  &:hover {
+    color: lightgray;
+    cursor: pointer;
+  }
 `;
 
 export const IncomeForm = styled.form`
@@ -50,11 +53,11 @@ export const Input = styled.input`
   padding: 0.5em 0.2em;
   outline: none;
   border: none;
-  /* border-bottom: 1px solid black; */
   outline: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   width: 100%;
   transition: 0.3s ease all;
+  margin-top: 0.5em;
 
   &:focus {
     box-shadow: 0 0 15px rgba(211, 174, 139, 1);

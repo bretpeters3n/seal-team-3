@@ -1,6 +1,6 @@
 import React from "react";
+import { ExpenseItem } from "../../components";
 import { BsPlusCircle } from "react-icons/bs";
-import { ExpenseItem, BudgetNavbar } from "../../components";
 import {
   Container,
   ExpenseContainer,
@@ -8,58 +8,43 @@ import {
   Title,
   Button,
 } from "./ExpenseTracker.styles";
+import { AnimatePresence } from "framer-motion";
+import { ExpenseData } from "../../pages/Expenses/Expenses";
 
-interface ExpensesProps {
-    id: number;
-    title: string;
-    amount: number;
+interface ExpenseTrackerProps {
+  setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteItem: (targetId: number) => void;
+  filteredExpenseData: ExpenseData[];
 }
 
-interface ExpenseProps {
-    setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-//Dummy Items
-const dummyExpenseData: Array<ExpensesProps> = [
-    {
-      id: 1,
-      title: "Doordash",
-      amount: 59.50,
-    },
-    {
-      id: 2,
-      title: "Rent",
-      amount: 1900,
-    },
-    {
-      id: 3,
-      title: "Electricity",
-      amount: 220,
-    },
-];
-
-
-const ExpenseTracker: React.FC<ExpenseProps> = ({ setDisplayAdder }) => {
-    return (
-      <Container>
-        <ExpenseContainer>
-          <TitleContainer>
-            <Title>Monthly Expenses</Title>
-            <Button onClick={() => setDisplayAdder(true)}>
-              <BsPlusCircle size="1.5rem" />
-            </Button>
-          </TitleContainer>
-          {dummyExpenseData.map((item) => (
+const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
+  setDisplayAdder,
+  deleteItem,
+  filteredExpenseData,
+}) => {
+  return (
+    <Container>
+      <ExpenseContainer>
+        <TitleContainer>
+          <Title>Monthly Expenses</Title>
+          <Button onClick={() => setDisplayAdder(true)}>
+            <BsPlusCircle size="1.5rem" />
+          </Button>
+        </TitleContainer>
+        <AnimatePresence>
+          {filteredExpenseData.map((item) => (
             <ExpenseItem
               key={item.id}
               id={item.id}
               title={item.title}
               amount={item.amount}
+              deleteItem={deleteItem}
             />
           ))}
-        </ExpenseContainer>
-      </Container>
-    );
-  };
+        </AnimatePresence>
+      </ExpenseContainer>
+    </Container>
+  );
+};
 
 export default ExpenseTracker;
