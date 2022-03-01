@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "./Expenses.styles";
+
 import { ExpenseTracker, ExpenseAdder } from "../../components";
 import { AnimatePresence } from "framer-motion";
 const Expenses = () => {
@@ -18,5 +19,4 @@ const Expenses = () => {
       </AnimatePresence>
     </Container>
   );
-};
 export default Expenses;
