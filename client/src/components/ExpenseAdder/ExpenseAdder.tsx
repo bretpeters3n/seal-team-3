@@ -44,7 +44,7 @@ const ExpenseAdder: React.FC<ExpenseAdderProps> = ({
       exit={{ y: -20, opacity: 0, transition: { duration: 0.1 } }}
     >
       <TitleContainer>
-        <Title>Add your income</Title>
+        <Title>Add your expense</Title>
         <Button onClick={() => setDisplayAdder(false)}>
           <MdOutlineCancel size="2rem" />
         </Button>
