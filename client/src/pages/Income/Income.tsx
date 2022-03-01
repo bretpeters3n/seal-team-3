@@ -52,16 +52,16 @@ const Income = () => {
       transition={{ duration: 0.35 }}
       exit={{ opacity: 0, y: -20 }}
     >
-      <IncomeTracker
-        setDisplayAdder={setDisplayAdder}
-        deleteItem={deleteItem}
-        filteredIncomeData={filteredIncomeData}
-      />
       <AnimatePresence>
         {displayAdder && (
           <IncomeAdder setDisplayAdder={setDisplayAdder} addItem={addItem} />
         )}
       </AnimatePresence>
+      <IncomeTracker
+        setDisplayAdder={setDisplayAdder}
+        deleteItem={deleteItem}
+        filteredIncomeData={filteredIncomeData}
+      />
     </Container>
   );
 };

@@ -34,7 +34,14 @@ const IncomeItem: React.FC<ItemDataProps> = ({
   };
 
   return (
-    <Container exit={{ opacity: 0, x: 500, transition: { duration: 0.2 } }}>
+    <Container
+      exit={{
+        opacity: 0,
+        x: 500,
+        backgroundColor: "#D25E5D",
+        transition: { duration: 0.2 },
+      }}
+    >
       <ItemContainer onClick={toggleItemOptions}>
         <ItemName>{title}</ItemName>
         <ItemAmount>{`$${amount.toFixed(2)}`}</ItemAmount>

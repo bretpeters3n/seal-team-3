@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Container,
   TitleContainer,
@@ -30,8 +30,10 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
     newItem: IncomeData,
     e: React.FormEvent<HTMLFormElement>
   ) => {
-    addItem(newItem);
     e.preventDefault();
+    addItem(newItem);
+    setTitle("");
+    setAmount(0);
   };
 
   return (

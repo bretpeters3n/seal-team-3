@@ -10,6 +10,7 @@ body,
 html {
   font-family: "Urbanist", sans-serif;
   width: 100vw;
+  overflow-x: hidden;
 }
 
 a {

@@ -17,6 +17,7 @@ export const Container = styled.div`
   justify-content: center;
   position: relative;
   padding: 0 2em;
+  z-index: 2;
 
   @media ${device.desktop} {
     justify-content: space-between;

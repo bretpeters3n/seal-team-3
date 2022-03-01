@@ -74,6 +74,7 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
             </SidebarWrapper>
           </>
         ) : (
+          // DESKTOP - when user does not exist
           <>
             <SidebarWrapper>
               <NavIcon to="/login" outlined>
@@ -131,13 +132,13 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
         ) : (
           <>
             <SidebarWrapper>
-              <NavIcon to="/login">
+              <NavIcon to="/login" onClick={() => setSidebar(false)}>
                 <BiLogIn size="1.5rem" />
                 <h2>Login</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon to="/signup">
+              <NavIcon to="/signup" onClick={() => setSidebar(false)}>
                 <HiOutlineUserAdd size="1.5rem" />
                 <h2>Signup</h2>
               </NavIcon>
