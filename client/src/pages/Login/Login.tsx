@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, { useState } from "react";
 import logo from "../../assets/budgety_logo.png";
 import {
@@ -54,7 +55,7 @@ const Login = () => {
             />
           </InputGroup>
           <Button>Login</Button>
-          <Question to="/signup">Don't have an account? Sign up</Question>
+          <Question to="/signup">Don&apos;t have an account? Sign Up</Question>
         </LoginForm>
       </FormSection>
 
