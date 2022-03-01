@@ -18,10 +18,10 @@ export const List = styled(motion.ul)`
   list-style: none;
 `;
 
-export const ListItem = styled(motion.a)`
+export const ListItem = styled.a`
   text-transform: uppercase;
   font-weight: 700;
-  color: gray;
+  transition: 0.2s ease all;
 
   &:hover {
     cursor: pointer;
@@ -30,6 +30,14 @@ export const ListItem = styled(motion.a)`
   &.selected {
     box-sizing: border-box;
     border-bottom: 1px solid black;
+    transform: scale(1.1);
+  }
+`;
+
+export const ListItemText = styled(Link)`
+  color: gray;
+
+  &.selected {
     color: black;
   }
 `;
