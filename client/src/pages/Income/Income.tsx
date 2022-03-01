@@ -1,9 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "./Income.styles";
 import { IncomeTracker, IncomeAdder } from "../../components";
 import { AnimatePresence } from "framer-motion";
+
+export interface IncomeData {
+  id: number;
+  title: string;
+  amount: number;
+}
+
+// Static dummy DATA for example list
+const dummyIncomeData: Array<IncomeData> = [
+  {
+    id: 1,
+    title: "Weekly Check",
+    amount: 1200,
+  },
+  {
+    id: 2,
+    title: "Tax Return",
+    amount: 3500,
+  },
+  {
+    id: 3,
+    title: "Gifted",
+    amount: 600,
+  },
+];
+
 const Income = () => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
+  const [filteredIncomeData, setFilteredIncomeData] =
+    useState<Array<IncomeData>>(dummyIncomeData);
+
+  useEffect(() => {}, [filteredIncomeData]);
+
+  const deleteItem = (targetId: number) => {
+    setFilteredIncomeData(
+      filteredIncomeData.filter((item) => item.id !== targetId)
+    );
+  };
+
+  const addItem = (newItem: IncomeData) => {
+    setFilteredIncomeData([...filteredIncomeData, newItem]);
+  };
 
   return (
     <Container
@@ -12,9 +52,15 @@ const Income = () => {
       transition={{ duration: 0.35 }}
       exit={{ opacity: 0, y: -20 }}
     >
-      <IncomeTracker setDisplayAdder={setDisplayAdder} />
+      <IncomeTracker
+        setDisplayAdder={setDisplayAdder}
+        deleteItem={deleteItem}
+        filteredIncomeData={filteredIncomeData}
+      />
       <AnimatePresence>
-        {displayAdder && <IncomeAdder setDisplayAdder={setDisplayAdder} />}
+        {displayAdder && (
+          <IncomeAdder setDisplayAdder={setDisplayAdder} addItem={addItem} />
+        )}
       </AnimatePresence>
     </Container>
   );

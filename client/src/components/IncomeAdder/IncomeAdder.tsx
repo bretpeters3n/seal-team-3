@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   TitleContainer,
@@ -12,13 +12,27 @@ import {
   FormButton,
 } from "./IncomeAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
+import { IncomeData } from "../../pages/Income/Income";
 
 interface IncomeAdderProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
+  addItem: (newItem: IncomeData) => void;
 }
 
-const IncomeAdder: React.FC<IncomeAdderProps> = ({ setDisplayAdder }) => {
-  const handleSubmit = () => {};
+const IncomeAdder: React.FC<IncomeAdderProps> = ({
+  setDisplayAdder,
+  addItem,
+}) => {
+  const [title, setTitle] = useState<string>("");
+  const [amount, setAmount] = useState<number>(0);
+
+  const handleSubmit = (
+    newItem: IncomeData,
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    addItem(newItem);
+    e.preventDefault();
+  };
 
   return (
     <Container
@@ -34,15 +48,23 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({ setDisplayAdder }) => {
         </Button>
       </TitleContainer>
 
-      <IncomeForm onSubmit={handleSubmit}>
+      <IncomeForm onSubmit={(e) => handleSubmit({ id: 123, title, amount }, e)}>
         <InputContainer>
           <InputGroup long>
             <Label>Title</Label>
-            <Input type="text" />
+            <Input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <Input type="number" />
+            <Input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(parseFloat(e.target.value))}
+            />
           </InputGroup>
         </InputContainer>
         <FormButton type="submit">Add Income</FormButton>
