@@ -46,7 +46,11 @@ export const InputGroup = styled.div<InputBoxModifier>`
   flex: ${(props) => (props.long ? "2" : "1")};
 `;
 
-export const Label = styled.h4``;
+export const Label = styled.div`
+  display: flex;
+  font-weight: 700;
+  gap: 0.5em;
+`;
 
 export const Input = styled.input`
   font-size: 1rem;

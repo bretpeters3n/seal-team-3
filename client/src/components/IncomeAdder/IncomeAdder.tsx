@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Container,
   TitleContainer,
@@ -13,6 +13,12 @@ import {
 } from "./IncomeAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 import { IncomeData } from "../../pages/Income/Income";
+import { useForm } from "react-hook-form";
+
+interface IncomeFormInputs {
+  title: string;
+  amount: number;
+}
 
 interface IncomeAdderProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,18 +29,13 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
   setDisplayAdder,
   addItem,
 }) => {
-  const [title, setTitle] = useState<string>("");
-  const [amount, setAmount] = useState<number>(0);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IncomeFormInputs>();
 
-  const handleSubmit = (
-    newItem: IncomeData,
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-    addItem(newItem);
-    setTitle("");
-    setAmount(0);
-  };
+  console.log(errors);
 
   return (
     <Container
@@ -50,22 +51,30 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
         </Button>
       </TitleContainer>
 
-      <IncomeForm onSubmit={(e) => handleSubmit({ id: 123, title, amount }, e)}>
+      <IncomeForm
+        onSubmit={handleSubmit((data) => console.log("data is", data))}
+      >
         <InputContainer>
           <InputGroup long>
-            <Label>Title</Label>
+            <Label>
+              Title*
+              {errors.title && (
+                <p style={{ color: "red" }}>{errors.title.message}</p>
+              )}
+            </Label>
             <Input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              {...register("title", {
+                required: "This is required",
+                minLength: { value: 4, message: "Needs at least 4" },
+              })}
             />
           </InputGroup>
           <InputGroup>
-            <Label>Amount</Label>
+            <Label>Amount*</Label>
             <Input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(parseFloat(e.target.value))}
+              {...register("amount", {
+                required: true,
+              })}
             />
           </InputGroup>
         </InputContainer>

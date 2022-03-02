@@ -51,7 +51,7 @@ const ExpenseItem: React.FC<ExpenseDataProps> = ({
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.1 }}
-          exit={{ x: 20, opacity: 0 }}
+          exit={{ x: 20, opacity: 0, transition: { duration: 0.3 } }}
         >
           <ItemOption blueHover onClick={handleEdit}>
             <RiEditLine size="1.5rem" />

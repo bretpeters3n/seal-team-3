@@ -28,7 +28,7 @@ const dummyIncomeData: Array<IncomeData> = [
   },
 ];
 
-const Income = () => {
+const Income: React.FC = () => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
   const [filteredIncomeData, setFilteredIncomeData] =
     useState<Array<IncomeData>>(dummyIncomeData);

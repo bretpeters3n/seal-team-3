@@ -1,6 +1,5 @@
-import React, { useEffect, useState, createContext } from "react";
+import React, { useState } from "react";
 import { Container, List, ListItem, ListItemText } from "./BudgetNavbar.styles";
-import { Link } from "react-router-dom";
 
 const BudgetNavbar = () => {
   const tabs = ["Income", "Expenses", "Combined"];
