@@ -54,7 +54,7 @@ const Login = () => {
             />
           </InputGroup>
           <Button>Login</Button>
-          <Question to="/signup">Don't have an account? Sign up</Question>
+          <Question to="/signup">Don&apos;t have an account? Sign Up</Question>
         </LoginForm>
       </FormSection>
 

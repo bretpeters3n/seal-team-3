@@ -23,29 +23,7 @@ const Signup = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Validation to see if all fields are filled
-    if (email === "" || firstPassword === "" || secondPassword === "") {
-      alert("Please fill out all fields");
-      return;
-    }
-
-    // Validation to see if passwords match
-    if (!checkIfPasswordsMatch(firstPassword, secondPassword)) {
-      alert("Passwords do not match.");
-      return;
-    }
-
-    // Code when all fields are filled properly
-    console.log("success");
   };
-
-  const checkIfPasswordsMatch = (a: string, b: string) => {
-    if (a !== b) return false;
-    return true;
-  };
-
-  console.log(email);
 
   return (
     <Container
@@ -107,7 +85,7 @@ const Signup = () => {
               }
             />
           </InputGroup>
-          <Button>Register</Button>
+          <Button type="submit">Register</Button>
           <Question to="/login">Already have an account?</Question>
         </LoginForm>
       </FormSection>
