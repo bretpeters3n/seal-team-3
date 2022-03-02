@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 interface ExpenseProps {
-    long?: boolean;
+  long?: boolean;
 }
 
 export const Container = styled(motion.div)`
@@ -28,6 +28,7 @@ export const Button = styled.button`
   border: none;
   &:hover {
     color: lightgray;
+    cursor: pointer;
   }
 `;
 
@@ -56,6 +57,7 @@ export const Input = styled.input`
   border-radius: 5px;
   width: 100%;
   transition: 0.3s ease all;
+  margin-top: 0.5em;
   &:focus {
     box-shadow: 0 0 15px rgba(211, 174, 139, 1);
     border-radius: 3px;
