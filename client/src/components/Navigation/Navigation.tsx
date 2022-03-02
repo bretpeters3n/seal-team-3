@@ -14,7 +14,11 @@ import logo from "../../assets/budgety_small_logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCancelCircle } from "react-icons/im";
 import { AiOutlineHome } from "react-icons/ai";
-import { MdOutlineAttachMoney, MdOutlineMoneyOffCsred } from "react-icons/md";
+import {
+  MdOutlineAttachMoney,
+  MdOutlineMoneyOffCsred,
+  MdOutlineEventNote,
+} from "react-icons/md";
 import { FaRegHandshake } from "react-icons/fa";
 import { BiLogOut, BiLogIn } from "react-icons/bi";
 import { HiOutlineUserAdd } from "react-icons/hi";
@@ -48,18 +52,13 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
         {user ? (
           <>
             <SidebarWrapper>
-              <NavIcon to="/income">
-                <h2>Income</h2>
+              <NavIcon to="/">
+                <h2>Dashboard</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon to="/expenses">
-                <h2>Expenses</h2>
-              </NavIcon>
-            </SidebarWrapper>
-            <SidebarWrapper>
-              <NavIcon to="/combined">
-                <h2>Combined</h2>
+              <NavIcon to="/budget">
+                <h2>My Budget</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
@@ -75,6 +74,7 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
             </SidebarWrapper>
           </>
         ) : (
+          // DESKTOP - when user does not exist
           <>
             <SidebarWrapper>
               <NavIcon to="/login" outlined>
@@ -105,27 +105,15 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
         {user ? (
           <>
             <SidebarWrapper>
-              <NavIcon to="/">
+              <NavIcon to="/" onClick={() => setSidebar(false)}>
                 <AiOutlineHome size="2rem" />
-                <h2>Home</h2>
+                <h2>Dashboard</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon to="/income">
-                <MdOutlineAttachMoney size="2rem" />
-                <h2>Income</h2>
-              </NavIcon>
-            </SidebarWrapper>
-            <SidebarWrapper>
-              <NavIcon to="/expenses">
-                <MdOutlineMoneyOffCsred size="2rem" />
-                <h2>Expenses</h2>
-              </NavIcon>
-            </SidebarWrapper>
-            <SidebarWrapper>
-              <NavIcon to="/combined">
-                <FaRegHandshake size="2rem" />
-                <h2>Combined</h2>
+              <NavIcon to="/budget" onClick={() => setSidebar(false)}>
+                <MdOutlineEventNote size="2rem" />
+                <h2>My Budget</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
@@ -144,13 +132,13 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
         ) : (
           <>
             <SidebarWrapper>
-              <NavIcon to="/login">
+              <NavIcon to="/login" onClick={() => setSidebar(false)}>
                 <BiLogIn size="1.5rem" />
                 <h2>Login</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon to="/signup">
+              <NavIcon to="/signup" onClick={() => setSidebar(false)}>
                 <HiOutlineUserAdd size="1.5rem" />
                 <h2>Signup</h2>
               </NavIcon>
