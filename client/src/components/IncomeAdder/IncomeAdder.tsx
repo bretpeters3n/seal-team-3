@@ -15,10 +15,24 @@ import {
 import { MdOutlineCancel } from "react-icons/md";
 import { IncomeData } from "../../pages/Income/Income";
 import { useForm, SubmitHandler } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object().shape({
+  title: yup.string().min(2).max(50).required(),
+  amount: yup
+    .number()
+    .typeError("must be a number")
+    .positive("must be positive")
+    .min(0)
+    .required("field is required"),
+});
 
 interface IncomeFormInputs {
   title: string;
   amount: number;
+  first_name?: string;
+  last_name?: string;
 }
 
 interface IncomeAdderProps {
@@ -34,13 +48,16 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IncomeFormInputs>();
+  } = useForm<IncomeFormInputs>({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit: SubmitHandler<IncomeFormInputs> = (data) => {
-    console.log(data.title);
-  };
+    data.first_name = "Ben";
+    data.last_name = "Cho";
 
-  console.log(errors);
+    console.log("data", data);
+  };
 
   return (
     <Container
@@ -60,26 +77,20 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
         <InputContainer>
           <InputGroup long>
             <Label>Title</Label>
-            <Input
-              {...register("title", {
-                required: "Title field is required",
-                minLength: { value: 3, message: "Needs at least 3 characters" },
-              })}
-            />
+            <Input defaultValue="example item" {...register("title")} />
             <ErrorContainer>
-              {errors.title && <p>{errors.title.message}</p>}
+              {errors.title && errors.title?.message && (
+                <p>{errors.title.message}</p>
+              )}
             </ErrorContainer>
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <Input
-              {...register("amount", {
-                required: "Amount field is required",
-                valueAsNumber: true,
-              })}
-            />
+            <Input {...register("amount")} />
             <ErrorContainer>
-              {errors.amount && <p>{errors.amount.message}</p>}
+              {errors.amount && errors.amount?.message && (
+                <p>{errors.amount.message}</p>
+              )}
             </ErrorContainer>
           </InputGroup>
         </InputContainer>
