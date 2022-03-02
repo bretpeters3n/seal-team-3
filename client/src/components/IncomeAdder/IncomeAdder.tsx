@@ -10,10 +10,11 @@ import {
   Label,
   Input,
   FormButton,
+  ErrorContainer,
 } from "./IncomeAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 import { IncomeData } from "../../pages/Income/Income";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 interface IncomeFormInputs {
   title: string;
@@ -35,6 +36,10 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
     formState: { errors },
   } = useForm<IncomeFormInputs>();
 
+  const onSubmit: SubmitHandler<IncomeFormInputs> = (data) => {
+    console.log(data.title);
+  };
+
   console.log(errors);
 
   return (
@@ -51,33 +56,34 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
         </Button>
       </TitleContainer>
 
-      <IncomeForm
-        onSubmit={handleSubmit((data) => console.log("data is", data))}
-      >
+      <IncomeForm onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
           <InputGroup long>
-            <Label>
-              Title*
-              {errors.title && (
-                <p style={{ color: "red" }}>{errors.title.message}</p>
-              )}
-            </Label>
+            <Label>Title</Label>
             <Input
               {...register("title", {
-                required: "This is required",
-                minLength: { value: 4, message: "Needs at least 4" },
+                required: "Title field is required",
+                minLength: { value: 3, message: "Needs at least 3 characters" },
               })}
             />
+            <ErrorContainer>
+              {errors.title && <p>{errors.title.message}</p>}
+            </ErrorContainer>
           </InputGroup>
           <InputGroup>
-            <Label>Amount*</Label>
+            <Label>Amount</Label>
             <Input
               {...register("amount", {
-                required: true,
+                required: "Amount field is required",
+                valueAsNumber: true,
               })}
             />
+            <ErrorContainer>
+              {errors.amount && <p>{errors.amount.message}</p>}
+            </ErrorContainer>
           </InputGroup>
         </InputContainer>
+
         <FormButton type="submit">Add Income</FormButton>
       </IncomeForm>
     </Container>
