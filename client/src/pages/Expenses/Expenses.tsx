@@ -19,4 +19,5 @@ const Expenses = () => {
       </AnimatePresence>
     </Container>
   );
-export default Expenses;
+};
+  export default Expenses;
