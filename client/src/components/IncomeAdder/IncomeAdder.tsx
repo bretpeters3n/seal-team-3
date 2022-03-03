@@ -13,13 +13,13 @@ import {
   ErrorContainer,
 } from "./IncomeAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
-import { IncomeData } from "../../pages/Income/Income";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { addIncomeItem } from "../../API/IncomeMethods";
 
 const schema = yup.object().shape({
-  title: yup.string().min(2).max(50).required(),
+  title: yup.string().min(2).max(50).required("field is required"),
   amount: yup
     .number()
     .typeError("must be a number")
@@ -37,26 +37,30 @@ interface IncomeFormInputs {
 
 interface IncomeAdderProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
-  addItem: (newItem: IncomeData) => void;
+  toggleChange: () => void;
 }
 
 const IncomeAdder: React.FC<IncomeAdderProps> = ({
   setDisplayAdder,
-  addItem,
+  toggleChange,
 }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IncomeFormInputs>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit: SubmitHandler<IncomeFormInputs> = (data) => {
-    data.first_name = "Ben";
-    data.last_name = "Cho";
+    data.first_name = "test firstName";
+    data.last_name = "test lastName";
 
-    console.log("data", data);
+    // API Call to add the new Income Data to DB
+    addIncomeItem(data);
+    toggleChange();
+    reset();
   };
 
   return (
@@ -77,7 +81,7 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
         <InputContainer>
           <InputGroup long>
             <Label>Title</Label>
-            <Input defaultValue="example item" {...register("title")} />
+            <Input {...register("title")} />
             <ErrorContainer>
               {errors.title && errors.title?.message && (
                 <p>{errors.title.message}</p>

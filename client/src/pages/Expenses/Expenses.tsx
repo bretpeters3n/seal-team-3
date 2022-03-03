@@ -2,47 +2,31 @@ import React, { useEffect, useState } from "react";
 import { Container } from "./Expenses.styles";
 import { ExpenseTracker, ExpenseAdder } from "../../components";
 import { AnimatePresence } from "framer-motion";
+import { getAllExpenseItems } from "../../API/ExpenseMethods";
 
 export interface ExpenseData {
-  id: number;
+  _id: string;
   title: string;
   amount: number;
+  type: "Income" | "Expense";
 }
-
-// Dummy Items for Expense
-const dummyExpenseData: Array<ExpenseData> = [
-  {
-    id: 1,
-    title: "Doordash",
-    amount: 59.5,
-  },
-  {
-    id: 2,
-    title: "Rent",
-    amount: 1900,
-  },
-  {
-    id: 3,
-    title: "Electricity",
-    amount: 220,
-  },
-];
 
 const Expenses = () => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
-  const [filteredExpenseData, setFilteredExpenseData] =
-    useState<Array<ExpenseData>>(dummyExpenseData);
+  const [change, setChange] = useState<boolean>(false);
+  const [filteredExpenseData, setFilteredExpenseData] = useState<
+    Array<ExpenseData>
+  >([]);
 
-  useEffect(() => {}, [filteredExpenseData]);
+  const toggleChange = () => setChange(!change);
 
-  const deleteItem = (targetId: number) => {
-    setFilteredExpenseData(
-      filteredExpenseData.filter((item) => item.id !== targetId)
-    );
-  };
+  useEffect(() => {
+    retrieveExpenseData();
+  }, [change]);
 
-  const addItem = (newItem: ExpenseData) => {
-    setFilteredExpenseData([...filteredExpenseData, newItem]);
+  const retrieveExpenseData = async () => {
+    const data = await getAllExpenseItems();
+    setFilteredExpenseData(data);
   };
 
   return (
@@ -54,13 +38,16 @@ const Expenses = () => {
     >
       <AnimatePresence>
         {displayAdder && (
-          <ExpenseAdder setDisplayAdder={setDisplayAdder} addItem={addItem} />
+          <ExpenseAdder
+            setDisplayAdder={setDisplayAdder}
+            toggleChange={toggleChange}
+          />
         )}
       </AnimatePresence>
       <ExpenseTracker
         setDisplayAdder={setDisplayAdder}
-        deleteItem={deleteItem}
         filteredExpenseData={filteredExpenseData}
+        toggleChange={toggleChange}
       />
     </Container>
   );

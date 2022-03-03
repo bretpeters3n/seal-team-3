@@ -13,14 +13,14 @@ import { IncomeData } from "../../pages/Income/Income";
 
 interface IncomeTrackerProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
-  deleteItem: (targetId: number) => void;
   filteredIncomeData: IncomeData[];
+  toggleChange: () => void;
 }
 
 const IncomeTracker: React.FC<IncomeTrackerProps> = ({
   setDisplayAdder,
-  deleteItem,
   filteredIncomeData,
+  toggleChange,
 }) => {
   return (
     <Container>
@@ -34,11 +34,11 @@ const IncomeTracker: React.FC<IncomeTrackerProps> = ({
         <AnimatePresence>
           {filteredIncomeData?.map((item) => (
             <IncomeItem
-              key={item.id}
-              id={item.id}
+              key={item._id}
+              id={item._id}
               title={item.title}
               amount={item.amount}
-              deleteItem={deleteItem}
+              toggleChange={toggleChange}
             />
           ))}
         </AnimatePresence>

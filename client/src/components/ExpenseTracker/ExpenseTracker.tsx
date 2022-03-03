@@ -13,14 +13,14 @@ import { ExpenseData } from "../../pages/Expenses/Expenses";
 
 interface ExpenseTrackerProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
-  deleteItem: (targetId: number) => void;
   filteredExpenseData: ExpenseData[];
+  toggleChange: () => void;
 }
 
 const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
   setDisplayAdder,
-  deleteItem,
   filteredExpenseData,
+  toggleChange,
 }) => {
   return (
     <Container>
@@ -34,11 +34,11 @@ const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
         <AnimatePresence>
           {filteredExpenseData.map((item) => (
             <ExpenseItem
-              key={item.id}
-              id={item.id}
+              key={item._id}
+              id={item._id}
               title={item.title}
               amount={item.amount}
-              deleteItem={deleteItem}
+              toggleChange={toggleChange}
             />
           ))}
         </AnimatePresence>

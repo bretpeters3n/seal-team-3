@@ -2,47 +2,31 @@ import React, { useState, useEffect } from "react";
 import { Container } from "./Income.styles";
 import { IncomeTracker, IncomeAdder } from "../../components";
 import { AnimatePresence } from "framer-motion";
+import { getAllIncomeItems } from "../../API/IncomeMethods";
 
 export interface IncomeData {
-  id: number;
+  _id: string;
   title: string;
   amount: number;
+  type: "Income" | "Expense";
 }
-
-// Static dummy DATA for example list
-const dummyIncomeData: Array<IncomeData> = [
-  {
-    id: 1,
-    title: "Weekly Check",
-    amount: 1200,
-  },
-  {
-    id: 2,
-    title: "Tax Return",
-    amount: 3500,
-  },
-  {
-    id: 3,
-    title: "Gifted",
-    amount: 600,
-  },
-];
 
 const Income: React.FC = () => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
-  const [filteredIncomeData, setFilteredIncomeData] =
-    useState<Array<IncomeData>>(dummyIncomeData);
+  const [change, setChange] = useState<boolean>(false);
+  const [filteredIncomeData, setFilteredIncomeData] = useState<
+    Array<IncomeData>
+  >([]);
 
-  useEffect(() => {}, [filteredIncomeData]);
+  const toggleChange = () => setChange(!change);
 
-  const deleteItem = (targetId: number) => {
-    setFilteredIncomeData(
-      filteredIncomeData.filter((item) => item.id !== targetId)
-    );
-  };
+  useEffect(() => {
+    retrieveIncomeData();
+  }, [change]);
 
-  const addItem = (newItem: IncomeData) => {
-    setFilteredIncomeData([...filteredIncomeData, newItem]);
+  const retrieveIncomeData = async () => {
+    const data = await getAllIncomeItems();
+    setFilteredIncomeData(data);
   };
 
   return (
@@ -54,13 +38,16 @@ const Income: React.FC = () => {
     >
       <AnimatePresence>
         {displayAdder && (
-          <IncomeAdder setDisplayAdder={setDisplayAdder} addItem={addItem} />
+          <IncomeAdder
+            setDisplayAdder={setDisplayAdder}
+            toggleChange={toggleChange}
+          />
         )}
       </AnimatePresence>
       <IncomeTracker
         setDisplayAdder={setDisplayAdder}
-        deleteItem={deleteItem}
         filteredIncomeData={filteredIncomeData}
+        toggleChange={toggleChange}
       />
     </Container>
   );

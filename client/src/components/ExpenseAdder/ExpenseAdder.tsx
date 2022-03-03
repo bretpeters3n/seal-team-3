@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Container,
   TitleContainer,
@@ -10,30 +10,56 @@ import {
   Label,
   Input,
   FormButton,
+  ErrorContainer,
 } from "./ExpenseAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
-import { ExpenseData } from "../../pages/Expenses/Expenses";
+import { useForm, SubmitHandler } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { addExpenseItem } from "../../API/ExpenseMethods";
+
+const schema = yup.object().shape({
+  title: yup.string().min(2).max(50).required("field is required"),
+  amount: yup
+    .number()
+    .typeError("must be a number")
+    .positive("must be positive")
+    .min(0)
+    .required("field is required"),
+});
+
+interface ExpenseFormInputs {
+  title: string;
+  amount: number;
+  first_name?: string;
+  last_name?: string;
+}
 
 interface ExpenseAdderProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
-  addItem: (newItem: ExpenseData) => void;
+  toggleChange: () => void;
 }
 
 const ExpenseAdder: React.FC<ExpenseAdderProps> = ({
   setDisplayAdder,
-  addItem,
+  toggleChange,
 }) => {
-  const [title, setTitle] = useState<string>("");
-  const [amount, setAmount] = useState<number>(0);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<ExpenseFormInputs>({
+    resolver: yupResolver(schema),
+  });
 
-  const handleSubmit = (
-    newItem: ExpenseData,
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-    addItem(newItem);
-    setTitle("");
-    setAmount(0);
+  const onSubmit: SubmitHandler<ExpenseFormInputs> = (data) => {
+    data.first_name = "test firstName";
+    data.last_name = "test lastName";
+
+    addExpenseItem(data);
+    toggleChange();
+    reset();
   };
 
   return (
@@ -50,25 +76,21 @@ const ExpenseAdder: React.FC<ExpenseAdderProps> = ({
         </Button>
       </TitleContainer>
 
-      <ExpenseForm
-        onSubmit={(e) => handleSubmit({ id: 123, title, amount }, e)}
-      >
+      <ExpenseForm onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
           <InputGroup long>
             <Label>Title</Label>
-            <Input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+            <Input {...register("title")} />
+            {errors.title && errors.title?.message && (
+              <ErrorContainer>{errors.title.message}</ErrorContainer>
+            )}
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <Input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(parseFloat(e.target.value))}
-            />
+            <Input {...register("amount")} />
+            {errors.amount && errors.amount?.message && (
+              <ErrorContainer>{errors.amount.message}</ErrorContainer>
+            )}
           </InputGroup>
         </InputContainer>
         <FormButton type="submit">Add Expense</FormButton>

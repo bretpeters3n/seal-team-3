@@ -8,28 +8,28 @@ import {
   ItemOption,
 } from "./IncomeItem.styles";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
+import { deleteIncomeItem } from "../../API/IncomeMethods";
 
 interface ItemDataProps {
-  id: number;
+  id: string;
   title: string;
   amount: number;
-  deleteItem: (targetId: number) => void;
+  toggleChange: () => void;
 }
 
 const IncomeItem: React.FC<ItemDataProps> = ({
   id,
   title,
   amount,
-  deleteItem,
+  toggleChange,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
 
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
-  const handleEdit = () => {};
-
-  const handleDelete = (id: number) => {
-    deleteItem(id);
+  const handleDelete = () => {
+    deleteIncomeItem(id);
+    toggleChange();
   };
 
   return (
@@ -53,10 +53,10 @@ const IncomeItem: React.FC<ItemDataProps> = ({
           transition={{ duration: 0.1 }}
           exit={{ x: 20, opacity: 0 }}
         >
-          <ItemOption blueHover onClick={handleEdit}>
+          <ItemOption blueHover>
             <RiEditLine size="1.5rem" />
           </ItemOption>
-          <ItemOption onClick={() => handleDelete(id)}>
+          <ItemOption onClick={handleDelete}>
             <RiDeleteBin6Line size="1.5rem" />
           </ItemOption>
         </ItemOptionsContainer>

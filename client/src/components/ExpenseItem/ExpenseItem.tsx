@@ -8,28 +8,28 @@ import {
   ItemOption,
 } from "./ExpenseItem.styles";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
+import { deleteExpenseItem } from "../../API/ExpenseMethods";
 
 interface ExpenseDataProps {
-  id: number;
+  id: string;
   title: string;
   amount: number;
-  deleteItem: (targetId: number) => void;
+  toggleChange: () => void;
 }
 
 const ExpenseItem: React.FC<ExpenseDataProps> = ({
   id,
   title,
   amount,
-  deleteItem,
+  toggleChange,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
 
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
-  const handleEdit = () => {};
-
-  const handleDelete = (id: number) => {
-    deleteItem(id);
+  const handleDelete = () => {
+    deleteExpenseItem(id);
+    toggleChange();
   };
 
   return (
@@ -53,10 +53,10 @@ const ExpenseItem: React.FC<ExpenseDataProps> = ({
           transition={{ duration: 0.1 }}
           exit={{ x: 20, opacity: 0, transition: { duration: 0.3 } }}
         >
-          <ItemOption blueHover onClick={handleEdit}>
+          <ItemOption blueHover>
             <RiEditLine size="1.5rem" />
           </ItemOption>
-          <ItemOption onClick={() => handleDelete(id)}>
+          <ItemOption onClick={handleDelete}>
             <RiDeleteBin6Line size="1.5rem" />
           </ItemOption>
         </ItemOptionsContainer>

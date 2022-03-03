@@ -44,6 +44,8 @@ export const InputContainer = styled.div`
 
 export const InputGroup = styled.div<ExpenseProps>`
   flex: ${(ExpenseProps) => (ExpenseProps.long ? "2" : "1")};
+  padding-bottom: 1em;
+  position: relative;
 `;
 
 export const Label = styled.h4``;
@@ -62,6 +64,13 @@ export const Input = styled.input`
     box-shadow: 0 0 15px rgba(211, 174, 139, 1);
     border-radius: 3px;
   }
+`;
+
+export const ErrorContainer = styled.div`
+  color: red;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 0;
 `;
 
 export const FormButton = styled.button`
