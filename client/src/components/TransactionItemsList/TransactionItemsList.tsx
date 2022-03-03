@@ -1,5 +1,5 @@
 import React from "react";
-import { IncomeItem } from "../../components";
+import TransactionItem from "../TransactionItem/TransactionItem";
 import { BsPlusCircle } from "react-icons/bs";
 import {
   Container,
@@ -7,38 +7,43 @@ import {
   TitleContainer,
   Title,
   Button,
-} from "./IncomeTracker.styles";
+} from "./TransactionItemsList.styles";
 import { AnimatePresence } from "framer-motion";
-import { IncomeData } from "../../pages/Income/Income";
+import { ItemData, TransactionType } from "../../constants";
 
-interface IncomeTrackerProps {
+interface ItemListProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
-  filteredIncomeData: IncomeData[];
-  toggleChange: () => void;
+  filteredData: ItemData[];
+  toggleRerender: () => void;
+  pageType: TransactionType;
 }
 
-const IncomeTracker: React.FC<IncomeTrackerProps> = ({
+const IncomeTracker: React.FC<ItemListProps> = ({
   setDisplayAdder,
-  filteredIncomeData,
-  toggleChange,
+  filteredData,
+  toggleRerender,
+  pageType,
 }) => {
   return (
     <Container>
       <IncomeContainer>
         <TitleContainer>
-          <Title>Monthly Income</Title>
+          <Title>
+            Monthly {`${pageType.includes("expense") ? "Expense" : "Income"}`}
+          </Title>
           <Button onClick={() => setDisplayAdder(true)}>
             <BsPlusCircle size="2rem" />
           </Button>
         </TitleContainer>
         <AnimatePresence>
-          {filteredIncomeData?.map((item) => (
-            <IncomeItem
+          {filteredData?.map((item) => (
+            <TransactionItem
               key={item._id}
               id={item._id}
               title={item.title}
               amount={item.amount}
-              toggleChange={toggleChange}
+              toggleRerender={toggleRerender}
+              pageType={pageType}
             />
           ))}
         </AnimatePresence>

@@ -11,12 +11,12 @@ import {
   Input,
   FormButton,
   ErrorContainer,
-} from "./ItemAdder.styles";
+} from "./TransactionItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { addItem } from "../../API/IEMethods";
+import { addItem } from "../../API/TransactionMethods";
 
 const schema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
@@ -37,13 +37,14 @@ interface FormInputs {
 
 interface AdderProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleChange: () => void;
+  toggleRerender: () => void;
 }
 
 const IncomeAdder: React.FC<AdderProps> = ({
   setDisplayAdder,
-  toggleChange,
+  toggleRerender,
 }) => {
+  // Grabs the path name from the browser
   const pathName = window.location.pathname;
 
   const {
@@ -61,7 +62,7 @@ const IncomeAdder: React.FC<AdderProps> = ({
 
     // API Call to add the new Income Data to DB
     addItem(data, pathName.includes("/expense") ? "expense" : "income");
-    toggleChange();
+    toggleRerender();
     reset();
   };
 

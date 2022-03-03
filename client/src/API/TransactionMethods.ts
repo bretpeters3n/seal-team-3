@@ -1,9 +1,9 @@
 import axios from "axios";
-import { IncomeExpenseTransferData, URL, IncomeOrExpense } from "../constants";
+import { IncomeExpenseTransferData, URL, TransactionType } from "../constants";
 
 export const addItem = async (
   data: IncomeExpenseTransferData,
-  type: IncomeOrExpense
+  type: TransactionType
 ) => {
   try {
     await axios.post(
@@ -22,7 +22,7 @@ export const addItem = async (
   }
 };
 
-export const getAllItems = async (type: IncomeOrExpense) => {
+export const getAllItems = async (type: TransactionType) => {
   try {
     const data = await axios
       .get(
@@ -37,7 +37,7 @@ export const getAllItems = async (type: IncomeOrExpense) => {
   }
 };
 
-export const deleteItem = async (itemId: string, type: IncomeOrExpense) => {
+export const deleteItem = async (itemId: string, type: TransactionType) => {
   try {
     await axios.delete(
       `${URL}/${type === "expense" ? "Expenses" : "Incomes"}/delete${

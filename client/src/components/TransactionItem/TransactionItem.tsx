@@ -6,30 +6,33 @@ import {
   ItemOptionsContainer,
   ItemContainer,
   ItemOption,
-} from "./IncomeItem.styles";
+} from "./TransactionItem.styles";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
-import { deleteItem } from "../../API/IEMethods";
+import { deleteItem } from "../../API/TransactionMethods";
+import { TransactionType } from "../../constants";
 
-interface ItemDataProps {
+interface ItemProps {
   id: string;
   title: string;
   amount: number;
-  toggleChange: () => void;
+  toggleRerender: () => void;
+  pageType: TransactionType;
 }
 
-const IncomeItem: React.FC<ItemDataProps> = ({
+const IncomeItem: React.FC<ItemProps> = ({
   id,
   title,
   amount,
-  toggleChange,
+  toggleRerender,
+  pageType,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
 
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
   const handleDelete = () => {
-    deleteItem(id, "income");
-    toggleChange();
+    deleteItem(id, pageType);
+    toggleRerender();
   };
 
   return (
@@ -43,7 +46,9 @@ const IncomeItem: React.FC<ItemDataProps> = ({
     >
       <ItemContainer onClick={toggleItemOptions}>
         <ItemName>{title}</ItemName>
-        <ItemAmount>{`$ ${amount.toFixed(2)}`}</ItemAmount>
+        <ItemAmount
+          textColor={pageType === "income" ? "#25a244" : "#ff595e"}
+        >{`$ ${amount.toFixed(2)}`}</ItemAmount>
       </ItemContainer>
       {/* Item Options slides out on Click of each item */}
       {itemOptions && (

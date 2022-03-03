@@ -17,4 +17,11 @@ export interface IncomeExpenseTransferData {
   last_name?: string | undefined;
 }
 
-export type IncomeOrExpense = "income" | "expense";
+export type TransactionType = "income" | "expense";
+
+export interface ItemData {
+  _id: string;
+  title: string;
+  amount: number;
+  type: TransactionType;
+}
