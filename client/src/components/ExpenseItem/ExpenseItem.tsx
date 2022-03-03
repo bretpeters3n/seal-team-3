@@ -8,7 +8,7 @@ import {
   ItemOption,
 } from "./ExpenseItem.styles";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
-import { deleteExpenseItem } from "../../API/ExpenseMethods";
+import { deleteItem } from "../../API/IEMethods";
 
 interface ExpenseDataProps {
   id: string;
@@ -28,7 +28,7 @@ const ExpenseItem: React.FC<ExpenseDataProps> = ({
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
   const handleDelete = () => {
-    deleteExpenseItem(id);
+    deleteItem(id, "expense");
     toggleChange();
   };
 

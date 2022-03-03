@@ -16,7 +16,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { addIncomeItem } from "../../API/IncomeMethods";
+import { addItem } from "../../API/IEMethods";
 
 const schema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
@@ -58,7 +58,7 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
     data.last_name = "test lastName";
 
     // API Call to add the new Income Data to DB
-    addIncomeItem(data);
+    addItem(data, "income");
     toggleChange();
     reset();
   };

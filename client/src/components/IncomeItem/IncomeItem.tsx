@@ -8,7 +8,7 @@ import {
   ItemOption,
 } from "./IncomeItem.styles";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
-import { deleteIncomeItem } from "../../API/IncomeMethods";
+import { deleteItem } from "../../API/IEMethods";
 
 interface ItemDataProps {
   id: string;
@@ -28,7 +28,7 @@ const IncomeItem: React.FC<ItemDataProps> = ({
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
   const handleDelete = () => {
-    deleteIncomeItem(id);
+    deleteItem(id, "income");
     toggleChange();
   };
 

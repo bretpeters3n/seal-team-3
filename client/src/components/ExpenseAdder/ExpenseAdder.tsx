@@ -16,7 +16,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { addExpenseItem } from "../../API/ExpenseMethods";
+import { addItem } from "../../API/IEMethods";
 
 const schema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
@@ -57,7 +57,7 @@ const ExpenseAdder: React.FC<ExpenseAdderProps> = ({
     data.first_name = "test firstName";
     data.last_name = "test lastName";
 
-    addExpenseItem(data);
+    addItem(data, "expense");
     toggleChange();
     reset();
   };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container } from "./Expenses.styles";
 import { ExpenseTracker, ExpenseAdder } from "../../components";
 import { AnimatePresence } from "framer-motion";
-import { getAllExpenseItems } from "../../API/ExpenseMethods";
+import { getAllItems } from "../../API/IEMethods";
 
 export interface ExpenseData {
   _id: string;
@@ -25,7 +25,7 @@ const Expenses = () => {
   }, [change]);
 
   const retrieveExpenseData = async () => {
-    const data = await getAllExpenseItems();
+    const data = await getAllItems("expense");
     setFilteredExpenseData(data);
   };
 

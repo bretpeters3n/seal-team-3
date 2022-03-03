@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container } from "./Income.styles";
 import { IncomeTracker, IncomeAdder } from "../../components";
 import { AnimatePresence } from "framer-motion";
-import { getAllIncomeItems } from "../../API/IncomeMethods";
+import { getAllItems } from "../../API/IEMethods";
 
 export interface IncomeData {
   _id: string;
@@ -25,7 +25,7 @@ const Income: React.FC = () => {
   }, [change]);
 
   const retrieveIncomeData = async () => {
-    const data = await getAllIncomeItems();
+    const data = await getAllItems("income");
     setFilteredIncomeData(data);
   };
 
