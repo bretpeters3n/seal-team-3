@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "./Expenses.styles";
-import { ExpenseTracker, ExpenseAdder } from "../../components";
+import { ExpenseTracker, ItemAdder } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/IEMethods";
 
@@ -38,7 +38,7 @@ const Expenses = () => {
     >
       <AnimatePresence>
         {displayAdder && (
-          <ExpenseAdder
+          <ItemAdder
             setDisplayAdder={setDisplayAdder}
             toggleChange={toggleChange}
           />

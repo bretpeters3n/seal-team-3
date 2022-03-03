@@ -11,7 +11,7 @@ import {
   Input,
   FormButton,
   ErrorContainer,
-} from "./IncomeAdder.styles";
+} from "./ItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
@@ -28,37 +28,39 @@ const schema = yup.object().shape({
     .required("field is required"),
 });
 
-interface IncomeFormInputs {
+interface FormInputs {
   title: string;
   amount: number;
   first_name?: string;
   last_name?: string;
 }
 
-interface IncomeAdderProps {
+interface AdderProps {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   toggleChange: () => void;
 }
 
-const IncomeAdder: React.FC<IncomeAdderProps> = ({
+const IncomeAdder: React.FC<AdderProps> = ({
   setDisplayAdder,
   toggleChange,
 }) => {
+  const pathName = window.location.pathname;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IncomeFormInputs>({
+  } = useForm<FormInputs>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<IncomeFormInputs> = (data) => {
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
     data.first_name = "test firstName";
     data.last_name = "test lastName";
 
     // API Call to add the new Income Data to DB
-    addItem(data, "income");
+    addItem(data, pathName.includes("/expense") ? "expense" : "income");
     toggleChange();
     reset();
   };
@@ -71,7 +73,9 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
       exit={{ y: -20, opacity: 0, transition: { duration: 0.1 } }}
     >
       <TitleContainer>
-        <Title>Add your income</Title>
+        <Title>
+          Add your {`${pathName.includes("expense") ? "Expense" : "Income"}`}
+        </Title>
         <Button onClick={() => setDisplayAdder(false)}>
           <MdOutlineCancel size="2rem" />
         </Button>
@@ -99,7 +103,9 @@ const IncomeAdder: React.FC<IncomeAdderProps> = ({
           </InputGroup>
         </InputContainer>
 
-        <FormButton type="submit">Add Income</FormButton>
+        <FormButton type="submit">
+          Add {`${pathName.includes("expense") ? "Expense" : "Income"}`}
+        </FormButton>
       </IncomeForm>
     </Container>
   );

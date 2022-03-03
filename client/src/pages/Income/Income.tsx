@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "./Income.styles";
-import { IncomeTracker, IncomeAdder } from "../../components";
+import { IncomeTracker, ItemAdder } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/IEMethods";
 
@@ -38,7 +38,7 @@ const Income: React.FC = () => {
     >
       <AnimatePresence>
         {displayAdder && (
-          <IncomeAdder
+          <ItemAdder
             setDisplayAdder={setDisplayAdder}
             toggleChange={toggleChange}
           />
