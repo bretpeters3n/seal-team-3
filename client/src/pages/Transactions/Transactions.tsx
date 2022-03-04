@@ -48,6 +48,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
             <TransactionItemAdder
               setDisplayAdder={setDisplayAdder}
               toggleRerender={toggleRerender}
+              pageType={pageType}
             />
           )}
         </AnimatePresence>

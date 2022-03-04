@@ -17,6 +17,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
+import { TransactionType } from "../../constants";
 
 const schema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
@@ -31,22 +32,19 @@ const schema = yup.object().shape({
 interface FormInputs {
   title: string;
   amount: number;
-  first_name?: string;
-  last_name?: string;
 }
 
 interface TransactionAdder {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
+  pageType: TransactionType;
 }
 
 const IncomeAdder: React.FC<TransactionAdder> = ({
   setDisplayAdder,
   toggleRerender,
+  pageType,
 }) => {
-  // Grabs the path name from the browser
-  const pathName = window.location.pathname;
-
   const {
     register,
     handleSubmit,
@@ -57,11 +55,7 @@ const IncomeAdder: React.FC<TransactionAdder> = ({
   });
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    data.first_name = "test firstName";
-    data.last_name = "test lastName";
-
-    // API Call to add the new Income Data to DB
-    addItem(data, pathName.includes("/expense") ? "expense" : "income");
+    addItem(data, pageType === "expense" ? "expense" : "income");
     toggleRerender();
     reset();
   };
@@ -75,7 +69,7 @@ const IncomeAdder: React.FC<TransactionAdder> = ({
     >
       <TitleContainer>
         <Title>
-          Add your {`${pathName.includes("expense") ? "Expense" : "Income"}`}
+          Add your {`${pageType === "expense" ? "Expense" : "Income"}`}
         </Title>
         <Button onClick={() => setDisplayAdder(false)}>
           <MdOutlineCancel size="2rem" />
@@ -105,7 +99,7 @@ const IncomeAdder: React.FC<TransactionAdder> = ({
         </InputContainer>
 
         <FormButton type="submit">
-          Add {`${pathName.includes("expense") ? "Expense" : "Income"}`}
+          Add {`${pageType === "expense" ? "Expense" : "Income"}`}
         </FormButton>
       </TransactionForm>
     </Container>
