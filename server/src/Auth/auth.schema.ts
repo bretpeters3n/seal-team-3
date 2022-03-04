@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-export const SignUpSchema = new mongoose.Schema({
+export const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   first_name: { type: String, required: true },
@@ -8,7 +8,8 @@ export const SignUpSchema = new mongoose.Schema({
   date_created: String,
 });
 
-export const LogInSchema = new mongoose.Schema({
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-});
+UserSchema.methods.toJSON = function () {
+  let userObject = this.toObject();
+  delete userObject.password;
+  return userObject;
+};
