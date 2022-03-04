@@ -11,7 +11,7 @@ import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { deleteItem } from "../../API/TransactionMethods";
 import { TransactionType } from "../../constants";
 
-interface TransactionItem {
+interface Transaction {
   id: string;
   title: string;
   amount: number;
@@ -19,7 +19,7 @@ interface TransactionItem {
   pageType: TransactionType;
 }
 
-const IncomeItem: React.FC<TransactionItem> = ({
+const TransactionItem: React.FC<Transaction> = ({
   id,
   title,
   amount,
@@ -70,4 +70,4 @@ const IncomeItem: React.FC<TransactionItem> = ({
   );
 };
 
-export default IncomeItem;
+export default TransactionItem;

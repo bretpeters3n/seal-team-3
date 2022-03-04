@@ -40,7 +40,7 @@ interface TransactionAdder {
   pageType: TransactionType;
 }
 
-const IncomeAdder: React.FC<TransactionAdder> = ({
+const TransactionItemAdder: React.FC<TransactionAdder> = ({
   setDisplayAdder,
   toggleRerender,
   pageType,
@@ -106,4 +106,4 @@ const IncomeAdder: React.FC<TransactionAdder> = ({
   );
 };
 
-export default IncomeAdder;
+export default TransactionItemAdder;
