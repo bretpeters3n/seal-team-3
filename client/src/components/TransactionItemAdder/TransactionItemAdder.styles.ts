@@ -32,7 +32,7 @@ export const Button = styled.button`
   }
 `;
 
-export const IncomeForm = styled.form`
+export const TransactionForm = styled.form`
   padding: 1em;
 `;
 
@@ -44,9 +44,15 @@ export const InputContainer = styled.div`
 
 export const InputGroup = styled.div<InputBoxModifier>`
   flex: ${(props) => (props.long ? "2" : "1")};
+  padding-bottom: 1em;
+  position: relative;
 `;
 
-export const Label = styled.h4``;
+export const Label = styled.div`
+  display: flex;
+  font-weight: 700;
+  gap: 0.5em;
+`;
 
 export const Input = styled.input`
   font-size: 1rem;
@@ -63,6 +69,13 @@ export const Input = styled.input`
     box-shadow: 0 0 15px rgba(211, 174, 139, 1);
     border-radius: 3px;
   }
+`;
+
+export const ErrorContainer = styled.div`
+  color: red;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 0;
 `;
 
 export const FormButton = styled.button`

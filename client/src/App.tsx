@@ -5,8 +5,7 @@ import {
   Login,
   Signup,
   Home,
-  Income,
-  Expenses,
+  Transactions,
   Combined,
   Budget,
   ErrorPage,
@@ -28,9 +27,15 @@ function App() {
               <Route path="/" element={<Home />} />
               {/* USING NESTED ROUTES  */}
               <Route path="budget" element={<Budget />}>
-                <Route index element={<Income />} />
-                <Route path="income" element={<Income />} />
-                <Route path="expenses" element={<Expenses />} />
+                <Route index element={<Transactions pageType="income" />} />
+                <Route
+                  path="income"
+                  element={<Transactions pageType="income" />}
+                />
+                <Route
+                  path="expenses"
+                  element={<Transactions pageType="expense" />}
+                />
                 <Route path="combined" element={<Combined />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>

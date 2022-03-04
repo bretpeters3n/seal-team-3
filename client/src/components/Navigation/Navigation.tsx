@@ -14,12 +14,7 @@ import logo from "../../assets/budgety_small_logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCancelCircle } from "react-icons/im";
 import { AiOutlineHome } from "react-icons/ai";
-import {
-  MdOutlineAttachMoney,
-  MdOutlineMoneyOffCsred,
-  MdOutlineEventNote,
-} from "react-icons/md";
-import { FaRegHandshake } from "react-icons/fa";
+import { MdOutlineEventNote } from "react-icons/md";
 import { BiLogOut, BiLogIn } from "react-icons/bi";
 import { HiOutlineUserAdd } from "react-icons/hi";
 

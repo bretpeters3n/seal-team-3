@@ -5,6 +5,10 @@ interface ButtonProps {
   blueHover?: boolean;
 }
 
+interface StyleProps {
+  textColor: string;
+}
+
 export const Container = styled(motion.div)`
   display: flex;
 `;
@@ -26,8 +30,8 @@ export const ItemName = styled.h3`
   font-weight: 400;
 `;
 
-export const ItemAmount = styled.h3`
-  color: #25a244;
+export const ItemAmount = styled.h3<StyleProps>`
+  color: ${(props) => props.textColor};
 `;
 
 export const ItemOptionsContainer = styled(motion.div)`

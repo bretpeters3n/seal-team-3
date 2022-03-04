@@ -6,30 +6,33 @@ import {
   ItemOptionsContainer,
   ItemContainer,
   ItemOption,
-} from "./ExpenseItem.styles";
+} from "./TransactionItem.styles";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
+import { deleteItem } from "../../API/TransactionMethods";
+import { TransactionType } from "../../constants";
 
-interface ExpenseDataProps {
-  id: number;
+interface Transaction {
+  id: string;
   title: string;
   amount: number;
-  deleteItem: (targetId: number) => void;
+  toggleRerender: () => void;
+  pageType: TransactionType;
 }
 
-const ExpenseItem: React.FC<ExpenseDataProps> = ({
+const TransactionItem: React.FC<Transaction> = ({
   id,
   title,
   amount,
-  deleteItem,
+  toggleRerender,
+  pageType,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
 
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
-  const handleEdit = () => {};
-
-  const handleDelete = (id: number) => {
-    deleteItem(id);
+  const handleDelete = () => {
+    deleteItem(id, pageType);
+    toggleRerender();
   };
 
   return (
@@ -43,7 +46,9 @@ const ExpenseItem: React.FC<ExpenseDataProps> = ({
     >
       <ItemContainer onClick={toggleItemOptions}>
         <ItemName>{title}</ItemName>
-        <ItemAmount>{`$ ${amount.toFixed(2)}`}</ItemAmount>
+        <ItemAmount
+          textColor={pageType === "income" ? "#25a244" : "#ff595e"}
+        >{`$ ${amount.toFixed(2)}`}</ItemAmount>
       </ItemContainer>
       {/* Item Options slides out on Click of each item */}
       {itemOptions && (
@@ -53,10 +58,10 @@ const ExpenseItem: React.FC<ExpenseDataProps> = ({
           transition={{ duration: 0.1 }}
           exit={{ x: 20, opacity: 0 }}
         >
-          <ItemOption blueHover onClick={handleEdit}>
+          <ItemOption blueHover>
             <RiEditLine size="1.5rem" />
           </ItemOption>
-          <ItemOption onClick={() => handleDelete(id)}>
+          <ItemOption onClick={handleDelete}>
             <RiDeleteBin6Line size="1.5rem" />
           </ItemOption>
         </ItemOptionsContainer>
@@ -65,4 +70,4 @@ const ExpenseItem: React.FC<ExpenseDataProps> = ({
   );
 };
 
-export default ExpenseItem;
+export default TransactionItem;
