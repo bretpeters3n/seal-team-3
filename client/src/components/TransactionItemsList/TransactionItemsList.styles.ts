@@ -5,7 +5,7 @@ export const Container = styled.div`
   margin-bottom: 1em;
 `;
 
-export const IncomeContainer = styled.div`
+export const TransactionsContainer = styled.div`
   width: 95%;
   margin: 0 auto;
   margin-top: 1em;

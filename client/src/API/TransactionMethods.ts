@@ -1,8 +1,8 @@
 import axios from "axios";
-import { IncomeExpenseTransferData, URL, TransactionType } from "../constants";
+import { TransactionTransferData, URL, TransactionType } from "../constants";
 
 export const addItem = async (
-  data: IncomeExpenseTransferData,
+  data: TransactionTransferData,
   type: TransactionType
 ) => {
   try {
@@ -13,8 +13,6 @@ export const addItem = async (
       {
         title: data.title,
         amount: data.amount,
-        first_name: data.first_name,
-        last_name: data.last_name,
       }
     );
   } catch (err: any) {

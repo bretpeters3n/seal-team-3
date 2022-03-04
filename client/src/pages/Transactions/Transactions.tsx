@@ -7,11 +7,11 @@ import { ItemData } from "../../constants";
 
 const PathContext = createContext<string>("");
 
-interface TransactionProps {
+interface Transaction {
   pageType: "income" | "expense";
 }
 
-const Income: React.FC<TransactionProps> = ({ pageType }) => {
+const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
   const [rerender, setRerender] = useState<boolean>(false);
   const [filteredIncomeItems, setFilteredIncomeItems] = useState<
@@ -64,4 +64,4 @@ const Income: React.FC<TransactionProps> = ({ pageType }) => {
   );
 };
 
-export default Income;
+export default Transactions;

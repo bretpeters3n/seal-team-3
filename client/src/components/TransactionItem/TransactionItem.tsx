@@ -11,7 +11,7 @@ import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { deleteItem } from "../../API/TransactionMethods";
 import { TransactionType } from "../../constants";
 
-interface ItemProps {
+interface TransactionItem {
   id: string;
   title: string;
   amount: number;
@@ -19,7 +19,7 @@ interface ItemProps {
   pageType: TransactionType;
 }
 
-const IncomeItem: React.FC<ItemProps> = ({
+const IncomeItem: React.FC<TransactionItem> = ({
   id,
   title,
   amount,

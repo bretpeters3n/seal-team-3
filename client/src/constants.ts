@@ -10,11 +10,9 @@ export interface UserInfoData extends LoginData {
   lastName: string;
 }
 
-export interface IncomeExpenseTransferData {
+export interface TransactionTransferData {
   title: string;
   amount: number;
-  first_name?: string | undefined;
-  last_name?: string | undefined;
 }
 
 export type TransactionType = "income" | "expense";

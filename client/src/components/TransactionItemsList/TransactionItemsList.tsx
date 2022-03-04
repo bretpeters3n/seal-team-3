@@ -3,7 +3,7 @@ import TransactionItem from "../TransactionItem/TransactionItem";
 import { BsPlusCircle } from "react-icons/bs";
 import {
   Container,
-  IncomeContainer,
+  TransactionsContainer,
   TitleContainer,
   Title,
   Button,
@@ -11,14 +11,14 @@ import {
 import { AnimatePresence } from "framer-motion";
 import { ItemData, TransactionType } from "../../constants";
 
-interface ItemListProps {
+interface TransactionTracker {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   filteredData: ItemData[];
   toggleRerender: () => void;
   pageType: TransactionType;
 }
 
-const IncomeTracker: React.FC<ItemListProps> = ({
+const TransactionItemsList: React.FC<TransactionTracker> = ({
   setDisplayAdder,
   filteredData,
   toggleRerender,
@@ -26,7 +26,7 @@ const IncomeTracker: React.FC<ItemListProps> = ({
 }) => {
   return (
     <Container>
-      <IncomeContainer>
+      <TransactionsContainer>
         <TitleContainer>
           <Title>
             Monthly {`${pageType.includes("expense") ? "Expense" : "Income"}`}
@@ -47,9 +47,9 @@ const IncomeTracker: React.FC<ItemListProps> = ({
             />
           ))}
         </AnimatePresence>
-      </IncomeContainer>
+      </TransactionsContainer>
     </Container>
   );
 };
 
-export default IncomeTracker;
+export default TransactionItemsList;

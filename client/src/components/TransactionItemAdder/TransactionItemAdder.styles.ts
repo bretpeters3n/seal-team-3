@@ -32,7 +32,7 @@ export const Button = styled.button`
   }
 `;
 
-export const IncomeForm = styled.form`
+export const TransactionForm = styled.form`
   padding: 1em;
 `;
 

@@ -4,7 +4,7 @@ import {
   TitleContainer,
   Title,
   Button,
-  IncomeForm,
+  TransactionForm,
   InputContainer,
   InputGroup,
   Label,
@@ -35,12 +35,12 @@ interface FormInputs {
   last_name?: string;
 }
 
-interface AdderProps {
+interface TransactionAdder {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
 }
 
-const IncomeAdder: React.FC<AdderProps> = ({
+const IncomeAdder: React.FC<TransactionAdder> = ({
   setDisplayAdder,
   toggleRerender,
 }) => {
@@ -82,7 +82,7 @@ const IncomeAdder: React.FC<AdderProps> = ({
         </Button>
       </TitleContainer>
 
-      <IncomeForm onSubmit={handleSubmit(onSubmit)}>
+      <TransactionForm onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
           <InputGroup long>
             <Label>Title</Label>
@@ -107,7 +107,7 @@ const IncomeAdder: React.FC<AdderProps> = ({
         <FormButton type="submit">
           Add {`${pathName.includes("expense") ? "Expense" : "Income"}`}
         </FormButton>
-      </IncomeForm>
+      </TransactionForm>
     </Container>
   );
 };
