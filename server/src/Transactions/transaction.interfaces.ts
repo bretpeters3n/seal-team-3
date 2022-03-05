@@ -1,16 +1,16 @@
 import { Document } from 'mongoose';
+import { MongoDBID } from 'src/shared/types';
 
 export enum IncomeOrExpense {
-  EXPENSE = 'Expense',
-  INCOME = 'Income',
+  EXPENSE = 'expense',
+  INCOME = 'income',
 }
 
-export interface IncomesAndExpenseInterface extends Document {
+export interface TransactionInterface extends Document {
   readonly title: string;
   readonly amount: number;
-  readonly first_name: string;
-  readonly last_name: string;
   type: IncomeOrExpense;
   date_posted: string;
   last_date_edited: String;
+  user_id: MongoDBID;
 }

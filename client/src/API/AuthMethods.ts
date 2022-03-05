@@ -9,8 +9,7 @@ export const signUp = async (userInfo: UserInfoData) => {
       first_name: userInfo.firstName,
       last_name: userInfo.lastName,
     });
-  } catch (e: any) {
-    // Will need to research more on how to better type the error
+  } catch (e) {
     if (e.response.status > 399) {
       alert(e.response.data.message[0]);
     }
@@ -19,13 +18,32 @@ export const signUp = async (userInfo: UserInfoData) => {
 
 export const logIn = async (userInfo: LoginData) => {
   try {
-    await axios.post(`${URL}/auth/logIn`, {
+    const response = await axios.post(`${URL}/auth/logIn`, {
       email: userInfo.email,
       password: userInfo.password,
-    });
-  } catch (e: any) {
+    },
+      //  This needs to be included in all of our other methods with axios.
+      // { withCredentials: true, headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` } }
+    );
+    sessionStorage.setItem('authToken', response.data.accessToken);
+    if (response) {
+      // write code to automatically push user to next page.
+      // history.push('/');
+    }
+  } catch (e) {
     if (e.response.status > 399) {
       alert(e.response.data.message[0]);
     }
   }
+
+  // A signout function that can be used to send user back to log-in page.
+// const signOut = () => {
+//   sessionStorage.setItem('authToken', '');
+//   history.push('/');
+// };
+  
+  // A function to use 'just in case' a user doesn't have an auth token.
+// if (!sessionStorage.getItem('authToken')) {
+//   history.push('/');
+// }
 };

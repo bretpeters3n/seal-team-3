@@ -1,14 +1,10 @@
 import { Document } from 'mongoose';
 
-export interface SignUpInterface extends Document {
+//interface, what structure you want the data to be in.
+export interface User extends Document {
   readonly email: string;
-  readonly password: string;
+  password: string;
   readonly first_name: string;
   readonly last_name: string;
-  date_created: string;
-}
-
-export interface LogInInterface extends Document {
-  readonly email: string;
-  readonly password: string;
+  account_created: string;
 }

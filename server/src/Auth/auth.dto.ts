@@ -1,9 +1,10 @@
+// Data Transfer Object.  What shape you can expect data to come in at.
+
 export class SignUpDTO {
   readonly email: string;
-  readonly password: string;
+  password: string;
   readonly first_name: string;
   readonly last_name: string;
-  date_created: string;
 }
 
 export class LogInDTO {
