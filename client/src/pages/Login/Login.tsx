@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
 import logo from "../../assets/budgety_logo.png";
 import {
   Container,
@@ -14,14 +17,25 @@ import {
   Title,
 } from "./Login.styles";
 
-const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+const Loginschema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(8).max(20).required().matches(/^[A-Za-z]+$/i)
+})
 
-  const handleSubmit = (e: React.FormEvent) => {
-    // code to validate login and password
-    e.preventDefault();
-  };
+interface LoginInputs {
+  email: string;
+  password: string;
+}
+
+export default function Login() {
+
+  const { register, handleSubmit, formState: {errors} } = useForm<LoginInputs>({
+    resolver: yupResolver(Loginschema),
+  });
+  // @ts-ignore 
+  const submitForm = (data) => {};
+  
+  
 
   return (
     <Container
@@ -31,30 +45,22 @@ const Login = () => {
       exit={{ opacity: 0, y: -20 }}
     >
       <FormSection>
-        <LoginForm onSubmit={(e: React.FormEvent) => handleSubmit(e)}>
+        <LoginForm onSubmit={handleSubmit(submitForm)}>
           <Title>Login</Title>
           <InputGroup>
             <Label>Email</Label>
-            <Input
-              type="email"
-              value={email}
-              onChange={(e: React.FormEvent) =>
-                setEmail((e.target as HTMLInputElement).value)
-              }
-            />
+            <Input type="text" {...register("email")}/>
+            {errors.email && errors.email?.message && (
+            <p> {errors.email.message}</p>)}
           </InputGroup>
           <InputGroup>
             <Label>Password</Label>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e: React.FormEvent) =>
-                setPassword((e.target as HTMLInputElement).value)
-              }
-            />
+            <Input {...register("password")}/>
+            {errors.password && errors.password?.message && (
+            <p>{errors.password.message}</p>)}
           </InputGroup>
           <Button>Login</Button>
-          <Question to="/signup">Don&apos;t have an account? Sign Up</Question>
+          <Question to="/signup">Don&#39;t have an account? Sign up</Question>
         </LoginForm>
       </FormSection>
 
@@ -63,6 +69,4 @@ const Login = () => {
       </LogoSection>
     </Container>
   );
-};
-
-export default Login;
+}; 
