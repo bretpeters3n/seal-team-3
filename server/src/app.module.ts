@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './Auth/auth.module';
-import { ExpenseModule } from './IncomesAndExpenses/Expenses/expenses.module';
-import { IncomeModule } from './IncomesAndExpenses/Incomes/income.module';
+import { TransactionModule } from './Transactions/transaction.module';
 
 @Module({
   imports: [
@@ -10,8 +9,7 @@ import { IncomeModule } from './IncomesAndExpenses/Incomes/income.module';
       useNewUrlParser: true,
     }),
     AuthModule,
-    IncomeModule,
-    ExpenseModule,
+    TransactionModule,
   ],
 })
 export class AppModule {}
