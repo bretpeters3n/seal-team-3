@@ -17,9 +17,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
-import { TransactionType } from "../../constants";
+import { TransactionTransferData, TransactionType } from "../../constants";
 
-const schema = yup.object().shape({
+const transactionSchema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
   amount: yup
     .number()
@@ -51,10 +51,12 @@ const TransactionItemAdder: React.FC<TransactionAdder> = ({
     formState: { errors },
     reset,
   } = useForm<FormInputs>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(transactionSchema),
   });
 
-  const onSubmit: SubmitHandler<FormInputs> = (data) => {
+  const onSubmit: SubmitHandler<FormInputs> = (
+    data: TransactionTransferData
+  ): void => {
     addItem(data, pageType === "expense" ? "expense" : "income");
     toggleRerender();
     reset();

@@ -26,7 +26,7 @@ export class AuthServices {
     // If there are no users with this name, it is saved, otherwise it returns an error.
     // Password is encrypted and user is created with an origin date.
     const newUser = new this.authModel(signupDTO);
-    newUser.account_created = dateStamp();
+    newUser.accountCreated = dateStamp();
     const { password } = newUser;
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
