@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import logo from "../../assets/budgety_logo.png";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Logo,
@@ -53,10 +54,15 @@ const Signup: React.FC = () => {
     resolver: yupResolver(signUpSchema),
   });
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<SignUpFormInputs> = (
     userInfo: UserInfoData
   ): void => {
     signUp(userInfo);
+    if (sessionStorage.getItem("authToken")) {
+      navigate("/");
+    }
     reset();
   };
 

@@ -15,7 +15,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   // State to keep track of whether a user is logged in or not
-  const [user, setUser] = useState<boolean>(true);
+  const [user, setUser] = useState<boolean>(false);
 
   return (
     <div className="App">
