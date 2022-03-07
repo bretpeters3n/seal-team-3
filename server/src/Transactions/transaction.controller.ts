@@ -73,8 +73,6 @@ export class TransactionController {
     return res.status(HttpStatus.OK).json(allIncomes);
   }
 
-  //START HERE WITH TESTING FUNCTIONS. SOMETHING IS GOING ON WITH THE DATESTAMP.
-
   // Edit an income using its ID
   @Patch('/editIncome/:incomeID')
   async editIncome(

@@ -74,7 +74,7 @@ export const InputGroup = styled.div``;
 
 export const Label = styled.p`
   font-size: 1.1rem;
-  margin-bottom: 0.5em;
+  margin-top: 0.5em;
 `;
 
 export const Input = styled.input`
@@ -115,4 +115,10 @@ export const Question = styled(Link)`
   color: blue;
   text-align: center;
   font-size: 1rem;
+`;
+
+export const LoginErrorContainer = styled.div`
+  color: red;
+  font-size: 0.8rem;
+  position: absolute;
 `;

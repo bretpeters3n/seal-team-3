@@ -9,8 +9,8 @@ export const signUp = async (userInfo: UserInfoData) => {
     const response = await axios.post(`${URL}/auth/signUp`, {
       email: userInfo.email,
       password: userInfo.password,
-      first_name: userInfo.firstName,
-      last_name: userInfo.lastName,
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
     });
 
     if (response) {

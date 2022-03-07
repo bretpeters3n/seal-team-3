@@ -3,8 +3,8 @@
 export class SignUpDTO {
   readonly email: string;
   password: string;
-  readonly first_name: string;
-  readonly last_name: string;
+  readonly firstName: string;
+  readonly lastName: string;
 }
 
 export class LogInDTO {

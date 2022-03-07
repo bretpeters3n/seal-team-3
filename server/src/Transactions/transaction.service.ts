@@ -41,7 +41,6 @@ export class TransactionServices {
     return newTransaction.save();
   }
 
-  // how do we want to allow users to find specific transaction
   async getTransaction(
     userID: MongoDBID,
     transactionID: MongoDBID,
