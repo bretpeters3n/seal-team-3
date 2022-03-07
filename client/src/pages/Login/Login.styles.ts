@@ -121,5 +121,4 @@ export const LoginErrorContainer = styled.div`
   color: red;
   font-size: 0.8rem;
   position: absolute;
-  bottom: 0;
 `;
