@@ -116,3 +116,9 @@ export const Question = styled(Link)`
   text-align: center;
   font-size: 1rem;
 `;
+
+export const LoginErrorContainer = styled.div`
+  color: red;
+  font-size: 0.8rem;
+  position: absolute;
+`;

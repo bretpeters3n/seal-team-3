@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { logIn } from "../../API/AuthMethods";
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
 import logo from "../../assets/budgety_logo.png";
 import {
   Container,
@@ -12,17 +16,47 @@ import {
   LogoSection,
   FormSection,
   Title,
+  LoginErrorContainer,
 } from "./Login.styles";
+import { LoginData } from "../../constants";
 
-const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+const Loginschema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Must be a valid email")
+    .required("Please enter a valid email."),
+  password: yup
+    .string()
+    .required("Please enter a password.")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+      "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character."
+    ),
+});
 
-  const handleSubmit = (e: React.FormEvent) => {
-    // code to validate login and password
-    e.preventDefault();
+interface LoginFormInputs {
+  email: string;
+  password: string;
+}
+
+const Login: React.FC = () => {
+  const { 
+    register, 
+    handleSubmit, 
+    formState: {errors},
+    reset, 
+    } = useForm<LoginFormInputs>({
+    resolver: yupResolver(Loginschema),
+  });
+
+  const onSubmit: SubmitHandler<LoginFormInputs> = (
+    userInfo: LoginData
+  ): void => {
+    logIn(userInfo);
+    reset();
   };
-
+  
+  
   return (
     <Container
       animate={{ opacity: 1, y: 0 }}
@@ -31,30 +65,30 @@ const Login = () => {
       exit={{ opacity: 0, y: -20 }}
     >
       <FormSection>
-        <LoginForm onSubmit={(e: React.FormEvent) => handleSubmit(e)}>
+        <LoginForm onSubmit={handleSubmit(onSubmit)}>
           <Title>Login</Title>
           <InputGroup>
             <Label>Email</Label>
-            <Input
-              type="email"
-              value={email}
-              onChange={(e: React.FormEvent) =>
-                setEmail((e.target as HTMLInputElement).value)
-              }
-            />
+            <Input type="email" {...register("email")}/>
+            <LoginErrorContainer>
+              {errors.email && errors.email?.message && (
+              <p>{errors.email.message}</p>
+              )}
+            </LoginErrorContainer>
+            
           </InputGroup>
           <InputGroup>
             <Label>Password</Label>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e: React.FormEvent) =>
-                setPassword((e.target as HTMLInputElement).value)
-              }
-            />
+            <Input type="password" {...register("password")}/>
+            <LoginErrorContainer>
+              {errors.password && errors.password?.message && (
+              <p>{errors.password.message}</p>
+              )}
+            </LoginErrorContainer>
+            
           </InputGroup>
           <Button>Login</Button>
-          <Question to="/signup">Don&apos;t have an account? Sign Up</Question>
+          <Question to="/signup">Don&#39;t have an account? Sign up</Question>
         </LoginForm>
       </FormSection>
 
@@ -63,6 +97,6 @@ const Login = () => {
       </LogoSection>
     </Container>
   );
-};
+}; 
 
 export default Login;
