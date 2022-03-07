@@ -11,8 +11,6 @@ export const signUp = async (userInfo: UserInfoData) => {
     });
 
     if (response) {
-      console.log(response);
-      // if response exists - login API Call is run with the email and password given from signup form
       const newUserLoginInfo: LoginData = {
         email: userInfo.email,
         password: userInfo.password,
