@@ -52,14 +52,11 @@ const Login: React.FC = () => {
     resolver: yupResolver(LoginSchema),
   });
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = (
-    userInfo: LoginData
-  ): void => {
+  const onSubmit: SubmitHandler<LoginFormInputs> = (userInfo: LoginData) => {
     logIn(userInfo);
-
-    // Need to figure out a way that these are being conditionally run only if login is successful
-    navigate("/");
-
+    if (sessionStorage.getItem("authToken")) {
+      navigate("/");
+    }
     reset();
   };
 

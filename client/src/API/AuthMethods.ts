@@ -29,8 +29,7 @@ export const signUp = async (userInfo: UserInfoData) => {
 
 export const logIn = async (userInfo: LoginData) => {
   try {
-    const response = await axios.get(`${URL}/auth/logIn`, {
-      // PROBLEM: Seems like axios.get method does not allow user to pass HTTP Body request data
+    const response = await axios.post(`${URL}/auth/logIn`, {
       email: userInfo.email,
       password: userInfo.password,
     });
