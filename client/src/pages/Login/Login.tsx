@@ -1,5 +1,6 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { logIn } from "../../API/AuthMethods";
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import logo from "../../assets/budgety_logo.png";
@@ -15,28 +16,47 @@ import {
   LogoSection,
   FormSection,
   Title,
+  LoginErrorContainer,
 } from "./Login.styles";
+import { LoginData } from "../../constants";
 
 const Loginschema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().min(8).max(20).required().matches(/^[A-Za-z]+$/i)
-})
+  email: yup
+    .string()
+    .email("Must be a valid email")
+    .required("Please enter a valid email."),
+  password: yup
+    .string()
+    .required("Please enter a password.")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+      "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character."
+    ),
+});
 
-interface LoginInputs {
+interface LoginFormInputs {
   email: string;
   password: string;
 }
 
-export default function Login() {
-
-  const { register, handleSubmit, formState: {errors} } = useForm<LoginInputs>({
+const Login: React.FC = () => {
+  const { 
+    register, 
+    handleSubmit, 
+    formState: {errors},
+    reset, 
+    } = useForm<LoginFormInputs>({
     resolver: yupResolver(Loginschema),
   });
-  // @ts-ignore 
-  const submitForm = (data) => {};
-  
-  
 
+  const onSubmit: SubmitHandler<LoginFormInputs> = (
+    userInfo: LoginData
+  ): void => {
+    logIn(userInfo);
+    reset();
+  };
+  
+  
   return (
     <Container
       animate={{ opacity: 1, y: 0 }}
@@ -45,19 +65,27 @@ export default function Login() {
       exit={{ opacity: 0, y: -20 }}
     >
       <FormSection>
-        <LoginForm onSubmit={handleSubmit(submitForm)}>
+        <LoginForm onSubmit={handleSubmit(onSubmit)}>
           <Title>Login</Title>
           <InputGroup>
             <Label>Email</Label>
-            <Input type="text" {...register("email")}/>
-            {errors.email && errors.email?.message && (
-            <p> {errors.email.message}</p>)}
+            <Input type="email" {...register("email")}/>
+            <LoginErrorContainer>
+              {errors.email && errors.email?.message && (
+              <p>{errors.email.message}</p>
+              )}
+            </LoginErrorContainer>
+            
           </InputGroup>
           <InputGroup>
             <Label>Password</Label>
-            <Input {...register("password")}/>
-            {errors.password && errors.password?.message && (
-            <p>{errors.password.message}</p>)}
+            <Input type="password" {...register("password")}/>
+            <LoginErrorContainer>
+              {errors.password && errors.password?.message && (
+              <p>{errors.password.message}</p>
+              )}
+            </LoginErrorContainer>
+            
           </InputGroup>
           <Button>Login</Button>
           <Question to="/signup">Don&#39;t have an account? Sign up</Question>
@@ -70,3 +98,5 @@ export default function Login() {
     </Container>
   );
 }; 
+
+export default Login;
