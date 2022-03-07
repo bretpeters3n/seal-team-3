@@ -1,9 +1,4 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { logIn } from "../../API/AuthMethods";
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-import logo from "../../assets/budgety_logo.png";
 import {
   Container,
   Logo,
@@ -18,9 +13,15 @@ import {
   Title,
   LoginErrorContainer,
 } from "./Login.styles";
+import logo from "../../assets/budgety_logo.png";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { logIn } from "../../API/AuthMethods";
 import { LoginData } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
-const Loginschema = yup.object().shape({
+const LoginSchema = yup.object().shape({
   email: yup
     .string()
     .email("Must be a valid email")
@@ -40,23 +41,28 @@ interface LoginFormInputs {
 }
 
 const Login: React.FC = () => {
-  const { 
-    register, 
-    handleSubmit, 
-    formState: {errors},
-    reset, 
-    } = useForm<LoginFormInputs>({
-    resolver: yupResolver(Loginschema),
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<LoginFormInputs>({
+    resolver: yupResolver(LoginSchema),
   });
 
   const onSubmit: SubmitHandler<LoginFormInputs> = (
     userInfo: LoginData
   ): void => {
     logIn(userInfo);
+
+    // Need to figure out a way that these are being conditionally run only if login is successful
+    navigate("/");
+
     reset();
   };
-  
-  
+
   return (
     <Container
       animate={{ opacity: 1, y: 0 }}
@@ -69,23 +75,21 @@ const Login: React.FC = () => {
           <Title>Login</Title>
           <InputGroup>
             <Label>Email</Label>
-            <Input type="email" {...register("email")}/>
+            <Input type="email" {...register("email")} />
             <LoginErrorContainer>
               {errors.email && errors.email?.message && (
-              <p>{errors.email.message}</p>
+                <p>{errors.email.message}</p>
               )}
             </LoginErrorContainer>
-            
           </InputGroup>
           <InputGroup>
             <Label>Password</Label>
-            <Input type="password" {...register("password")}/>
+            <Input type="password" {...register("password")} />
             <LoginErrorContainer>
               {errors.password && errors.password?.message && (
-              <p>{errors.password.message}</p>
+                <p>{errors.password.message}</p>
               )}
             </LoginErrorContainer>
-            
           </InputGroup>
           <Button>Login</Button>
           <Question to="/signup">Don&#39;t have an account? Sign up</Question>
@@ -97,6 +101,6 @@ const Login: React.FC = () => {
       </LogoSection>
     </Container>
   );
-}; 
+};
 
 export default Login;

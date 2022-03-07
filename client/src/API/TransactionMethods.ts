@@ -21,7 +21,9 @@ export const addItem = async (
     );
   } catch (e) {
     const err = e as AxiosError;
-    alert(err.response?.data.message);
+    if (err.response?.data?.statusCode > 401) {
+      alert(err.response?.data?.message);
+    }
   }
 };
 
@@ -41,7 +43,9 @@ export const getAllItems = async (type: TransactionType) => {
     return data;
   } catch (e) {
     const err = e as AxiosError;
-    alert(err.response?.data.message);
+    if (err.response?.data?.statusCode > 401) {
+      alert(err.response?.data?.message);
+    }
   }
 };
 
@@ -60,6 +64,8 @@ export const deleteItem = async (itemId: string, type: TransactionType) => {
     );
   } catch (e) {
     const err = e as AxiosError;
-    alert(err.response?.data.message);
+    if (err.response?.data?.statusCode > 401) {
+      alert(err.response?.data?.message);
+    }
   }
 };
