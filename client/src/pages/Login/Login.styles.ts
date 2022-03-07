@@ -74,7 +74,7 @@ export const InputGroup = styled.div``;
 
 export const Label = styled.p`
   font-size: 1.1rem;
-  margin-bottom: 0.5em;
+  margin-top: 0.5em;
 `;
 
 export const Input = styled.input`

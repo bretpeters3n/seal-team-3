@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import { signUp } from "../../API/AuthMethods";
+import { useForm, SubmitHandler } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import logo from "../../assets/budgety_logo.png";
 import {
   Container,
@@ -12,17 +16,48 @@ import {
   Title,
   LogoSection,
   FormSection,
+  SignUpErrorContainer,
 } from "./Signup.styles";
+import { UserInfoData } from "../../constants";
 
-const Signup = () => {
-  const [firstPassword, setFirstPassword] = useState<string>("");
-  const [secondPassword, setSecondPassword] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
+const signUpSchema = yup.object().shape({
+  firstName: yup.string().required("Please enter your first name."),
+  lastName: yup.string().required("Please enter your last name."),
+  email: yup
+    .string()
+    .email("Must be a valid email.")
+    .required("Please enter a valid email address."),
+  password: yup
+    .string()
+    .required("Please enter a password.")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+      "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character."
+    ),
+});
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+interface SignUpFormInputs {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+const Signup: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<SignUpFormInputs>({
+    resolver: yupResolver(signUpSchema),
+  });
+
+  const onSubmit: SubmitHandler<SignUpFormInputs> = (
+    userInfo: UserInfoData
+  ): void => {
+    signUp(userInfo);
+    reset();
   };
 
   return (
@@ -33,57 +68,43 @@ const Signup = () => {
       exit={{ opacity: 0, y: -20 }}
     >
       <FormSection>
-        <LoginForm onSubmit={(e: React.FormEvent) => handleSubmit(e)}>
+        <LoginForm onSubmit={handleSubmit(onSubmit)}>
           <Title>Create an account</Title>
           <InputGroup>
             <Label>First Name</Label>
-            <Input
-              type="text"
-              value={firstName}
-              onChange={(e: React.FormEvent) =>
-                setFirstName((e.target as HTMLInputElement).value)
-              }
-            />
+            <Input {...register("firstName")} />
+            <SignUpErrorContainer>
+              {errors.firstName && errors.firstName?.message && (
+                <p>{errors.firstName.message}</p>
+              )}
+            </SignUpErrorContainer>
           </InputGroup>
           <InputGroup>
             <Label>Last Name</Label>
-            <Input
-              type="text"
-              value={lastName}
-              onChange={(e: React.FormEvent) =>
-                setLastName((e.target as HTMLInputElement).value)
-              }
-            />
+            <Input {...register("lastName")} />
+            <SignUpErrorContainer>
+              {errors.lastName && errors.lastName?.message && (
+                <p>{errors.lastName.message}</p>
+              )}
+            </SignUpErrorContainer>
           </InputGroup>
           <InputGroup>
             <Label>Email</Label>
-            <Input
-              type="email"
-              value={email}
-              onChange={(e: React.FormEvent) =>
-                setEmail((e.target as HTMLInputElement).value)
-              }
-            />
+            <Input {...register("email")} />
+            <SignUpErrorContainer>
+              {errors.email && errors.email?.message && (
+                <p>{errors.email.message}</p>
+              )}
+            </SignUpErrorContainer>
           </InputGroup>
           <InputGroup>
             <Label>Password</Label>
-            <Input
-              type="password"
-              value={firstPassword}
-              onChange={(e: React.FormEvent) =>
-                setFirstPassword((e.target as HTMLInputElement).value)
-              }
-            />
-          </InputGroup>
-          <InputGroup>
-            <Label>Confirm Password</Label>
-            <Input
-              type="password"
-              value={secondPassword}
-              onChange={(e: React.FormEvent) =>
-                setSecondPassword((e.target as HTMLInputElement).value)
-              }
-            />
+            <Input type="password" {...register("password")} />
+            <SignUpErrorContainer>
+              {errors.password && errors.password?.message && (
+                <p>{errors.password.message}</p>
+              )}
+            </SignUpErrorContainer>
           </InputGroup>
           <Button type="submit">Register</Button>
           <Question to="/login">Already have an account?</Question>
