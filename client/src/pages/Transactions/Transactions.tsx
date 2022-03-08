@@ -23,10 +23,6 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
 
   const toggleRerender = () => setRerender(!rerender);
 
-  useEffect(() => {
-    retrieveData();
-  }, [rerender]);
-
   const retrieveData = async () => {
     const data = await getAllItems(pageType);
 
@@ -34,6 +30,10 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
       ? setFilteredIncomeItems(data)
       : setFilteredExpenseItems(data);
   };
+
+  useEffect(() => {
+    retrieveData();
+  }, [rerender]);
 
   return (
     <PathContext.Provider value={pageType}>
