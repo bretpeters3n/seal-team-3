@@ -67,7 +67,7 @@ export class TransactionController {
   @Get('/allIncomes')
   async getAllIncomes(@GetUser() user: User, @Res() res: Response) {
     const allIncomes = await this.transactionServices.getAllTransactions(
-      user._id,
+      user,
       IncomeOrExpense.INCOME
     );
     return res.status(HttpStatus.OK).json(allIncomes);
