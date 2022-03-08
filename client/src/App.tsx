@@ -17,7 +17,6 @@ function App() {
   // State to keep track of whether a user is logged in or not
   const [user, setUser] = useState<boolean>(false);
 
-  // Bugs: The user is starting outside of the login/signup page.
   return (
     <div className="App">
       <Router>
@@ -44,8 +43,8 @@ function App() {
           ) : (
             <>
               <Route path="/" element={<Welcome />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login setUser={setUser} />} />
+              <Route path="/signup" element={<Signup setUser={setUser} />} />
             </>
           )}
         </Routes>

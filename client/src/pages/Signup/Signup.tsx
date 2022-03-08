@@ -44,7 +44,11 @@ interface SignUpFormInputs {
   password: string;
 }
 
-const Signup: React.FC = () => {
+interface SignInProps {
+  setUser: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Signup: React.FC<SignInProps> = ({ setUser }) => {
   const {
     register,
     handleSubmit,
@@ -59,10 +63,7 @@ const Signup: React.FC = () => {
   const onSubmit: SubmitHandler<SignUpFormInputs> = (
     userInfo: UserInfoData
   ): void => {
-    signUp(userInfo);
-    if (sessionStorage.getItem("authToken")) {
-      navigate("/");
-    }
+    signUp(userInfo, navigate, setUser);
     reset();
   };
 

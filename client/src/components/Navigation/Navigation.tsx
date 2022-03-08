@@ -17,6 +17,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineEventNote } from "react-icons/md";
 import { BiLogOut, BiLogIn } from "react-icons/bi";
 import { HiOutlineUserAdd } from "react-icons/hi";
+import { logOut } from "../../API/AuthMethods";
 
 // VARIANTS FOR SIDEBAR FRAMER MOTION
 const animationVariants = {
@@ -118,6 +119,7 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
                 onClick={() => {
                   setUser(!user);
                   setSidebar(false);
+                  logOut();
                 }}
               >
                 <BiLogOut size="2rem" />

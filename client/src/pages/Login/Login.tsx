@@ -40,7 +40,11 @@ interface LoginFormInputs {
   password: string;
 }
 
-const Login: React.FC = () => {
+interface LogInProps {
+  setUser: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Login: React.FC<LogInProps> = ({ setUser }) => {
   const navigate = useNavigate();
 
   const {
@@ -53,10 +57,7 @@ const Login: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<LoginFormInputs> = (userInfo: LoginData) => {
-    logIn(userInfo);
-    if (sessionStorage.getItem("authToken")) {
-      navigate("/");
-    }
+    logIn(userInfo, navigate, setUser);
     reset();
   };
 
