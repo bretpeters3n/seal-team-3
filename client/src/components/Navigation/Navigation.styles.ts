@@ -101,6 +101,11 @@ export const NavIcon = styled(NavLink)`
     background: black;
     color: white;
   }
+
+  &#no-style {
+    background: none;
+    color: black;
+  }
   @media (min-width: 800px) {
     margin-left: 1em;
   }

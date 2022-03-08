@@ -14,21 +14,18 @@ interface Transaction {
 const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
   const [rerender, setRerender] = useState<boolean>(false);
-  const [filteredIncomeItems, setFilteredIncomeItems] = useState<
-    Array<ItemData>
-  >([]);
-  const [filteredExpenseItems, setFilteredExpenseItems] = useState<
-    Array<ItemData>
-  >([]);
+
+  const [incomeItems, setIncomeItems] = useState<Array<ItemData>>([]);
+  const [expenseItems, setExpenseItems] = useState<Array<ItemData>>([]);
 
   const toggleRerender = () => setRerender(!rerender);
 
   const retrieveData = async () => {
-    const data = await getAllItems(pageType);
+    const expenseData = await getAllItems("expense");
+    const incomeData = await getAllItems("income");
 
-    pageType === "income"
-      ? setFilteredIncomeItems(data)
-      : setFilteredExpenseItems(data);
+    setIncomeItems(incomeData);
+    setExpenseItems(expenseData);
   };
 
   useEffect(() => {
@@ -54,9 +51,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
         </AnimatePresence>
         <TransactionItemsList
           setDisplayAdder={setDisplayAdder}
-          filteredData={
-            pageType === "income" ? filteredIncomeItems : filteredExpenseItems
-          }
+          filteredData={pageType === "income" ? incomeItems : expenseItems}
           toggleRerender={toggleRerender}
           pageType={pageType}
         />

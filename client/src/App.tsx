@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigation } from "./components";
 import {
   Welcome,
@@ -14,8 +14,13 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
-  // State to keep track of whether a user is logged in or not
   const [user, setUser] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      setUser(true);
+    }
+  }, []);
 
   return (
     <div className="App">

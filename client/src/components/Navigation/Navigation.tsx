@@ -61,9 +61,11 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
               <NavIcon
                 to="/"
                 onClick={() => {
-                  setUser(!user);
+                  setUser(false);
                   setSidebar(false);
+                  logOut();
                 }}
+                id="no-style"
               >
                 <BiLogOut size="1.5rem" />
               </NavIcon>
@@ -117,10 +119,11 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
               <NavIcon
                 to="/"
                 onClick={() => {
-                  setUser(!user);
+                  setUser(false);
                   setSidebar(false);
                   logOut();
                 }}
+                id="no-style"
               >
                 <BiLogOut size="2rem" />
                 <h2>Logout</h2>
