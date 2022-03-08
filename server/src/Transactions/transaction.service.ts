@@ -57,16 +57,18 @@ export class TransactionServices {
   }
 
   async getAllTransactions(
-    userID: MongoDBID,
+    user: User,
     transactionType: IncomeOrExpense
   ): Promise<TransactionInterface[]> {
-    const foundUser = this.userModel.findById(userID).exec();
-    if (foundUser) {
-      const allTransactions =
-        transactionType === 'income'
-          ? this.incomeModel.find().exec()
-          : this.expenseModel.find().exec();
-      return allTransactions;
+    const allTransactions =
+      transactionType === 'income'
+        ? await this.incomeModel.find().exec()
+        : await this.expenseModel.find().exec();
+    if (allTransactions) {
+      const currentUserTransactions = allTransactions.filter(
+        (transaction) => transaction.user_id === user.id
+      );
+      return currentUserTransactions;
     }
     throw new UnauthorizedException('User must own transactions');
   }
