@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { device } from "../../utils/Breakpoints";
 
@@ -7,6 +7,7 @@ import { device } from "../../utils/Breakpoints";
 interface StyledProps {
   active?: string;
   displayOption?: string;
+  activeClassName?: any;
 }
 
 export const Container = styled.div`
@@ -87,18 +88,19 @@ export const SidebarWrapper = styled.div`
   }
 `;
 
-export const NavIcon = styled(Link)<StyledProps>`
+export const NavIcon = styled(NavLink)`
   margin-left: 2em;
   display: flex;
   align-items: center;
   gap: 1em;
-  background-color: ${(props) =>
-    props.active === "yes" ? "black" : "transparent"};
-  color: ${(props) => (props.active === "yes" ? "white" : "black")};
   border-radius: 50px;
   padding: 0.5em 1em;
   font-size: 0.8rem;
 
+  &.active {
+    background: black;
+    color: white;
+  }
   @media (min-width: 800px) {
     margin-left: 1em;
   }
