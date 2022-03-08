@@ -1,14 +1,23 @@
 import axios, { AxiosError } from "axios";
+import React from "react";
+import { NavigateFunction } from "react-router";
 import { LoginData, UserInfoData, URL } from "../constants";
 
-export const logIn = async (userInfo: LoginData) => {
+export const logIn = async (
+  userInfo: LoginData,
+  navigate: NavigateFunction,
+  setUser: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     const response = await axios.post(`${URL}/auth/logIn`, {
       email: userInfo.email,
       password: userInfo.password,
     });
     if (response) {
-      sessionStorage.setItem("authToken", response.data.accessToken);
+      localStorage.setItem("authToken", response.data.accessToken);
+      sessionStorage.setItem("userID", response.data.userID);
+      navigate("/");
+      setUser(true);
     }
   } catch (e) {
     const err = e as AxiosError;
@@ -20,7 +29,7 @@ export const logIn = async (userInfo: LoginData) => {
 
 export const logOut = async () => {
   try {
-    sessionStorage.setItem("authToken", "");
+    localStorage.setItem("authToken", "");
   } catch (e) {
     const err = e as AxiosError;
     if (err.response?.data?.statusCode > 399) {
@@ -29,7 +38,11 @@ export const logOut = async () => {
   }
 };
 
-export const signUp = async (userInfo: UserInfoData) => {
+export const signUp = async (
+  userInfo: UserInfoData,
+  navigate: NavigateFunction,
+  setUser: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     const response = await axios.post(`${URL}/auth/signUp`, {
       email: userInfo.email,
@@ -43,7 +56,7 @@ export const signUp = async (userInfo: UserInfoData) => {
         email: userInfo.email,
         password: userInfo.password,
       };
-      logIn(newUserLoginInfo);
+      logIn(newUserLoginInfo, navigate, setUser);
     }
   } catch (e) {
     const err = e as AxiosError;
