@@ -17,6 +17,7 @@ function App() {
   // State to keep track of whether a user is logged in or not
   const [user, setUser] = useState<boolean>(false);
 
+  // Bugs: The user is starting outside of the login/signup page.
   return (
     <div className="App">
       <Router>

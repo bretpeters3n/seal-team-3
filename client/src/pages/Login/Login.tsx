@@ -92,7 +92,6 @@ const Login: React.FC = () => {
           <Question to="/signup">Don&#39;t have an account? Sign up</Question>
         </LoginForm>
       </FormSection>
-
       <LogoSection>
         <Logo src={logo} alt="Budgety Logo" />
       </LogoSection>
