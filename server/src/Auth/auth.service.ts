@@ -45,7 +45,7 @@ export class AuthServices {
 
   async logIn(
     logInDTO: LogInDTO
-  ): Promise<{ accessToken: string; userID: MongoDBID }> {
+  ): Promise<{ accessToken: string}> {
     // destructures DTO to find user by email.
     const { email, password } = logInDTO;
     const user = await this.authModel.findOne({ email });
@@ -53,11 +53,9 @@ export class AuthServices {
     // then we return an accesstoken.
     // if not, we throw an error.
     if (user && (await bcrypt.compare(password, user.password))) {
-      const { _id } = user;
-      const userID = _id;
       const payload: JwtPayload = { email };
       const accessToken: string = this.jwtService.sign(payload);
-      return { accessToken, userID };
+      return { accessToken };
     } else {
       throw new UnauthorizedException('Please check your login credentials');
     }
