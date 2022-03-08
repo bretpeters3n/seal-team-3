@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Logo,
@@ -32,9 +32,6 @@ interface Props {
 const Navigation: React.FC<Props> = ({ user, setUser }) => {
   // Sidebar state is being used to see whether sidebar is open or not
   const [sidebar, setSidebar] = useState<boolean>(false);
-  const [path, setPath] = useState<string>(window.location.pathname);
-
-  useEffect(() => {}, [path]);
 
   // Function to toggle sidebar on/off
   const toggleSidebar = () => setSidebar(!sidebar);
@@ -75,20 +72,12 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
           // DESKTOP - when user does not exist
           <>
             <SidebarWrapper>
-              <NavIcon
-                to="/login"
-                active={path.includes("login") ? "yes" : "no"}
-                onClick={() => setPath("login")}
-              >
+              <NavIcon to="/login">
                 <h2>Login</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
-              <NavIcon
-                to="/signup"
-                active={path.includes("signup") ? "yes" : "no"}
-                onClick={() => setPath("signup")}
-              >
+              <NavIcon to="/signup">
                 <h2>Signup</h2>
               </NavIcon>
             </SidebarWrapper>
