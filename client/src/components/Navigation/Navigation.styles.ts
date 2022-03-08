@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { device } from "../../utils/Breakpoints";
 
 // This is to use props from styled components from Navigation.ts file
-interface Props {
-  filled?: boolean;
-  outlined?: boolean;
+interface StyledProps {
+  active?: string;
+  displayOption?: string;
 }
 
 export const Container = styled.div`
@@ -18,6 +18,7 @@ export const Container = styled.div`
   position: relative;
   padding: 0 2em;
   z-index: 2;
+  overflow: hidden;
 
   @media ${device.desktop} {
     justify-content: space-between;
@@ -55,7 +56,7 @@ export const DesktopNav = styled.div`
   }
 `;
 
-export const Sidebar = styled(motion.div)`
+export const Sidebar = styled(motion.div)<StyledProps>`
   width: 250px;
   height: 100vh;
   position: fixed;
@@ -66,6 +67,7 @@ export const Sidebar = styled(motion.div)`
   display: flex;
   flex-direction: column;
   gap: 2em;
+  display: ${(props) => props.displayOption};
 `;
 
 export const SidebarWrapper = styled.div`
@@ -85,13 +87,14 @@ export const SidebarWrapper = styled.div`
   }
 `;
 
-export const NavIcon = styled(Link)<Props>`
+export const NavIcon = styled(Link)<StyledProps>`
   margin-left: 2em;
   display: flex;
   align-items: center;
   gap: 1em;
-  background-color: ${(props) => (props.filled ? "black" : "transparent")};
-  color: ${(props) => (props.filled ? "white" : "black")};
+  background-color: ${(props) =>
+    props.active === "yes" ? "black" : "transparent"};
+  color: ${(props) => (props.active === "yes" ? "white" : "black")};
   border-radius: 50px;
   padding: 0.5em 1em;
   font-size: 0.8rem;
