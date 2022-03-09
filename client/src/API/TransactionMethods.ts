@@ -105,7 +105,7 @@ export const getItem = async (itemId: string, type: TransactionType) => {
       }
     );
     if (response) {
-      console.log("cool");
+      // code if response is true
     }
   } catch (e) {
     const err = e as AxiosError;

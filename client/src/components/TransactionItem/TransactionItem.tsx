@@ -37,8 +37,6 @@ const TransactionItem: React.FC<Transaction> = ({
     toggleRerender();
   };
 
-  console.log(id);
-
   return (
     <Container>
       {displayItemEditor && (
