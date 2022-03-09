@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { dateStamp } from 'src/utils/dateStamp';
@@ -16,9 +20,7 @@ export class TransactionServices {
     @InjectModel('IncomeSchema')
     private readonly incomeModel: Model<TransactionInterface>,
     @InjectModel('ExpenseSchema')
-    private readonly expenseModel: Model<TransactionInterface>,
-    @InjectModel('UserSchema')
-    private readonly userModel: Model<User>
+    private readonly expenseModel: Model<TransactionInterface>
   ) {}
 
   // ALL TRANSACTION METHODS
@@ -41,20 +43,20 @@ export class TransactionServices {
     return newTransaction.save();
   }
 
-  async getTransaction(
-    userID: MongoDBID,
-    transactionID: MongoDBID,
-    transactionType: IncomeOrExpense
-  ): Promise<TransactionInterface> {
-    const transaction =
-      transactionType === 'income'
-        ? await this.incomeModel.findById(transactionID).exec()
-        : await this.expenseModel.findById(transactionID).exec();
-    if (userID === transaction.user_id) {
-      return transaction;
-    }
-    throw new UnauthorizedException('User must own transaction');
-  }
+  // async getTransaction(
+  //   userID: MongoDBID,
+  //   transactionID: MongoDBID,
+  //   transactionType: IncomeOrExpense
+  // ): Promise<TransactionInterface> {
+  //   const transaction =
+  //     transactionType === 'income'
+  //       ? await this.incomeModel.findById(transactionID).exec()
+  //       : await this.expenseModel.findById(transactionID).exec();
+  //   if (userID === transaction.user_id) {
+  //     return transaction;
+  //   }
+  //   throw new UnauthorizedException('User must own transaction');
+  // }
 
   async getAllTransactions(
     user: User,
@@ -74,7 +76,7 @@ export class TransactionServices {
   }
 
   async editTransaction(
-    userID: MongoDBID,
+    user: User,
     transactionID: MongoDBID,
     transactionDTO: TransactionDTO,
     transactionType: IncomeOrExpense
@@ -96,14 +98,17 @@ export class TransactionServices {
             }
           );
     editableTransaction.last_date_edited = dateStamp();
-    if (userID === editableTransaction.user_id) {
+    if (editableTransaction === null) {
+      throw new NotFoundException('Transaction does not exist!');
+    } else if (user._id.toString() === editableTransaction.user_id) {
       return editableTransaction;
+    } else if (user._id.toString() !== editableTransaction.user_id) {
+      throw new UnauthorizedException('User must own transaction');
     }
-    throw new UnauthorizedException('User must own transaction');
   }
 
   async deleteTransaction(
-    userID: MongoDBID,
+    user: User,
     transactionID: MongoDBID,
     transactionType: IncomeOrExpense
   ): Promise<
@@ -115,7 +120,9 @@ export class TransactionServices {
       transactionType === 'income'
         ? await this.incomeModel.findByIdAndRemove(transactionID)
         : await this.expenseModel.findByIdAndRemove(transactionID);
-    if (userID === deletedtransaction.user_id) {
+    if (deletedtransaction === null) {
+      throw new NotFoundException('Transaction was already deleted.');
+    } else if (user._id.toString() === deletedtransaction.user_id) {
       return deletedtransaction;
     }
     throw new UnauthorizedException('User must own transaction');
