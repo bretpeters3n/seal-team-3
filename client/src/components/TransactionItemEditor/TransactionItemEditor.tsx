@@ -40,6 +40,7 @@ interface TargetItem {
   amount: number;
   pageType: TransactionType;
   setDisplayItemEditor: React.Dispatch<React.SetStateAction<boolean>>;
+  setItemOptions: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const TransactionItemEditor: React.FC<TargetItem> = ({
@@ -48,6 +49,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   amount,
   pageType,
   setDisplayItemEditor,
+  setItemOptions,
 }) => {
   const preloadedValues = {
     title: title,
@@ -68,6 +70,8 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   ) => {
     // code to run on submit
     editItem(id, pageType);
+    setItemOptions(false);
+    setDisplayItemEditor(false);
   };
 
   return (

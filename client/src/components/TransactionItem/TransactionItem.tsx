@@ -46,6 +46,7 @@ const TransactionItem: React.FC<Transaction> = ({
           amount={amount}
           pageType={pageType}
           setDisplayItemEditor={setDisplayItemEditor}
+          setItemOptions={setItemOptions}
         />
       )}
       <ItemContainer onClick={toggleItemOptions}>
