@@ -70,6 +70,27 @@ export const deleteItem = async (itemId: string, type: TransactionType) => {
   }
 };
 
+export const editItem = async (itemId: string, type: TransactionType) => {
+  try {
+    await axios.patch(
+      `${URL}/transactions/edit${
+        type === "expense" ? "Expense" : "Income"
+      }/${itemId}`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      }
+    );
+  } catch (e) {
+    const err = e as AxiosError;
+    if (err.response?.data?.statusCode > 401) {
+      alert(err.response?.data?.message);
+    }
+  }
+};
+
 export const getItem = async (itemId: string, type: TransactionType) => {
   try {
     const response = await axios.get(

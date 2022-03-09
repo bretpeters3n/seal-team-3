@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,7 +16,8 @@ import {
   TitleContainer,
   Icon,
 } from "./TransactionItemEditor.styles";
-import { TransactionTransferData } from "../../constants";
+import { TransactionTransferData, TransactionType } from "../../constants";
+import { editItem } from "../../API/TransactionMethods";
 
 const transactionSchema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
@@ -28,26 +29,35 @@ const transactionSchema = yup.object().shape({
     .required("field is required"),
 });
 
-interface Editor {
-  toggleItemEditor: () => void;
-}
-
 interface FormInputs {
   title: string;
   amount: number;
 }
 
-const TransactionItemEditor: React.FC<Editor> = ({ toggleItemEditor }) => {
+interface TargetItem {
+  id: string;
+  title: string;
+  amount: number;
+  pageType: TransactionType;
+  setDisplayItemEditor: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const TransactionItemEditor: React.FC<TargetItem> = ({
+  id,
+  title,
+  amount,
+  pageType,
+  setDisplayItemEditor,
+}) => {
   const preloadedValues = {
-    title: "cool",
-    amount: 0,
+    title: title,
+    amount: amount,
   };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<FormInputs>({
     resolver: yupResolver(transactionSchema),
     defaultValues: preloadedValues,
@@ -57,11 +67,8 @@ const TransactionItemEditor: React.FC<Editor> = ({ toggleItemEditor }) => {
     data: TransactionTransferData
   ) => {
     // code to run on submit
-    toggleItemEditor();
-    reset();
+    editItem(id, pageType);
   };
-
-  useEffect(() => {}, []);
 
   return (
     <Container>
@@ -71,7 +78,7 @@ const TransactionItemEditor: React.FC<Editor> = ({ toggleItemEditor }) => {
       >
         <TitleContainer>
           <h1>Edit transaction</h1>
-          <Icon onClick={toggleItemEditor}>
+          <Icon onClick={() => setDisplayItemEditor(false)}>
             <GrFormClose size="2rem" />
           </Icon>
         </TitleContainer>
@@ -97,7 +104,7 @@ const TransactionItemEditor: React.FC<Editor> = ({ toggleItemEditor }) => {
             </InputGroup>
           </InputContainer>
 
-          <FormButton type="submit">Finish</FormButton>
+          <FormButton type="submit">Finish Edit</FormButton>
         </TransactionForm>
       </EditorContainer>
     </Container>
