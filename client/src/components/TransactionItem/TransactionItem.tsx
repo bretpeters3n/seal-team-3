@@ -17,6 +17,7 @@ interface Transaction {
   amount: number;
   toggleRerender: () => void;
   pageType: TransactionType;
+  handleOnEdit: (id: string, title: string, amount: number) => void;
 }
 
 const TransactionItem: React.FC<Transaction> = ({
@@ -25,6 +26,7 @@ const TransactionItem: React.FC<Transaction> = ({
   amount,
   toggleRerender,
   pageType,
+  handleOnEdit,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
 
@@ -51,7 +53,7 @@ const TransactionItem: React.FC<Transaction> = ({
           transition={{ duration: 0.1 }}
           exit={{ x: 20, opacity: 0 }}
         >
-          <ItemOption blueHover>
+          <ItemOption blueHover onClick={() => handleOnEdit(id, title, amount)}>
             <RiEditLine size="1.5rem" />
           </ItemOption>
           <ItemOption onClick={handleDelete}>

@@ -16,6 +16,7 @@ interface TransactionTracker {
   filteredData: ItemData[];
   toggleRerender: () => void;
   pageType: TransactionType;
+  handleOnEdit: (id: string, name: string, amount: number) => void;
 }
 
 const TransactionItemsList: React.FC<TransactionTracker> = ({
@@ -23,6 +24,7 @@ const TransactionItemsList: React.FC<TransactionTracker> = ({
   filteredData,
   toggleRerender,
   pageType,
+  handleOnEdit,
 }) => {
   return (
     <Container>
@@ -44,6 +46,7 @@ const TransactionItemsList: React.FC<TransactionTracker> = ({
               amount={item.amount}
               toggleRerender={toggleRerender}
               pageType={pageType}
+              handleOnEdit={handleOnEdit}
             />
           ))}
         </AnimatePresence>

@@ -1,6 +1,10 @@
 import React, { useState, useEffect, createContext } from "react";
 import { Container } from "./Transactions.styles";
-import { TransactionItemAdder, TransactionItemsList } from "../../components";
+import {
+  TransactionItemAdder,
+  TransactionItemEditor,
+  TransactionItemsList,
+} from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/TransactionMethods";
 import { ItemData } from "../../constants";
@@ -13,12 +17,19 @@ interface Transaction {
 
 const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
+  const [displayItemEditor, setDisplayItemEditor] = useState<boolean>(false);
   const [rerender, setRerender] = useState<boolean>(false);
 
   const [incomeItems, setIncomeItems] = useState<Array<ItemData>>([]);
   const [expenseItems, setExpenseItems] = useState<Array<ItemData>>([]);
 
   const toggleRerender = () => setRerender(!rerender);
+  const toggleItemEditor = () => setDisplayItemEditor(!displayItemEditor);
+
+  const handleOnEdit = (id: string, title: string, amount: number) => {
+    setDisplayAdder(false);
+    setDisplayItemEditor(true);
+  };
 
   const retrieveData = async () => {
     const expenseData = await getAllItems("expense");
@@ -40,6 +51,9 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
         transition={{ duration: 0.35 }}
         exit={{ opacity: 0, y: -20 }}
       >
+        {displayItemEditor && (
+          <TransactionItemEditor toggleItemEditor={toggleItemEditor} />
+        )}
         <AnimatePresence>
           {displayAdder && (
             <TransactionItemAdder
@@ -54,6 +68,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
           filteredData={pageType === "income" ? incomeItems : expenseItems}
           toggleRerender={toggleRerender}
           pageType={pageType}
+          handleOnEdit={handleOnEdit}
         />
       </Container>
     </PathContext.Provider>

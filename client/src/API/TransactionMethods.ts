@@ -69,3 +69,27 @@ export const deleteItem = async (itemId: string, type: TransactionType) => {
     }
   }
 };
+
+export const getItem = async (itemId: string, type: TransactionType) => {
+  try {
+    const response = await axios.get(
+      `${URL}/transactions/get${
+        type === "expense" ? "Expense" : "Income"
+      }/${itemId}`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      }
+    );
+    if (response) {
+      console.log("cool");
+    }
+  } catch (e) {
+    const err = e as AxiosError;
+    if (err.response?.data?.statusCode > 401) {
+      alert(err.response?.data?.message);
+    }
+  }
+};
