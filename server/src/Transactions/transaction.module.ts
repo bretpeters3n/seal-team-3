@@ -11,7 +11,6 @@ import { TransactionServices } from './transaction.service';
     MongooseModule.forFeature([
       { name: 'IncomeSchema', schema: IncomeSchema },
       { name: 'ExpenseSchema', schema: ExpenseSchema },
-      { name: 'UserSchema', schema: UserSchema },
     ]),
     AuthModule,
   ],
