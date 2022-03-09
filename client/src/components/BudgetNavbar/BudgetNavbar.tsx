@@ -11,9 +11,6 @@ const BudgetNavbar = () => {
         <ListItem>
           <ListItemText to="/budget/expenses">Expenses</ListItemText>
         </ListItem>
-        <ListItem>
-          <ListItemText to="/budget/combined">Combined</ListItemText>
-        </ListItem>
       </List>
     </Container>
   );

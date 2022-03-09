@@ -111,7 +111,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
             </InputGroup>
           </InputContainer>
 
-          <FormButton type="submit">Finish Edit</FormButton>
+          <FormButton type="submit">Save</FormButton>
         </TransactionForm>
       </EditorContainer>
     </Container>

@@ -6,7 +6,6 @@ import {
   Signup,
   Home,
   Transactions,
-  Combined,
   Budget,
   ErrorPage,
 } from "./pages";
@@ -41,7 +40,6 @@ function App() {
                   path="expenses"
                   element={<Transactions pageType="expense" />}
                 />
-                <Route path="combined" element={<Combined />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             </>
