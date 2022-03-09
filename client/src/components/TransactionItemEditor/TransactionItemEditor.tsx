@@ -41,6 +41,7 @@ interface TargetItem {
   pageType: TransactionType;
   setDisplayItemEditor: React.Dispatch<React.SetStateAction<boolean>>;
   setItemOptions: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleRerender: () => void;
 }
 
 const TransactionItemEditor: React.FC<TargetItem> = ({
@@ -50,6 +51,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   pageType,
   setDisplayItemEditor,
   setItemOptions,
+  toggleRerender,
 }) => {
   const preloadedValues = {
     title: title,
@@ -69,9 +71,10 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
     data: TransactionTransferData
   ) => {
     // code to run on submit
-    editItem(id, pageType);
+    editItem(id, data, pageType);
     setItemOptions(false);
     setDisplayItemEditor(false);
+    toggleRerender();
   };
 
   return (
