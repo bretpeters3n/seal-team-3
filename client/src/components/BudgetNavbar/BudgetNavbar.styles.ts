@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const Container = styled(motion.div)`
   width: 100vw;
@@ -33,10 +33,13 @@ export const ListItem = styled.a`
   }
 `;
 
-export const ListItemText = styled(Link)`
+export const ListItemText = styled(NavLink)`
   color: gray;
 
-  &.selected {
+  transition: 0.2s all ease;
+  &.active {
+    border-bottom: 1px solid black;
+    font-size: 1.1rem;
     color: black;
   }
 `;
