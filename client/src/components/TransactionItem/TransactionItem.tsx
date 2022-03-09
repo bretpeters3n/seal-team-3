@@ -10,6 +10,7 @@ import {
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { deleteItem } from "../../API/TransactionMethods";
 import { TransactionType } from "../../constants";
+import { TransactionItemEditor } from "../../components";
 
 interface Transaction {
   id: string;
@@ -27,6 +28,7 @@ const TransactionItem: React.FC<Transaction> = ({
   pageType,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
+  const [displayItemEditor, setDisplayItemEditor] = useState<boolean>(false);
 
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
@@ -37,6 +39,17 @@ const TransactionItem: React.FC<Transaction> = ({
 
   return (
     <Container>
+      {displayItemEditor && (
+        <TransactionItemEditor
+          id={id}
+          title={title}
+          amount={amount}
+          pageType={pageType}
+          setDisplayItemEditor={setDisplayItemEditor}
+          setItemOptions={setItemOptions}
+          toggleRerender={toggleRerender}
+        />
+      )}
       <ItemContainer onClick={toggleItemOptions}>
         <ItemName>{title}</ItemName>
         <ItemAmount
@@ -51,7 +64,7 @@ const TransactionItem: React.FC<Transaction> = ({
           transition={{ duration: 0.1 }}
           exit={{ x: 20, opacity: 0 }}
         >
-          <ItemOption blueHover>
+          <ItemOption blueHover onClick={() => setDisplayItemEditor(true)}>
             <RiEditLine size="1.5rem" />
           </ItemOption>
           <ItemOption onClick={handleDelete}>

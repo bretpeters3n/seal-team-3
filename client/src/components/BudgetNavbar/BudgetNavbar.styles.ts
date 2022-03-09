@@ -13,7 +13,7 @@ export const List = styled(motion.ul)`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   list-style: none;
 `;
 

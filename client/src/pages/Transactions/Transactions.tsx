@@ -13,6 +13,7 @@ interface Transaction {
 
 const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
+
   const [rerender, setRerender] = useState<boolean>(false);
 
   const [incomeItems, setIncomeItems] = useState<Array<ItemData>>([]);
