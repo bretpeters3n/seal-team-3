@@ -4,7 +4,6 @@ import {
   Res,
   HttpStatus,
   Param,
-  NotFoundException,
   Post,
   Body,
   Delete,
@@ -13,12 +12,12 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
-import { User } from 'src/Auth/Auth.interfaces';
+import { User } from 'src/Auth/dataStructureFiles/auth.interfaces';
 import { GetUser } from 'src/Auth/get-user.decorator';
 import { ValidateObjectId } from 'src/shared/pipes/validate-object-id.pipes';
 import { MongoDBID } from 'src/shared/types';
-import { TransactionDTO } from './dto/transaction.dto';
-import { IncomeOrExpense } from './transaction.interfaces';
+import { TransactionDTO } from './dataStructureFiles/transaction.dto';
+import { IncomeOrExpense } from './dataStructureFiles/transaction.interfaces';
 import { TransactionServices } from './transaction.service';
 
 @Controller('transactions')

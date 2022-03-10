@@ -7,8 +7,8 @@ import {
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { dateStamp } from 'src/utils/dateStamp';
-import { User } from './Auth.interfaces';
-import { LogInDTO, SignUpDTO } from './auth.dto';
+import { User } from './dataStructureFiles/auth.interfaces';
+import { LogInDTO, SignUpDTO } from './dataStructureFiles/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './jwt-payload';

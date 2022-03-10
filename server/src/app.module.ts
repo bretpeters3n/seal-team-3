@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './Auth/auth.module';
+import { BudgetModule } from './Budgets/budget.module';
 import { TransactionModule } from './Transactions/transaction.module';
 
 @Module({
@@ -9,6 +10,7 @@ import { TransactionModule } from './Transactions/transaction.module';
       useNewUrlParser: true,
     }),
     AuthModule,
+    BudgetModule,
     TransactionModule,
   ],
 })

@@ -1,4 +1,4 @@
-import { IncomeOrExpense } from 'src/Transactions/transaction.interfaces';
+import { IncomeOrExpense } from 'src/Transactions/dataStructureFiles/transaction.interfaces';
 
 export class TransactionDTO {
   readonly title: string;

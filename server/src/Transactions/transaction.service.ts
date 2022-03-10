@@ -9,10 +9,10 @@ import { dateStamp } from 'src/utils/dateStamp';
 import {
   IncomeOrExpense,
   TransactionInterface,
-} from './transaction.interfaces';
+} from './dataStructureFiles/transaction.interfaces';
 import { MongoDBID } from 'src/shared/types';
-import { User } from 'src/Auth/Auth.interfaces';
-import { TransactionDTO } from './dto/transaction.dto';
+import { User } from 'src/Auth/dataStructureFiles/auth.interfaces';
+import { TransactionDTO } from './dataStructureFiles/transaction.dto';
 
 @Injectable()
 export class TransactionServices {
