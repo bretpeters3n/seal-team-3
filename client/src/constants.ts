@@ -15,6 +15,13 @@ export interface TransactionTransferData {
   amount: number;
 }
 
+export interface BudgetTransferData {
+  month: string;
+  year: string;
+  total: number;
+  currentAmount: number;
+}
+
 export type TransactionType = "income" | "expense";
 
 export interface ItemData {

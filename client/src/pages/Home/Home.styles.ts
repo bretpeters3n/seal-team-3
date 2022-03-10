@@ -7,7 +7,7 @@ interface ProgressProp {
 }
 
 interface ActiveProp {
-  currentMonth: boolean;
+  currentmonth: boolean;
 }
 
 export const Container = styled.div`
@@ -40,7 +40,7 @@ export const BudgetMainContainer = styled.div<ActiveProp>`
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 1em;
   border-radius: 5px;
-  opacity: ${(props) => (props.currentMonth ? "1" : ".4")};
+  opacity: ${(props) => (props.currentmonth ? "1" : ".4")};
 `;
 
 export const BudgetTitle = styled.h1`
@@ -87,7 +87,7 @@ export const BudgetLinksContainer = styled.div`
 export const BudgetLink = styled(Link)<ActiveProp>`
   font-weight: 700;
   color: #3200c0;
-  pointer-events: ${(props) => (props.currentMonth ? "auto" : "none")};
+  pointer-events: ${(props) => (props.currentmonth ? "auto" : "none")};
 `;
 
 export const AddButton = styled.button`
