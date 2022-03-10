@@ -99,7 +99,7 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
       <Sidebar
         variants={animationVariants}
         animate={sidebar ? "open" : "closed"}
-        displayOption={sidebar ? "flex" : "none"}
+        displayoption={sidebar ? "flex" : "none"}
       >
         {user ? (
           <>

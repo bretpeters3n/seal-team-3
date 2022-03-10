@@ -6,7 +6,7 @@ import { device } from "../../utils/Breakpoints";
 // This is to use props from styled components from Navigation.ts file
 interface StyledProps {
   active?: string;
-  displayOption?: string;
+  displayoption?: string;
   activeClassName?: any;
 }
 
@@ -68,7 +68,7 @@ export const Sidebar = styled(motion.div)<StyledProps>`
   display: flex;
   flex-direction: column;
   gap: 2em;
-  display: ${(props) => props.displayOption};
+  display: ${(props) => props.displayoption};
 `;
 
 export const SidebarWrapper = styled.div`

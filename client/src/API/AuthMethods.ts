@@ -14,8 +14,7 @@ export const logIn = async (
       password: userInfo.password,
     });
     if (response) {
-      localStorage.setItem("authToken", response.data.accessToken);
-      sessionStorage.setItem("userID", response.data.userID);
+      sessionStorage.setItem("authToken", response.data.accessToken);
       navigate("/");
       setUser(true);
     }
@@ -29,7 +28,7 @@ export const logIn = async (
 
 export const logOut = async () => {
   try {
-    localStorage.setItem("authToken", "");
+    sessionStorage.setItem("authToken", "");
   } catch (e) {
     const err = e as AxiosError;
     if (err.response?.data?.statusCode > 399) {
