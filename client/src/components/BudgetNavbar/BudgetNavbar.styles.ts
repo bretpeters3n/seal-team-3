@@ -17,7 +17,7 @@ export const List = styled(motion.ul)`
   list-style: none;
 `;
 
-export const ListItem = styled.a`
+export const ListItem = styled.li`
   text-transform: uppercase;
   font-weight: 700;
   transition: 0.2s ease all;
