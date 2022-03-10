@@ -22,33 +22,33 @@ const Home = () => {
     <>
       <PageTitle>Your Budgets</PageTitle>
       <Container>
-        {BudgetData.map((budget) => (
-          <BudgetMainContainer key={budget.month}>
+        {BudgetData.map(({ month, year, spent, budget, active }) => (
+          <BudgetMainContainer key={month} currentMonth={active}>
             <BudgetTitle>
-              {budget.month} <Soft>{budget.year}</Soft>
+              {month} <Soft>{year}</Soft>
             </BudgetTitle>
 
             <TotalBudgetBar>
-              <ExpenseBar percentage={(budget.spent / budget.budget) * 100} />
+              <ExpenseBar percentage={Math.min((spent / budget) * 100, 100)} />
             </TotalBudgetBar>
 
             <BudgetInfoContainer>
               <BudgetInfo>
-                ${budget.spent} of <Soft>${budget.budget}</Soft>
+                ${spent} of <Soft>${budget}</Soft>
               </BudgetInfo>
               <BudgetInfo>
-                {`${budget.budget - budget.spent < 0 ? "-" : ""}$${Math.abs(
-                  budget.budget - budget.spent
-                )}`}{" "}
-                <Soft>
-                  {budget.budget - budget.spent > 0 ? "left" : "over"}
-                </Soft>
+                {`${budget - spent < 0 ? "-" : ""}$${Math.abs(budget - spent)}`}{" "}
+                <Soft>{budget - spent > 0 ? "left" : "over"}</Soft>
               </BudgetInfo>
             </BudgetInfoContainer>
 
             <BudgetLinksContainer>
-              <BudgetLink to="/budget/income">Adjust Incomes</BudgetLink>
-              <BudgetLink to="/budget/expenses">Adjust Expenses</BudgetLink>
+              <BudgetLink to="/budget/income" currentMonth={active}>
+                Adjust Incomes
+              </BudgetLink>
+              <BudgetLink to="/budget/expenses" currentMonth={active}>
+                Adjust Expenses
+              </BudgetLink>
             </BudgetLinksContainer>
           </BudgetMainContainer>
         ))}
