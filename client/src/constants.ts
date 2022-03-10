@@ -26,6 +26,15 @@ export interface ItemData {
   type: TransactionType;
 }
 
+export interface IBudgetData {
+  _id: string;
+  month: string;
+  year: string;
+  total: number;
+  currentAmount: number;
+  active: boolean;
+}
+
 export const months = [
   "January",
   "February",
@@ -41,6 +50,7 @@ export const months = [
   "December",
 ] as const;
 
+// Needed for form validation using yup
 export const TransactionSchema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
   amount: yup
