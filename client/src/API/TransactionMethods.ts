@@ -15,7 +15,7 @@ export const addItem = async (
       {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
         },
       }
     );
@@ -35,7 +35,7 @@ export const getAllItems = async (type: TransactionType) => {
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
           },
         }
       )
@@ -58,7 +58,7 @@ export const deleteItem = async (itemId: string, type: TransactionType) => {
       {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
         },
       }
     );
@@ -87,7 +87,7 @@ export const editItem = async (
       {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
         },
       }
     );
@@ -108,7 +108,7 @@ export const editItem = async (
 //       {
 //         withCredentials: true,
 //         headers: {
-//           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+//           Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
 //         },
 //       }
 //     );

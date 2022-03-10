@@ -16,7 +16,7 @@ function App() {
   const [user, setUser] = useState<boolean>(false);
 
   useEffect(() => {
-    if (localStorage.getItem("authToken")) {
+    if (sessionStorage.getItem("authToken")) {
       setUser(true);
     }
   }, []);
