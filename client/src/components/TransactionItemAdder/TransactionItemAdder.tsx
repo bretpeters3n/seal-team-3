@@ -14,20 +14,13 @@ import {
 } from "./TransactionItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
-import { TransactionTransferData, TransactionType } from "../../constants";
-
-const transactionSchema = yup.object().shape({
-  title: yup.string().min(2).max(50).required("field is required"),
-  amount: yup
-    .number()
-    .typeError("must be a number")
-    .positive("must be positive")
-    .min(0)
-    .required("field is required"),
-});
+import {
+  TransactionTransferData,
+  TransactionType,
+  TransactionSchema,
+} from "../../constants";
 
 interface FormInputs {
   title: string;
@@ -51,7 +44,7 @@ const TransactionItemAdder: React.FC<TransactionAdder> = ({
     formState: { errors },
     reset,
   } = useForm<FormInputs>({
-    resolver: yupResolver(transactionSchema),
+    resolver: yupResolver(TransactionSchema),
   });
 
   const onSubmit: SubmitHandler<FormInputs> = (
@@ -91,7 +84,11 @@ const TransactionItemAdder: React.FC<TransactionAdder> = ({
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <Input {...register("amount")} />
+            <Input
+              {...register("amount")}
+              inputMode="numeric"
+              autoComplete="transaction-amount"
+            />
             <ErrorContainer>
               {errors.amount && errors.amount?.message && (
                 <p>{errors.amount.message}</p>

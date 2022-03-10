@@ -37,6 +37,12 @@ const TransactionItem: React.FC<Transaction> = ({
     toggleRerender();
   };
 
+  const currencyFormatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  });
+
   return (
     <Container>
       {displayItemEditor && (
@@ -54,7 +60,7 @@ const TransactionItem: React.FC<Transaction> = ({
         <ItemName>{title}</ItemName>
         <ItemAmount
           textColor={pageType === "income" ? "#25a244" : "#ff595e"}
-        >{`$ ${amount.toFixed(2)}`}</ItemAmount>
+        >{`${currencyFormatter.format(amount)}`}</ItemAmount>
       </ItemContainer>
       {/* Item Options slides out on Click of each item */}
       {itemOptions && (
