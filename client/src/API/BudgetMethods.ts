@@ -27,6 +27,35 @@ export const createBudget = async (data: BudgetTransferData) => {
   }
 };
 
+// PATCH Budget by ID
+export const editBudget = async (
+  budgetId: string,
+  data: BudgetTransferData
+) => {
+  try {
+    await axios.patch(
+      `${URL}/budgets/editBudget/${budgetId}`,
+      {
+        month: data.month,
+        year: data.year,
+        total: data.total,
+        currentAmount: data.currentAmount,
+      },
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        },
+      }
+    );
+  } catch (e) {
+    const err = e as AxiosError;
+    if (err.response?.data?.statusCode > 401) {
+      alert(err.response?.data?.message);
+    }
+  }
+};
+
 // GET All Budgets
 export const getAllBudgets = async () => {
   try {
