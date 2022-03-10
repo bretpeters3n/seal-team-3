@@ -1,15 +1,6 @@
 import styled from "styled-components";
 import { device } from "../../utils/Breakpoints";
 
-
-interface ProgressProp {
-  percentage: number;
-}
-
-interface ActiveProp {
-  currentmonth: boolean;
-}
-
 export const Container = styled.div`
   width: 100%;
   max-width: 800px;
@@ -31,5 +22,3 @@ export const PageTitle = styled.h3`
     font-size: 2rem;
   }
 `;
-
-
