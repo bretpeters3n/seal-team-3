@@ -36,8 +36,8 @@ const BudgetCard: React.FC<BudgetCardProps> = ({
         <BudgetInfo>
           {`${total - currentAmount < 0 ? "-" : ""}$${Math.abs(
             total - currentAmount
-          )}`}{" "}
-          <Soft>{total - currentAmount > 0 ? "left" : "over"}</Soft>
+          )}`}
+          <Soft>{total - currentAmount > 0 ? " left" : " over"}</Soft>
         </BudgetInfo>
       </BudgetInfoContainer>
 
