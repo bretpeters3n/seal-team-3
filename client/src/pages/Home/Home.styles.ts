@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { device } from "../../utils/Breakpoints";
 
 interface StyledProps {
   percentage: number;
@@ -7,10 +8,13 @@ interface StyledProps {
 
 export const Container = styled.div`
   width: 100%;
+  max-width: 800px;
   padding: 1em;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 2em;
+  align-items: center;
 `;
 
 export const PageTitle = styled.h3`
@@ -18,6 +22,10 @@ export const PageTitle = styled.h3`
   text-transform: uppercase;
   letter-spacing: 0.2em;
   margin-top: 1em;
+
+  @media ${device.desktop} {
+    font-size: 2rem;
+  }
 `;
 
 export const BudgetMainContainer = styled.div`
@@ -74,4 +82,15 @@ export const BudgetLinksContainer = styled.div`
 export const BudgetLink = styled(Link)`
   font-weight: 700;
   color: #6540d0;
+`;
+
+export const AddButton = styled.button`
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: 0.2s all ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;

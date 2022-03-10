@@ -11,9 +11,11 @@ import {
   BudgetLinksContainer,
   BudgetLink,
   PageTitle,
+  AddButton,
 } from "./Home.styles";
 
 import { BudgetData } from "../../dummydata";
+import { BsPlusSquare } from "react-icons/bs";
 
 const Home = () => {
   return (
@@ -50,6 +52,9 @@ const Home = () => {
             </BudgetLinksContainer>
           </BudgetMainContainer>
         ))}
+        <AddButton>
+          <BsPlusSquare size="2.5rem" />
+        </AddButton>
       </Container>
     </>
   );
