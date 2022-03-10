@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from 'src/Auth/auth.module';
-import { UserSchema } from 'src/Auth/auth.schema';
-import { ExpenseSchema, IncomeSchema } from './schema/transaction.schema';
+import { ExpenseSchema, IncomeSchema } from './dataStructureFiles/transaction.schema';
 import { TransactionController } from './transaction.controller';
 import { TransactionServices } from './transaction.service';
 
