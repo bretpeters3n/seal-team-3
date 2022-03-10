@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GrFormClose } from "react-icons/gr";
 import {
@@ -16,18 +15,12 @@ import {
   TitleContainer,
   Icon,
 } from "./TransactionItemEditor.styles";
-import { TransactionTransferData, TransactionType } from "../../constants";
+import {
+  TransactionTransferData,
+  TransactionType,
+  TransactionSchema,
+} from "../../constants";
 import { editItem } from "../../API/TransactionMethods";
-
-const transactionSchema = yup.object().shape({
-  title: yup.string().min(2).max(50).required("field is required"),
-  amount: yup
-    .number()
-    .typeError("must be a number")
-    .positive("must be positive")
-    .min(0)
-    .required("field is required"),
-});
 
 interface FormInputs {
   title: string;
@@ -63,7 +56,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<FormInputs>({
-    resolver: yupResolver(transactionSchema),
+    resolver: yupResolver(TransactionSchema),
     defaultValues: preloadedValues,
   });
 
