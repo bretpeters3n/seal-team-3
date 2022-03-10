@@ -1,3 +1,5 @@
+import * as yup from "yup";
+
 export const URL = "http://localhost:5000";
 
 export interface LoginData {
@@ -45,3 +47,16 @@ export const months = [
   "November",
   "December",
 ] as const;
+
+export const TransactionSchema = yup.object().shape({
+  title: yup.string().min(2).max(50).required("field is required"),
+  amount: yup
+    .number()
+    .typeError("must be a number")
+    .positive("must be positive")
+    .min(0)
+    .test("maxDigitsAfterDecimal", "up to 2 decimals only", (amount: any) =>
+      /^\d+(\.\d{1,2})?$/.test(amount?.toString())
+    )
+    .required("field is required"),
+});

@@ -25,6 +25,7 @@ const dummy = {
   currentAmount: 500,
 };
 
+
 const Home = () => {
   const [budgets, setBudgets] = useState(null);
   const retrieveBudgets = async () => {
