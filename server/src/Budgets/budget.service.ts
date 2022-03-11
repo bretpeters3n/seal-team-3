@@ -10,6 +10,7 @@ import { BudgetInterface } from './dataStructureFiles/budget.interfaces';
 import { MongoDBID } from 'src/shared/types';
 import { User } from 'src/Auth/dataStructureFiles/auth.interfaces';
 import { BudgetDTO } from './dataStructureFiles/budget.dto';
+import { serveBudgetTitleOptions } from './utils';
 
 @Injectable()
 export class BudgetServices {
@@ -19,6 +20,10 @@ export class BudgetServices {
   ) {}
 
   // ALL BUDGET SERVICE METHODS
+  getAllBudgetCreationOptions(): string[] {
+    return serveBudgetTitleOptions();
+  }
+
   async createBudget(
     budgetDTO: BudgetDTO,
     user: User

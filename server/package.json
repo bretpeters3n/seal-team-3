@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "^8.1.1",
     "@types/mongodb": "^4.0.7",
     "bcrypt": "^5.0.1",
+    "dayjs": "^1.10.8",
     "dotenv": "^16.0.0",
     "mongoose": "^6.2.1",
     "passport": "^0.5.2",

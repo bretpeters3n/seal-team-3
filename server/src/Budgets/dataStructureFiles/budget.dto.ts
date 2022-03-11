@@ -1,6 +1,6 @@
 export class BudgetDTO {
-  readonly month: string;
-  readonly year: string;
+  readonly title: string;
   readonly total: number;
   readonly currentAmount: number;
+  created: boolean;
 }
