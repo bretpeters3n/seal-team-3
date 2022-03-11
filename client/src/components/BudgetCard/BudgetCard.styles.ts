@@ -14,10 +14,10 @@ export const BudgetCardContainer = styled.div<ActiveProp>`
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 1em;
   border-radius: 5px;
-  opacity: ${(props) => (props.currentmonth ? "1" : ".4")};
+  opacity: ${(props) => (props.currentmonth ? "1" : ".5")};
 `;
 
 export const BudgetTitle = styled.h1`

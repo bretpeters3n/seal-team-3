@@ -1,14 +1,14 @@
 import React from "react";
-import { Container, PageTitle } from "./Home.styles";
-import { BudgetData } from "../../dummydata";
-
+import { Container, PageTitle, Carousel } from "./Home.styles";
 import { BudgetCardList } from "../../components";
 
 const Home = () => {
   return (
     <Container>
       <PageTitle>Your Budgets</PageTitle>
-      <BudgetCardList budgets={BudgetData} />
+      <Carousel>
+        <BudgetCardList />
+      </Carousel>
     </Container>
   );
 };

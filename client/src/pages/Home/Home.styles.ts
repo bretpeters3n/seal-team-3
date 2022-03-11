@@ -4,12 +4,17 @@ import { device } from "../../utils/Breakpoints";
 export const Container = styled.div`
   width: 100%;
   max-width: 800px;
-  padding: 1em;
+  height: calc(100vh - 70px);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 2em;
-  align-items: center;
+`;
+
+export const Carousel = styled.div`
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+  margin: auto auto;
 `;
 
 export const PageTitle = styled.h3`

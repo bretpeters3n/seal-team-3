@@ -20,7 +20,9 @@ const BudgetCard: React.FC<BudgetCardProps> = ({
   budget: { _id, month, year, total, currentAmount, active },
 }) => {
   return (
-    <BudgetCardContainer currentmonth={active}>
+    <BudgetCardContainer
+      currentmonth={_id === "622a9328889850b445c43db0" ? true : active}
+    >
       <BudgetTitle>
         {month} <Soft>{year}</Soft>
       </BudgetTitle>
