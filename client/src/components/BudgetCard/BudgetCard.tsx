@@ -27,15 +27,16 @@ const BudgetCard: React.FC<IBudgetCard> = ({
 }) => {
   return (
     <BudgetCardContainer
-      currentmonth={_id === "622b99db73a322920a89f756" ? true : active}
+      currentmonth={_id === "622b99db73a322920a89f756"}
       initial={{ scale: 0, rotate: -180 }}
       animate={{
         scale: index === position ? 1 : 0.8,
         rotate: 0,
-        top: `${(index - position) * 20 + 25}vh`,
+        top: `${(index - position) * 15 + 26}vh`,
       }}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
       onClick={() => setPosition(index)}
+      current={index === position}
     >
       <BudgetTitle>
         {month} <Soft>{year}</Soft>
@@ -58,10 +59,10 @@ const BudgetCard: React.FC<IBudgetCard> = ({
       </BudgetInfoContainer>
 
       <BudgetLinksContainer>
-        <BudgetLink to="/budget/income" currentmonth={active}>
+        <BudgetLink to="/budget/income" current={active}>
           Adjust Incomes
         </BudgetLink>
-        <BudgetLink to="/budget/expenses" currentmonth={active}>
+        <BudgetLink to="/budget/expenses" current={active}>
           Adjust Expenses
         </BudgetLink>
       </BudgetLinksContainer>

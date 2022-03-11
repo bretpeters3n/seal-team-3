@@ -7,23 +7,25 @@ interface ProgressProp {
 }
 
 interface ActiveProp {
-  currentmonth: boolean;
+  currentmonth?: boolean;
+  current?: boolean;
 }
 
 export const BudgetCardContainer = styled(motion.div)<ActiveProp>`
   position: absolute;
-  width: 95%;
+  background: white;
+  width: 90%;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
   gap: 0.5em;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: ${(props) =>
+    props.current
+      ? "rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;"
+      : "rgba(0, 0, 0, 0.24) 0px 3px 8px"};
   padding: 1em;
   border-radius: 5px;
-  opacity: ${(props) => (props.currentmonth ? "1" : ".5")};
-  /* @media (min-width: 800px) {
-    height: 15vh;
-  } */
+  opacity: ${(props) => (props.current ? "1" : ".2")};
+  z-index: ${(props) => (props.current ? 1 : 0)};
 `;
 
 export const BudgetTitle = styled.h1`
@@ -68,5 +70,5 @@ export const BudgetLinksContainer = styled.div`
 export const BudgetLink = styled(Link)<ActiveProp>`
   font-weight: 700;
   color: #3200c0;
-  pointer-events: ${(props) => (props.currentmonth ? "auto" : "none")};
+  pointer-events: ${(props) => (props.current ? "auto" : "none")};
 `;
