@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 interface ProgressProp {
@@ -9,9 +10,8 @@ interface ActiveProp {
   currentmonth: boolean;
 }
 
-export const BudgetCardContainer = styled.div<ActiveProp>`
-  position: relative;
-  z-index: 1000;
+export const BudgetCardContainer = styled(motion.div)<ActiveProp>`
+  position: absolute;
   width: 95%;
   display: flex;
   flex-direction: column;
@@ -35,11 +35,11 @@ export const Soft = styled.span`
 `;
 
 export const TotalBudgetBar = styled.div`
+  position: relative;
   width: 100%;
   height: 30px;
   background: #e0e0e0;
   border-radius: 5px;
-  position: relative;
 `;
 
 export const ExpenseBar = styled.div<ProgressProp>`

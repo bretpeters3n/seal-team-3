@@ -10,13 +10,6 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const Carousel = styled.div`
-  width: 100%;
-  height: 80vh;
-  overflow: hidden;
-  margin: auto auto;
-`;
-
 export const PageTitle = styled.h3`
   text-align: center;
   text-transform: uppercase;
