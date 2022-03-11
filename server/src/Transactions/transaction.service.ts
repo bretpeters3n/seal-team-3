@@ -60,7 +60,8 @@ export class TransactionServices {
 
   async getAllTransactions(
     user: User,
-    transactionType: IncomeOrExpense
+    transactionType: IncomeOrExpense,
+    budgetID: MongoDBID
   ): Promise<TransactionInterface[]> {
     const allTransactions =
       transactionType === 'income'
@@ -68,7 +69,8 @@ export class TransactionServices {
         : await this.expenseModel.find().exec();
     if (allTransactions) {
       const currentUserTransactions = allTransactions.filter(
-        (transaction) => transaction.user_id === user.id
+        (transaction) =>
+          transaction.user_id === user.id && transaction.budget_id === budgetID
       );
       return currentUserTransactions;
     }
