@@ -40,6 +40,8 @@ const BudgetCardList: React.FC = () => {
     retrieveAllBudgets();
   }, [position]);
 
+  console.log(sessionStorage.getItem("authToken"));
+
   return (
     <Container {...handlers}>
       {budgets.length &&

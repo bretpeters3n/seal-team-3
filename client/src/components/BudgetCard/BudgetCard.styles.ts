@@ -10,6 +10,8 @@ interface ActiveProp {
 }
 
 export const BudgetCardContainer = styled.div<ActiveProp>`
+  position: relative;
+  z-index: 1000;
   width: 95%;
   display: flex;
   flex-direction: column;

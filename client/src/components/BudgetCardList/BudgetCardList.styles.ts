@@ -3,12 +3,13 @@ import { motion } from "framer-motion";
 
 export const Container = styled.div`
   position: relative;
-  height: 70vh;
+  height: 100%;
+  outline: 1px solid red;
 `;
 
 export const BudgetCardContainer = styled(motion.div)`
   width: 100%;
-  height: 20vh;
+  height: 25%;
   overflow: hidden;
   background: white;
   position: absolute;
