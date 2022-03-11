@@ -13,4 +13,5 @@ export interface TransactionInterface extends Document {
   date_posted: string;
   last_date_edited: String;
   user_id: MongoDBID;
+  budget_id: MongoDBID;
 }

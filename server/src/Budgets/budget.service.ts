@@ -32,6 +32,7 @@ export class BudgetServices {
     newBudget.date_created = dateStamp();
     newBudget.last_date_edited = dateStamp();
     newBudget.user_id = user._id;
+    newBudget.created = true;
     return newBudget.save();
   }
 

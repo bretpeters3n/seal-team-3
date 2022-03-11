@@ -63,11 +63,16 @@ export class TransactionController {
   // }
 
   // Fetch all incomes
-  @Get('/allIncomes')
-  async getAllIncomes(@GetUser() user: User, @Res() res: Response) {
+  @Get('/allIncomes/:budgetID')
+  async getAllIncomes(
+    @GetUser() user: User,
+    @Res() res: Response,
+    @Param('budgetID', new ValidateObjectId()) budgetID: MongoDBID
+  ) {
     const allIncomes = await this.transactionServices.getAllTransactions(
       user,
-      IncomeOrExpense.INCOME
+      IncomeOrExpense.INCOME,
+      budgetID
     );
     return res.status(HttpStatus.OK).json(allIncomes);
   }
@@ -148,11 +153,16 @@ export class TransactionController {
   // }
 
   // Fetch all expenses
-  @Get('/allExpenses')
-  async getExpenses(@GetUser() user: User, @Res() res: Response) {
+  @Get('/allExpenses/:budgetID')
+  async getExpenses(
+    @GetUser() user: User,
+    @Res() res: Response,
+    @Param('budgetID', new ValidateObjectId()) budgetID: MongoDBID
+  ) {
     const allExpenses = await this.transactionServices.getAllTransactions(
       user,
-      IncomeOrExpense.EXPENSE
+      IncomeOrExpense.EXPENSE,
+      budgetID
     );
     return res.status(HttpStatus.OK).json(allExpenses);
   }
