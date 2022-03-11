@@ -60,7 +60,7 @@ export const editBudget = async (
 export const getAllBudgets = async () => {
   try {
     const data = await axios
-      .get(`${URL}/budgets/allBudgets`, {
+      .get(`${URL}/budgets/allCreatedBudgets`, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
@@ -70,7 +70,9 @@ export const getAllBudgets = async () => {
     return data;
   } catch (e) {
     const err = e as AxiosError;
-    if (err.response?.data?.statusCode > 401) {
+    if (err.response?.data?.statusCode === 401) {
+      alert("Auth token may have expired");
+    } else if (err.response?.data?.statusCode > 401) {
       alert(err.response?.data?.message);
     }
   }

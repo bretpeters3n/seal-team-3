@@ -10,20 +10,22 @@ interface ActiveProp {
 }
 
 export const BudgetCardContainer = styled.div<ActiveProp>`
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   gap: 0.5em;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 1em;
   border-radius: 5px;
   opacity: ${(props) => (props.currentmonth ? "1" : ".5")};
+  /* @media (min-width: 800px) {
+    height: 15vh;
+  } */
 `;
 
 export const BudgetTitle = styled.h1`
-  letter-spacing: 0.1em;
   font-weight: 800;
-  text-transform: uppercase;
 `;
 
 export const Soft = styled.span`
