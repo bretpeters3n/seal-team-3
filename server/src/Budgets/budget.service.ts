@@ -6,11 +6,14 @@ import {
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { dateStamp } from 'src/utils/dateStamp';
-import { BudgetInterface } from './dataStructureFiles/budget.interfaces';
+import {
+  budgetDummyData,
+  BudgetInterface,
+} from './dataStructureFiles/budget.interfaces';
 import { MongoDBID } from 'src/shared/types';
 import { User } from 'src/Auth/dataStructureFiles/auth.interfaces';
 import { BudgetDTO } from './dataStructureFiles/budget.dto';
-import { serveBudgetTitleOptions } from './utils';
+import { createBudgetObjects } from './utils';
 
 @Injectable()
 export class BudgetServices {
@@ -20,9 +23,6 @@ export class BudgetServices {
   ) {}
 
   // ALL BUDGET SERVICE METHODS
-  getAllBudgetCreationOptions(): string[] {
-    return serveBudgetTitleOptions();
-  }
 
   async createBudget(
     budgetDTO: BudgetDTO,
@@ -36,13 +36,27 @@ export class BudgetServices {
     return newBudget.save();
   }
 
-  async getAllBudgets(user: User): Promise<BudgetInterface[]> {
+  async getAllBudgets(
+    user: User
+  ): Promise<BudgetInterface[] | budgetDummyData[]> {
+    const allBudgetOptions = createBudgetObjects();
     const allBudgets = await this.budgetModel.find().exec();
     if (allBudgets) {
       const currentUserBudgets = allBudgets.filter(
         (budget) => budget.user_id === user.id
       );
-      return currentUserBudgets;
+      allBudgetOptions.forEach((budgetTitle) =>
+        currentUserBudgets.forEach((createdBudget) => {
+          if (createdBudget.title === budgetTitle.title) {
+            allBudgetOptions.splice(
+              allBudgetOptions.indexOf(budgetTitle),
+              1,
+              createdBudget
+            );
+          }
+        })
+      );
+      return allBudgetOptions;
     }
     throw new UnauthorizedException('User must own budgets');
   }
