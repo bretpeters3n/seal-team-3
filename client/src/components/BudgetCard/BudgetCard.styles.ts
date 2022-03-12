@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 interface ProgressProp {
@@ -6,24 +7,29 @@ interface ProgressProp {
 }
 
 interface ActiveProp {
-  currentmonth: boolean;
+  $current?: boolean;
+  active?: boolean;
 }
 
-export const BudgetCardContainer = styled.div<ActiveProp>`
-  width: 100%;
+export const BudgetCardContainer = styled(motion.div)<ActiveProp>`
+  position: absolute;
+  background: white;
+  width: 90%;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: ${(props) =>
+    props.$current
+      ? "rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;"
+      : "rgba(0, 0, 0, 0.24) 0px 3px 8px"};
   padding: 1em;
   border-radius: 5px;
-  opacity: ${(props) => (props.currentmonth ? "1" : ".4")};
+  opacity: ${(props) => (props.$current ? "1" : ".15")};
+  z-index: ${(props) => (props.$current ? 1 : 0)};
 `;
 
 export const BudgetTitle = styled.h1`
-  letter-spacing: 0.1em;
   font-weight: 800;
-  text-transform: uppercase;
 `;
 
 export const Soft = styled.span`
@@ -31,11 +37,11 @@ export const Soft = styled.span`
 `;
 
 export const TotalBudgetBar = styled.div`
+  position: relative;
   width: 100%;
   height: 30px;
   background: #e0e0e0;
   border-radius: 5px;
-  position: relative;
 `;
 
 export const ExpenseBar = styled.div<ProgressProp>`
@@ -55,14 +61,30 @@ export const BudgetInfoContainer = styled.div`
 
 export const BudgetInfo = styled.h3``;
 
-export const BudgetLinksContainer = styled.div`
-  display: flex;
+export const BudgetLinksContainer = styled.div<ActiveProp>`
+  display: ${(props) => (props.active ? "flex" : "none")};
   align-items: center;
   justify-content: space-between;
 `;
 
-export const BudgetLink = styled(Link)<ActiveProp>`
+export const BudgetLink = styled(Link)`
   font-weight: 700;
   color: #3200c0;
-  pointer-events: ${(props) => (props.currentmonth ? "auto" : "none")};
+`;
+
+export const CreateBudgetButton = styled.div<ActiveProp>`
+  display: ${(props) => (props.active ? "none" : "flex")};
+  align-items: center;
+  justify-content: center;
+  color: #3200c0;
+  transition: 0.2s all ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`;
+
+export const NoBudgetMessage = styled.div`
+  width: 100%;
 `;

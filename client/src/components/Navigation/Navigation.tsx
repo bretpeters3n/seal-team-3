@@ -67,7 +67,7 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
                 }}
                 id="no-style"
               >
-                <BiLogOut size="1.5rem" />
+                <h2>Logout</h2>
               </NavIcon>
             </SidebarWrapper>
           </>

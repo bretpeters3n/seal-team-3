@@ -24,6 +24,8 @@
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
+    "react-swipeable": "^6.2.0",
+    "react-use-scroll-direction": "^0.1.0",
     "styled-components": "^5.3.3",
     "sweetalert2": "^11.4.4",
     "typescript": "^4.5.5",

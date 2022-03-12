@@ -18,8 +18,7 @@ export interface TransactionTransferData {
 }
 
 export interface BudgetTransferData {
-  month: string;
-  year: string;
+  title: string;
   total: number;
   currentAmount: number;
 }
@@ -34,12 +33,11 @@ export interface ItemData {
 }
 
 export interface IBudgetData {
-  _id: string;
-  month: string;
-  year: string;
+  _id?: string;
+  title: string;
   total: number;
   currentAmount: number;
-  active: boolean;
+  created: boolean;
 }
 
 export const months = [
@@ -57,10 +55,21 @@ export const months = [
   "December",
 ] as const;
 
-// Needed for form validation using yup
 export const TransactionSchema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
   amount: yup
+    .number()
+    .typeError("must be a number")
+    .positive("must be positive")
+    .min(0)
+    .test("maxDigitsAfterDecimal", "up to 2 decimals only", (amount: any) =>
+      /^\d+(\.\d{1,2})?$/.test(amount?.toString())
+    )
+    .required("field is required"),
+});
+
+export const CreateBudgetSchema = yup.object().shape({
+  total: yup
     .number()
     .typeError("must be a number")
     .positive("must be positive")

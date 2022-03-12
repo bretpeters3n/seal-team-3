@@ -7,8 +7,7 @@ export const createBudget = async (data: BudgetTransferData) => {
     await axios.post(
       `${URL}/budgets/createBudget`,
       {
-        month: data.month,
-        year: data.year,
+        title: data.title,
         total: data.total,
         currentAmount: data.currentAmount,
       },
@@ -36,8 +35,7 @@ export const editBudget = async (
     await axios.patch(
       `${URL}/budgets/editBudget/${budgetId}`,
       {
-        month: data.month,
-        year: data.year,
+        title: data.title,
         total: data.total,
         currentAmount: data.currentAmount,
       },
@@ -60,7 +58,7 @@ export const editBudget = async (
 export const getAllBudgets = async () => {
   try {
     const data = await axios
-      .get(`${URL}/budgets/allBudgets`, {
+      .get(`${URL}/budgets/getAllBudgets`, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
@@ -70,7 +68,9 @@ export const getAllBudgets = async () => {
     return data;
   } catch (e) {
     const err = e as AxiosError;
-    if (err.response?.data?.statusCode > 401) {
+    if (err.response?.data?.statusCode === 401) {
+      alert("Auth token may have expired");
+    } else if (err.response?.data?.statusCode > 401) {
       alert(err.response?.data?.message);
     }
   }
