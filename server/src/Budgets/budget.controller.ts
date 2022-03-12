@@ -25,12 +25,6 @@ export class BudgetController {
   constructor(private budgetServices: BudgetServices) {}
 
   //BUDGET METHODS
-  // Get all budget title options
-  @Get('/allBudgetOptions')
-  getAllBudgetOptions() {
-    const allBudgets = this.budgetServices.getAllBudgetCreationOptions();
-    return allBudgets;
-  }
 
   // Create a budget
   @Post('/createBudget')
@@ -47,7 +41,7 @@ export class BudgetController {
   }
 
   // Fetch all budgets
-  @Get('/allCreatedBudgets')
+  @Get('/getAllBudgets')
   async getAllCreatedBudgets(@GetUser() user: User, @Res() res: Response) {
     const allBudgets = await this.budgetServices.getAllBudgets(user);
     return res.status(HttpStatus.OK).json(allBudgets);
