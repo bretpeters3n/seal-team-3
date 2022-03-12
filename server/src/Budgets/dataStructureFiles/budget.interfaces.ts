@@ -10,3 +10,10 @@ export interface BudgetInterface extends Document {
   last_date_edited: String;
   user_id: MongoDBID;
 }
+
+export interface budgetDummyData {
+  title: string;
+  total: number;
+  currentAmount: number;
+  created: boolean;
+}
