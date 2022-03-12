@@ -6,3 +6,4 @@ export { default as TransactionItemsList } from "./TransactionItemsList/Transact
 export { default as TransactionItemEditor } from "./TransactionItemEditor/TransactionItemEditor";
 export { default as BudgetCardList } from "./BudgetCardList/BudgetCardList";
 export { default as BudgetCard } from "./BudgetCard/BudgetCard";
+export { default as BudgetAdder } from "./BudgetAdder/BudgetAdder";

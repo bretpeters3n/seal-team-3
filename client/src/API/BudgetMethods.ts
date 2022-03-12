@@ -7,8 +7,7 @@ export const createBudget = async (data: BudgetTransferData) => {
     await axios.post(
       `${URL}/budgets/createBudget`,
       {
-        month: data.month,
-        year: data.year,
+        title: data.title,
         total: data.total,
         currentAmount: data.currentAmount,
       },
@@ -36,8 +35,7 @@ export const editBudget = async (
     await axios.patch(
       `${URL}/budgets/editBudget/${budgetId}`,
       {
-        month: data.month,
-        year: data.year,
+        title: data.title,
         total: data.total,
         currentAmount: data.currentAmount,
       },
@@ -60,7 +58,7 @@ export const editBudget = async (
 export const getAllBudgets = async () => {
   try {
     const data = await axios
-      .get(`${URL}/budgets/allCreatedBudgets`, {
+      .get(`${URL}/budgets/getAllBudgets`, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,

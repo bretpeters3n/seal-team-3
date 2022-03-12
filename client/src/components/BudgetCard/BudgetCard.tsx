@@ -1,33 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BudgetCardContainer,
   BudgetTitle,
-  Soft,
   TotalBudgetBar,
   ExpenseBar,
   BudgetInfoContainer,
   BudgetInfo,
   BudgetLinksContainer,
   BudgetLink,
+  CreateBudgetButton,
+  NoBudgetMessage,
 } from "./BudgetCard.styles";
 import { IBudgetData } from "../../constants";
+import { BsPlusSquare } from "react-icons/bs";
+import { BudgetAdder } from "../../components";
 
 interface IBudgetCard {
   budget: IBudgetData;
   index: number;
   position: number;
   setPosition: React.Dispatch<React.SetStateAction<number>>;
+  toggleRerender: () => void;
 }
 
 const BudgetCard: React.FC<IBudgetCard> = ({
-  budget: { _id, month, year, total, currentAmount, active },
+  budget: { _id, title, total, currentAmount, created },
   index,
   position,
   setPosition,
+  toggleRerender,
 }) => {
+  const [displayBudgetAdder, setDisplayBudgetAdder] = useState<boolean>(false);
+
   return (
     <BudgetCardContainer
-      currentmonth={_id === "622b99db73a322920a89f756"}
       initial={{ scale: 0, rotate: -180 }}
       animate={{
         scale: index === position ? 1 : 0.8,
@@ -36,36 +42,53 @@ const BudgetCard: React.FC<IBudgetCard> = ({
       }}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
       onClick={() => setPosition(index)}
-      current={index === position}
+      $current={index === position}
     >
-      <BudgetTitle>
-        {month} <Soft>{year}</Soft>
-      </BudgetTitle>
+      <BudgetTitle>{title}</BudgetTitle>
 
-      <TotalBudgetBar>
-        <ExpenseBar percentage={Math.min((currentAmount / total) * 100, 100)} />
-      </TotalBudgetBar>
+      {created ? (
+        <>
+          <TotalBudgetBar>
+            <ExpenseBar
+              percentage={Math.min((currentAmount / total) * 100, 100)}
+            />
+          </TotalBudgetBar>
+          <BudgetInfoContainer>
+            <BudgetInfo>{`$${currentAmount} of $${total}`}</BudgetInfo>
+            <BudgetInfo>
+              {`${total - currentAmount < 0 ? "-" : ""}$${Math.abs(
+                total - currentAmount
+              )}`}
+              {total - currentAmount > 0 ? " left" : " over"}
+            </BudgetInfo>
+          </BudgetInfoContainer>
 
-      <BudgetInfoContainer>
-        <BudgetInfo>
-          ${currentAmount} of <Soft>${total}</Soft>
-        </BudgetInfo>
-        <BudgetInfo>
-          {`${total - currentAmount < 0 ? "-" : ""}$${Math.abs(
-            total - currentAmount
-          )}`}
-          <Soft>{total - currentAmount > 0 ? " left" : " over"}</Soft>
-        </BudgetInfo>
-      </BudgetInfoContainer>
+          <BudgetLinksContainer active={created}>
+            <BudgetLink to="/budget/income">Adjust Incomes</BudgetLink>
+            <BudgetLink to="/budget/expenses">Adjust Expenses</BudgetLink>
+          </BudgetLinksContainer>
+        </>
+      ) : (
+        <NoBudgetMessage>
+          <h4>Please create a new budget</h4>
+        </NoBudgetMessage>
+      )}
 
-      <BudgetLinksContainer>
-        <BudgetLink to="/budget/income" current={active}>
-          Adjust Incomes
-        </BudgetLink>
-        <BudgetLink to="/budget/expenses" current={active}>
-          Adjust Expenses
-        </BudgetLink>
-      </BudgetLinksContainer>
+      <CreateBudgetButton
+        active={created}
+        onClick={() => setDisplayBudgetAdder(true)}
+      >
+        <BsPlusSquare size="2.5rem" />
+      </CreateBudgetButton>
+
+      {displayBudgetAdder && (
+        <BudgetAdder
+          title={title}
+          currentAmount={currentAmount}
+          setDisplayBudgetAdder={setDisplayBudgetAdder}
+          toggleRerender={toggleRerender}
+        />
+      )}
     </BudgetCardContainer>
   );
 };

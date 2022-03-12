@@ -7,8 +7,8 @@ interface ProgressProp {
 }
 
 interface ActiveProp {
-  currentmonth?: boolean;
-  current?: boolean;
+  $current?: boolean;
+  active?: boolean;
 }
 
 export const BudgetCardContainer = styled(motion.div)<ActiveProp>`
@@ -19,13 +19,13 @@ export const BudgetCardContainer = styled(motion.div)<ActiveProp>`
   flex-direction: column;
   gap: 0.5em;
   box-shadow: ${(props) =>
-    props.current
+    props.$current
       ? "rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;"
       : "rgba(0, 0, 0, 0.24) 0px 3px 8px"};
   padding: 1em;
   border-radius: 5px;
-  opacity: ${(props) => (props.current ? "1" : ".2")};
-  z-index: ${(props) => (props.current ? 1 : 0)};
+  opacity: ${(props) => (props.$current ? "1" : ".15")};
+  z-index: ${(props) => (props.$current ? 1 : 0)};
 `;
 
 export const BudgetTitle = styled.h1`
@@ -61,14 +61,30 @@ export const BudgetInfoContainer = styled.div`
 
 export const BudgetInfo = styled.h3``;
 
-export const BudgetLinksContainer = styled.div`
-  display: flex;
+export const BudgetLinksContainer = styled.div<ActiveProp>`
+  display: ${(props) => (props.active ? "flex" : "none")};
   align-items: center;
   justify-content: space-between;
 `;
 
-export const BudgetLink = styled(Link)<ActiveProp>`
+export const BudgetLink = styled(Link)`
   font-weight: 700;
   color: #3200c0;
-  pointer-events: ${(props) => (props.current ? "auto" : "none")};
+`;
+
+export const CreateBudgetButton = styled.div<ActiveProp>`
+  display: ${(props) => (props.active ? "none" : "flex")};
+  align-items: center;
+  justify-content: center;
+  color: #3200c0;
+  transition: 0.2s all ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`;
+
+export const NoBudgetMessage = styled.div`
+  width: 100%;
 `;

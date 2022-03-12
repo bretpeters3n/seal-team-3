@@ -18,21 +18,38 @@ export const Carousel = styled(motion.div)`
   width: 100%;
 `;
 
-export const ArrowOptions = styled.div`
+export const UpArrow = styled.div`
   position: absolute;
-  z-index: 10;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const Arrow = styled.div`
-  margin: 0 auto;
+  top: 0;
+  z-index: 1;
   cursor: pointer;
   transition: 0.3s all ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export const DownArrow = styled.div`
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  cursor: pointer;
+  transition: 0.3s all ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export const GotoCurrent = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  cursor: pointer;
+  transition: 0.3s all ease;
+  padding: 1em;
 
   &:hover {
     transform: scale(1.1);
