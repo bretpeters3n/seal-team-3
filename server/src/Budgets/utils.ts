@@ -1,5 +1,5 @@
 import * as dayjs from 'dayjs';
-import { budgetDummyData } from './dataStructureFiles/budget.interfaces';
+import { BudgetDummyData } from './dataStructureFiles/budget.interfaces';
 
 // today minus a year
 const startingDay = dayjs().subtract(1, 'year');
@@ -19,7 +19,7 @@ const differenceInMonths = endingDay.diff(startingDay, 'month');
 // the counter that increments each loop to get each month
 let monthCounter = 0;
 
-export const serveBudgetTitleOptions = () => {
+const serveBudgetTitleOptions = () => {
   while (monthCounter < differenceInMonths + 1) {
     budgetTitlesArray.push(
       mutableStartingDate.add(monthCounter, 'month').format('MMMM YYYY')
@@ -30,4 +30,12 @@ export const serveBudgetTitleOptions = () => {
     }
   }
   return budgetTitlesArray;
+};
+
+export const createBudgetObjects = (): BudgetDummyData[] => {
+  const budgetTitleArray = serveBudgetTitleOptions();
+  const budgetObjectArray = budgetTitleArray.map((title: string) => {
+    return { title, total: 0, currentAmount: 0, created: false };
+  });
+  return budgetObjectArray;
 };

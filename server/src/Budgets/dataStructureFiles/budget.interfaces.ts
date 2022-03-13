@@ -11,7 +11,7 @@ export interface BudgetInterface extends Document {
   user_id: MongoDBID;
 }
 
-export interface budgetDummyData {
+export interface BudgetDummyData {
   title: string;
   total: number;
   currentAmount: number;
