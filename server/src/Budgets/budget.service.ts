@@ -7,13 +7,13 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { dateStamp } from 'src/utils/dateStamp';
 import {
-  budgetDummyData,
+  BudgetDummyData,
   BudgetInterface,
 } from './dataStructureFiles/budget.interfaces';
 import { MongoDBID } from 'src/shared/types';
 import { User } from 'src/Auth/dataStructureFiles/auth.interfaces';
 import { BudgetDTO } from './dataStructureFiles/budget.dto';
-import { serveBudgetTitleOptions } from './utils';
+import { createBudgetObjects } from './utils';
 
 @Injectable()
 export class BudgetServices {
@@ -35,8 +35,10 @@ export class BudgetServices {
     return newBudget.save();
   }
 
-  async getAllBudgets(user: User): Promise<BudgetInterface[] | string[]> {
-    const allBudgetOptions = serveBudgetTitleOptions();
+  async getAllBudgets(
+    user: User
+  ): Promise<BudgetInterface[] | BudgetDummyData[]> {
+    const allBudgetOptions = createBudgetObjects();
     const allBudgets = await this.budgetModel.find().exec();
     if (allBudgets) {
       const currentUserBudgets = allBudgets.filter(
@@ -44,7 +46,7 @@ export class BudgetServices {
       );
       allBudgetOptions.forEach((budgetTitle) =>
         currentUserBudgets.forEach((createdBudget) => {
-          if (createdBudget.title === budgetTitle) {
+          if (createdBudget.title === budgetTitle.title) {
             allBudgetOptions.splice(
               allBudgetOptions.indexOf(budgetTitle),
               1,
