@@ -25,6 +25,8 @@ export interface BudgetTransferData {
 
 export type TransactionType = "income" | "expense";
 
+export type BudgetIdType = string | undefined;
+
 export interface ItemData {
   _id: string;
   title: string;
@@ -33,7 +35,7 @@ export interface ItemData {
 }
 
 export interface IBudgetData {
-  _id?: string;
+  _id: string;
   title: string;
   total: number;
   currentAmount: number;
@@ -60,8 +62,6 @@ export const TransactionSchema = yup.object().shape({
   amount: yup
     .number()
     .typeError("must be a number")
-    .positive("must be positive")
-    .min(0)
     .test("maxDigitsAfterDecimal", "up to 2 decimals only", (amount: any) =>
       /^\d+(\.\d{1,2})?$/.test(amount?.toString())
     )

@@ -4,6 +4,7 @@ import { TransactionItemAdder, TransactionItemsList } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/TransactionMethods";
 import { ItemData } from "../../constants";
+import { useParams, useLocation } from "react-router-dom";
 
 const PathContext = createContext<string>("");
 
@@ -13,21 +14,20 @@ interface Transaction {
 
 const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
-
   const [rerender, setRerender] = useState<boolean>(false);
+  const [transactionItems, setTransactionItems] = useState<Array<ItemData>>([]);
 
-  const [incomeItems, setIncomeItems] = useState<Array<ItemData>>([]);
-  const [expenseItems, setExpenseItems] = useState<Array<ItemData>>([]);
+  const { budgetId } = useParams();
 
   const toggleRerender = () => setRerender(!rerender);
 
   const retrieveData = async () => {
-    const expenseData = await getAllItems("expense");
-    const incomeData = await getAllItems("income");
+    const transactions = await getAllItems(budgetId);
 
-    setIncomeItems(incomeData);
-    setExpenseItems(expenseData);
+    setTransactionItems(transactions);
   };
+
+  const budgetData: any = useLocation();
 
   useEffect(() => {
     retrieveData();
@@ -47,14 +47,16 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
               setDisplayAdder={setDisplayAdder}
               toggleRerender={toggleRerender}
               pageType={pageType}
+              budgetData={budgetData.state}
             />
           )}
         </AnimatePresence>
         <TransactionItemsList
           setDisplayAdder={setDisplayAdder}
-          filteredData={pageType === "income" ? incomeItems : expenseItems}
+          filteredData={transactionItems}
           toggleRerender={toggleRerender}
           pageType={pageType}
+          budgetData={budgetData.state}
         />
       </Container>
     </PathContext.Provider>

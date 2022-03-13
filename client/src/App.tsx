@@ -33,7 +33,7 @@ function App() {
               <Route path="budget" element={<Budget />}>
                 <Route index element={<Transactions pageType="income" />} />
                 <Route
-                  path="income"
+                  path="transactions/:budgetId"
                   element={<Transactions pageType="income" />}
                 />
                 <Route

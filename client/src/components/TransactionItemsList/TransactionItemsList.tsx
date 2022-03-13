@@ -11,26 +11,28 @@ import {
 import { AnimatePresence } from "framer-motion";
 import { ItemData, TransactionType } from "../../constants";
 
-interface TransactionTracker {
+interface ITransactionItemsList {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   filteredData: ItemData[];
   toggleRerender: () => void;
   pageType: TransactionType;
+  budgetData:
+    | { id: string; title: string; total: number; currentAmount: number }
+    | undefined;
 }
 
-const TransactionItemsList: React.FC<TransactionTracker> = ({
+const TransactionItemsList: React.FC<ITransactionItemsList> = ({
   setDisplayAdder,
   filteredData,
   toggleRerender,
   pageType,
+  budgetData,
 }) => {
   return (
     <Container>
       <TransactionsContainer>
         <TitleContainer>
-          <Title>
-            Monthly {`${pageType.includes("expense") ? "Expense" : "Income"}`}
-          </Title>
+          <Title>{budgetData?.title} Transactions</Title>
           <Button onClick={() => setDisplayAdder(true)}>
             <BsPlusCircle size="2rem" />
           </Button>

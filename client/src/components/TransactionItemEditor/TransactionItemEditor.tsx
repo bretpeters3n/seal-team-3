@@ -64,7 +64,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
     data: TransactionTransferData
   ) => {
     // code to run on submit
-    editItem(id, data, pageType);
+    editItem(id, data);
     setItemOptions(false);
     setDisplayItemEditor(false);
     toggleRerender();

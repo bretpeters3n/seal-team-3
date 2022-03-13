@@ -33,7 +33,7 @@ const TransactionItem: React.FC<Transaction> = ({
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
   const handleDelete = () => {
-    deleteItem(id, pageType);
+    deleteItem(id);
     toggleRerender();
   };
 
@@ -59,10 +59,9 @@ const TransactionItem: React.FC<Transaction> = ({
       <ItemContainer onClick={toggleItemOptions}>
         <ItemName>{title}</ItemName>
         <ItemAmount
-          textColor={pageType === "income" ? "#25a244" : "#ff595e"}
+          textColor={amount > 0 ? "#25a244" : "#ff595e"}
         >{`${currencyFormatter.format(amount)}`}</ItemAmount>
       </ItemContainer>
-      {/* Item Options slides out on Click of each item */}
       {itemOptions && (
         <ItemOptionsContainer
           initial={{ x: 20, opacity: 0 }}

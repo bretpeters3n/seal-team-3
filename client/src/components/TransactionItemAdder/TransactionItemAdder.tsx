@@ -21,22 +21,27 @@ import {
   TransactionType,
   TransactionSchema,
 } from "../../constants";
+import { editBudget } from "../../API/BudgetMethods";
 
 interface FormInputs {
   title: string;
   amount: number;
 }
 
-interface TransactionAdder {
+interface ITransactionItemAdder {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
   pageType: TransactionType;
+  budgetData:
+    | { id: string; title: string; total: number; currentAmount: number }
+    | undefined;
 }
 
-const TransactionItemAdder: React.FC<TransactionAdder> = ({
+const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   setDisplayAdder,
   toggleRerender,
   pageType,
+  budgetData,
 }) => {
   const {
     register,
@@ -50,7 +55,12 @@ const TransactionItemAdder: React.FC<TransactionAdder> = ({
   const onSubmit: SubmitHandler<FormInputs> = (
     data: TransactionTransferData
   ): void => {
-    addItem(data, pageType === "expense" ? "expense" : "income");
+    addItem(data, budgetData?.id);
+    editBudget(budgetData?.id!, {
+      title: budgetData!.title,
+      total: budgetData!.total,
+      currentAmount: budgetData?.currentAmount! + 30,
+    });
     toggleRerender();
     reset();
   };

@@ -1,13 +1,13 @@
 import axios, { AxiosError } from "axios";
-import { TransactionTransferData, URL, TransactionType } from "../constants";
+import { TransactionTransferData, URL, BudgetIdType } from "../constants";
 
 export const addItem = async (
   data: TransactionTransferData,
-  type: TransactionType
+  budgetId: string | undefined
 ) => {
   try {
     await axios.post(
-      `${URL}/transactions/post${type === "expense" ? "Expense" : "Income"}`,
+      `${URL}/transactions/postTransaction/${budgetId}`,
       {
         title: data.title,
         amount: data.amount,
@@ -27,18 +27,15 @@ export const addItem = async (
   }
 };
 
-export const getAllItems = async (type: TransactionType) => {
+export const getAllItems = async (budgetId: BudgetIdType) => {
   try {
     const data = await axios
-      .get(
-        `${URL}/transactions/all${type === "expense" ? "Expenses" : "Incomes"}`,
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-          },
-        }
-      )
+      .get(`${URL}/transactions/allTransactions/${budgetId}`, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        },
+      })
       .then((res) => res.data);
     return data;
   } catch (e) {
@@ -49,19 +46,14 @@ export const getAllItems = async (type: TransactionType) => {
   }
 };
 
-export const deleteItem = async (itemId: string, type: TransactionType) => {
+export const deleteItem = async (itemId: string) => {
   try {
-    await axios.delete(
-      `${URL}/transactions/delete${
-        type === "expense" ? "Expense" : "Income"
-      }/${itemId}`,
-      {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-        },
-      }
-    );
+    await axios.delete(`${URL}/transactions/deleteTransaction/${itemId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+      },
+    });
   } catch (e) {
     const err = e as AxiosError;
     if (err.response?.data?.statusCode > 401) {
@@ -72,14 +64,11 @@ export const deleteItem = async (itemId: string, type: TransactionType) => {
 
 export const editItem = async (
   itemId: string,
-  data: TransactionTransferData,
-  type: TransactionType
+  data: TransactionTransferData
 ) => {
   try {
     await axios.patch(
-      `${URL}/transactions/edit${
-        type === "expense" ? "Expense" : "Income"
-      }/${itemId}`,
+      `${URL}/transactions/editTransaction/${itemId}`,
       {
         title: data.title,
         amount: data.amount,
