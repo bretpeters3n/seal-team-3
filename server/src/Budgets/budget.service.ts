@@ -13,7 +13,7 @@ import {
 import { MongoDBID } from 'src/shared/types';
 import { User } from 'src/Auth/dataStructureFiles/auth.interfaces';
 import { BudgetDTO } from './dataStructureFiles/budget.dto';
-import { createBudgetObjects } from './utils';
+import { serveBudgetTitleOptions } from './utils';
 
 @Injectable()
 export class BudgetServices {
@@ -23,7 +23,6 @@ export class BudgetServices {
   ) {}
 
   // ALL BUDGET SERVICE METHODS
-
   async createBudget(
     budgetDTO: BudgetDTO,
     user: User
@@ -36,10 +35,8 @@ export class BudgetServices {
     return newBudget.save();
   }
 
-  async getAllBudgets(
-    user: User
-  ): Promise<BudgetInterface[] | budgetDummyData[]> {
-    const allBudgetOptions = createBudgetObjects();
+  async getAllBudgets(user: User): Promise<BudgetInterface[] | string[]> {
+    const allBudgetOptions = serveBudgetTitleOptions();
     const allBudgets = await this.budgetModel.find().exec();
     if (allBudgets) {
       const currentUserBudgets = allBudgets.filter(
@@ -47,7 +44,7 @@ export class BudgetServices {
       );
       allBudgetOptions.forEach((budgetTitle) =>
         currentUserBudgets.forEach((createdBudget) => {
-          if (createdBudget.title === budgetTitle.title) {
+          if (createdBudget.title === budgetTitle) {
             allBudgetOptions.splice(
               allBudgetOptions.indexOf(budgetTitle),
               1,

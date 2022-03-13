@@ -19,7 +19,7 @@ const differenceInMonths = endingDay.diff(startingDay, 'month');
 // the counter that increments each loop to get each month
 let monthCounter = 0;
 
-const serveBudgetTitleOptions = () => {
+export const serveBudgetTitleOptions = () => {
   while (monthCounter < differenceInMonths + 1) {
     budgetTitlesArray.push(
       mutableStartingDate.add(monthCounter, 'month').format('MMMM YYYY')
@@ -30,12 +30,4 @@ const serveBudgetTitleOptions = () => {
     }
   }
   return budgetTitlesArray;
-};
-
-export const createBudgetObjects = (): budgetDummyData[] => {
-  const budgetTitleArray = serveBudgetTitleOptions();
-  const budgetObjectArray = budgetTitleArray.map((title: string) => {
-    return { title, total: 0, currentAmount: 0, created: false };
-  });
-  return budgetObjectArray;
 };
