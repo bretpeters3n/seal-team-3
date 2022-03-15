@@ -6,8 +6,6 @@ import { ICategory } from "../../constants";
 const BudgetMain: React.FC = () => {
   const budgetData = useOutletContext<any>();
 
-  console.log(typeof budgetData);
-
   return (
     <Container>
       <h1>Budget MAIN PAGE</h1>

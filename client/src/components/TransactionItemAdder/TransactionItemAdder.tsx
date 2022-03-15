@@ -47,8 +47,6 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
 
   const budgetData: any = useOutletContext();
 
-  console.log("items page", budgetData);
-
   const {
     register,
     handleSubmit,

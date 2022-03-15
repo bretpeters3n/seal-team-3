@@ -16,8 +16,6 @@ const Home = () => {
     {}
   );
 
-  console.log("data", data);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }

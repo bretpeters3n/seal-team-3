@@ -28,8 +28,6 @@ const Budget = () => {
     (budget: IBudgetData) => budget._id === budgetId
   );
 
-  console.log("DATA", data);
-
   return (
     <Container>
       <BudgetNavbar />
