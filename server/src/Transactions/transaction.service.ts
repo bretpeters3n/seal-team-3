@@ -13,19 +13,23 @@ import {
 import { MongoDBID } from 'src/shared/types';
 import { User } from 'src/Auth/dataStructureFiles/auth.interfaces';
 import { TransactionDTO } from './dataStructureFiles/transaction.dto';
+import { BudgetServices } from 'src/Budgets/budget.service';
 
 @Injectable()
 export class TransactionServices {
   constructor(
     @InjectModel('TransactionSchema')
-    private readonly transactionModel: Model<TransactionInterface>
+    private readonly transactionModel: Model<TransactionInterface>,
+    private budgetServices: BudgetServices
   ) {}
 
   // ALL TRANSACTION METHODS
+  //  The method below creates a new transactions and adds it to the budget within a category
   async addTransaction(
     incomingDTO: TransactionDTO,
     user: User,
-    budget_id: MongoDBID
+    budget_id: MongoDBID,
+    category_id: MongoDBID
   ): Promise<TransactionInterface> {
     const newTransaction = new this.transactionModel(incomingDTO);
     newTransaction.type =
@@ -34,7 +38,28 @@ export class TransactionServices {
     newTransaction.last_date_edited = dateStamp();
     newTransaction.user_id = user._id;
     newTransaction.budget_id = budget_id;
-    return newTransaction.save();
+    newTransaction.category_id = category_id;
+    const allBudgets = await this.budgetServices.getAllCreatedBudgets(user);
+    const foundBudget = allBudgets.find((budget) => budget._id == budget_id);
+    const foundCategory = foundBudget.categories.find(
+      (category) => category._id == category_id
+    );
+    newTransaction.save();
+    foundCategory.transactions.push({
+      title: newTransaction.title,
+      amount: incomingDTO.amount,
+      type:
+        incomingDTO.amount < 0
+          ? IncomeOrExpense.EXPENSE
+          : IncomeOrExpense.INCOME,
+      date_posted: dateStamp(),
+      last_date_edited: dateStamp(),
+      user_id: user._id,
+      budget_id,
+      category_id,
+    });
+    foundBudget.save();
+    return newTransaction;
   }
 
   // async getTransaction(
@@ -67,7 +92,6 @@ export class TransactionServices {
     throw new UnauthorizedException('User must own transactions');
   }
 
-  // Start here. This one and delete aren't working.
   async editTransaction(
     user: User,
     transactionID: MongoDBID,
