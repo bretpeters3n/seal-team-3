@@ -29,7 +29,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
 
   const budgetData: any = useOutletContext();
 
-  console.log("transactions page", budgetData);
+  console.log("transactions page", transactionItems);
 
   useEffect(() => {
     retrieveData();
@@ -54,7 +54,9 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
         </AnimatePresence>
         <TransactionItemsList
           setDisplayAdder={setDisplayAdder}
-          filteredData={transactionItems}
+          filteredData={transactionItems.filter(
+            (transaction) => transaction.type === pageType
+          )}
           toggleRerender={toggleRerender}
           pageType={pageType}
           budgetData={budgetData}

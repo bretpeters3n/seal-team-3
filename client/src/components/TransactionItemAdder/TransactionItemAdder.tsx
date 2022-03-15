@@ -62,7 +62,14 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   const onSubmit: SubmitHandler<FormInputs> = (
     data: TransactionTransferData
   ): void => {
-    addItem(data, budgetId, getValues("category"));
+    addItem(
+      {
+        title: data.title,
+        amount: pageType === "expense" ? data.amount * -1 : data.amount,
+      },
+      budgetId,
+      getValues("category")
+    );
     editBudget(budgetData.id, {
       title: budgetData.title,
       total: budgetData.total,
