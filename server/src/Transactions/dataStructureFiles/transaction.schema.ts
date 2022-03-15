@@ -8,4 +8,5 @@ export const TransactionSchema = new mongoose.Schema({
   last_date_edited: String,
   user_id: { type: String, required: true },
   budget_id: { type: String, required: true },
+  category_id: { type: String, required: true },
 });

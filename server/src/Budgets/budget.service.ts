@@ -10,10 +10,11 @@ import {
   BudgetDummyData,
   BudgetInterface,
 } from './dataStructureFiles/budget.interfaces';
+import { createBudgetObjects } from './utils';
 import { MongoDBID } from 'src/shared/types';
 import { User } from 'src/Auth/dataStructureFiles/auth.interfaces';
 import { BudgetDTO } from './dataStructureFiles/budget.dto';
-import { createBudgetObjects } from './utils';
+import { CATEGORIES } from './constants';
 
 @Injectable()
 export class BudgetServices {
@@ -32,9 +33,17 @@ export class BudgetServices {
     newBudget.last_date_edited = dateStamp();
     newBudget.user_id = user._id;
     newBudget.created = true;
+    CATEGORIES.forEach((category) =>
+      newBudget.categories.push({
+        title: category.title,
+        amount: category.amount,
+        transactions: category.transactions,
+      })
+    );
     return newBudget.save();
   }
 
+  // getAllBudgets
   async getAllBudgets(
     user: User
   ): Promise<BudgetInterface[] | BudgetDummyData[]> {
@@ -58,6 +67,17 @@ export class BudgetServices {
       return allBudgetOptions;
     }
     throw new UnauthorizedException('User must own budgets');
+  }
+
+  //getAllCreatedBudgets
+  async getAllCreatedBudgets(user: User): Promise<BudgetInterface[]> {
+    const allBudgets = await this.budgetModel.find().exec();
+    if (allBudgets) {
+      const currentUserBudgets = allBudgets.filter(
+        (budget) => budget.user_id === user.id
+      );
+      return currentUserBudgets;
+    }
   }
 
   async editBudget(

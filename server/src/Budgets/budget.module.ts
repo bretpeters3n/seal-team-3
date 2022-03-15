@@ -12,5 +12,6 @@ import { BudgetController } from './budget.controller';
   ],
   providers: [BudgetServices],
   controllers: [BudgetController],
+  exports: [BudgetServices],
 })
 export class BudgetModule {}
