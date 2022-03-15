@@ -7,8 +7,8 @@ export enum IncomeOrExpense {
 }
 
 export interface TransactionInterface extends Document {
-  readonly title: string;
-  readonly amount: number;
+  title: string;
+  amount: number;
   type: IncomeOrExpense;
   date_posted: string;
   last_date_edited: String;

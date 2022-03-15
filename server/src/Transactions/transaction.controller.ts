@@ -79,15 +79,20 @@ export class TransactionController {
   }
 
   // Edit a transaction using its ID
-  @Patch('/editTransaction/:transactionID')
+  @Patch('/editTransaction/:budgetID/:currentCategoryID/:transactionID')
   async editTransaction(
     @GetUser() user: User,
     @Res() res: Response,
+    @Param('budgetID', new ValidateObjectId()) budgetID: MongoDBID,
+    @Param('currentCategoryID', new ValidateObjectId())
+    currentCategoryID: MongoDBID,
     @Param('transactionID', new ValidateObjectId()) transactionID: MongoDBID,
     @Body() transactionDTO: TransactionDTO
   ) {
     const editableTransaction = await this.transactionServices.editTransaction(
       user,
+      budgetID,
+      currentCategoryID,
       transactionID,
       transactionDTO
     );
@@ -98,35 +103,25 @@ export class TransactionController {
   }
 
   // Delete a transaction using its ID
-  @Delete('/deleteTransaction/:transactionID')
+  @Delete('/deleteTransaction/:budgetID/:categoryID/:transactionID')
   async deleteTransaction(
     @GetUser() user: User,
     @Res() res: Response,
+    @Param('budgetID', new ValidateObjectId()) budgetID: MongoDBID,
+    @Param('categoryID', new ValidateObjectId())
+    categoryID: MongoDBID,
     @Param('transactionID', new ValidateObjectId()) transactionID: MongoDBID
   ) {
     const deletableTransaction =
-      await this.transactionServices.deleteTransaction(user, transactionID);
+      await this.transactionServices.deleteTransaction(
+        user,
+        budgetID,
+        categoryID,
+        transactionID
+      );
     return res.status(HttpStatus.OK).json({
       message: 'Transaction has been deleted!',
       deletedTransaction: deletableTransaction,
     });
   }
-
-  // Fetch a particular expense using its ID
-  // @Get('/getExpense/:expenseID')
-  // async getExpense(
-  //   @GetUser() user: User,
-  //   @Res() res: Response,
-  //   @Param('expenseID', new ValidateObjectId()) expenseID: MongoDBID
-  // ) {
-  //   const foundExpense = await this.transactionServices.getTransaction(
-  //     user._id,
-  //     expenseID,
-  //     IncomeOrExpense.EXPENSE
-  //   );
-  //   if (!foundExpense) {
-  //     throw new NotFoundException('Expense does not exist!');
-  //   }
-  //   return res.status(HttpStatus.OK).json(foundExpense);
-  // }
 }
