@@ -58,12 +58,38 @@ export const months = [
   "December",
 ] as const;
 
+interface Transaction {
+  title: string;
+  amount: number;
+  type: "income" | "expense";
+  userId: string;
+  budgetId: string;
+  categoryId: string;
+  _id: string;
+}
+
+interface Category {
+  title: string;
+  amount: number;
+  transactions: Transaction[];
+  _id: string;
+}
+
+export interface IBudget {
+  title: string;
+  total: number;
+  currentAmount: number;
+  _id?: string;
+  categories?: Category[];
+  userId?: string;
+  created: boolean;
+}
+
 export const TransactionSchema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
   amount: yup
     .number()
     .typeError("must be a number")
-    .positive()
     .test("maxDigitsAfterDecimal", "up to 2 decimals only", (amount: any) =>
       /^\d+(\.\d{1,2})?$/.test(amount?.toString())
     )

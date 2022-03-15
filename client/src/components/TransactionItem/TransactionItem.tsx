@@ -60,7 +60,7 @@ const TransactionItem: React.FC<Transaction> = ({
         <ItemName>{title}</ItemName>
         <ItemAmount
           textColor={pageType === "income" ? "#25a244" : "#ff595e"}
-        >{`${currencyFormatter.format(amount)}`}</ItemAmount>
+        >{`${currencyFormatter.format(Math.abs(amount))}`}</ItemAmount>
       </ItemContainer>
       {itemOptions && (
         <ItemOptionsContainer
