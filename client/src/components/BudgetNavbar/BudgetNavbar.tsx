@@ -6,10 +6,10 @@ const BudgetNavbar = () => {
     <Container>
       <List>
         <ListItem>
-          <ListItemText to="/budget/income">Income</ListItemText>
+          <ListItemText to="income">Income</ListItemText>
         </ListItem>
         <ListItem>
-          <ListItemText to="/budget/expenses">Expenses</ListItemText>
+          <ListItemText to="expenses">Expenses</ListItemText>
         </ListItem>
       </List>
     </Container>

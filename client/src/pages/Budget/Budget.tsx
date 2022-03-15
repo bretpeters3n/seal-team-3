@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "./Budget.styles";
 import { BudgetNavbar } from "../../components";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 const Budget = () => {
-  const { budgetId } = useParams();
+  const data: any = useLocation();
+  const [budgetData, setBudgetData] = useState<any>(data);
 
-  console.log(budgetId);
+  useEffect(() => {
+    setBudgetData(data);
+  }, []);
 
   return (
     <Container>
       <BudgetNavbar />
-      <Outlet />
+      <Outlet context={budgetData} />
     </Container>
   );
 };

@@ -71,6 +71,8 @@ export const Input = styled.input`
   }
 `;
 
+export const Select = styled.select``;
+
 export const ErrorContainer = styled.div`
   color: red;
   font-size: 0.8rem;

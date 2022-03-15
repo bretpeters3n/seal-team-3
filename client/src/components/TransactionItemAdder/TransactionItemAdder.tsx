@@ -11,6 +11,7 @@ import {
   Input,
   FormButton,
   ErrorContainer,
+  Select,
 } from "./TransactionItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -22,32 +23,38 @@ import {
   TransactionSchema,
 } from "../../constants";
 import { editBudget } from "../../API/BudgetMethods";
+import { useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
   amount: number;
+  category: string;
 }
 
 interface ITransactionItemAdder {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
   pageType: TransactionType;
-  budgetData:
-    | { id: string; title: string; total: number; currentAmount: number }
-    | undefined;
 }
 
 const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   setDisplayAdder,
   toggleRerender,
   pageType,
-  budgetData,
 }) => {
+  // const [category, setCategory] = useState<string>("");
+  const { budgetId } = useParams();
+
+  const budgetData: any = useOutletContext();
+
+  console.log("items page", budgetData);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    getValues,
   } = useForm<FormInputs>({
     resolver: yupResolver(TransactionSchema),
   });
@@ -55,11 +62,11 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   const onSubmit: SubmitHandler<FormInputs> = (
     data: TransactionTransferData
   ): void => {
-    addItem(data, budgetData?.id);
-    editBudget(budgetData?.id!, {
-      title: budgetData!.title,
-      total: budgetData!.total,
-      currentAmount: budgetData?.currentAmount! + 30,
+    addItem(data, budgetId, getValues("category"));
+    editBudget(budgetData.id, {
+      title: budgetData.title,
+      total: budgetData.total,
+      currentAmount: budgetData.currentAmount + parseFloat(getValues("title")),
     });
     toggleRerender();
     reset();
@@ -99,6 +106,21 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
               inputMode="numeric"
               autoComplete="transaction-amount"
             />
+            <ErrorContainer>
+              {errors.amount && errors.amount?.message && (
+                <p>{errors.amount.message}</p>
+              )}
+            </ErrorContainer>
+          </InputGroup>
+          <InputGroup>
+            <Label>Category</Label>
+            <Select {...register("category")}>
+              {budgetData.state.categories.map((category: any) => (
+                <option key={category.title} value={category._id}>
+                  {category.title}
+                </option>
+              ))}
+            </Select>
             <ErrorContainer>
               {errors.amount && errors.amount?.message && (
                 <p>{errors.amount.message}</p>

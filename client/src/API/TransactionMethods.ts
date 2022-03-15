@@ -3,11 +3,12 @@ import { TransactionTransferData, URL, BudgetIdType } from "../constants";
 
 export const addItem = async (
   data: TransactionTransferData,
-  budgetId: string | undefined
+  budgetId: string | undefined,
+  categoryId: string | undefined
 ) => {
   try {
     await axios.post(
-      `${URL}/transactions/postTransaction/${budgetId}`,
+      `${URL}/transactions/postTransaction/${budgetId}/${categoryId}`,
       {
         title: data.title,
         amount: data.amount,

@@ -25,7 +25,7 @@ interface IBudgetCard {
 }
 
 const BudgetCard: React.FC<IBudgetCard> = ({
-  budget: { _id, title, total, currentAmount, created },
+  budget: { _id, title, total, currentAmount, created, categories },
   index,
   position,
   setPosition,
@@ -45,9 +45,11 @@ const BudgetCard: React.FC<IBudgetCard> = ({
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
       $current={index === position}
       onClick={() =>
-        navigate(`/budget/${_id}`, {
-          state: { id: _id, title, total, currentAmount },
-        })
+        created
+          ? navigate(`/budget/${_id}`, {
+              state: { id: _id, title, total, currentAmount, categories },
+            })
+          : null
       }
     >
       <BudgetTitle>{title}</BudgetTitle>

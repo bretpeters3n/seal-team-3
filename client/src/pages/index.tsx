@@ -5,3 +5,4 @@ export { default as Home } from "./Home/Home";
 export { default as Transactions } from "./Transactions/Transactions";
 export { default as Budget } from "./Budget/Budget";
 export { default as ErrorPage } from "./ErrorPage/ErrorPage";
+export { default as BudgetMain } from "./BudgetMain/BudgetMain";

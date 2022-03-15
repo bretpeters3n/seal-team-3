@@ -8,6 +8,7 @@ import {
   Transactions,
   Budget,
   ErrorPage,
+  BudgetMain,
 } from "./pages";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -31,8 +32,9 @@ function App() {
               <Route path="/" element={<Home />} />
               {/* USING NESTED ROUTES  */}
               <Route path="budget/:budgetId" element={<Budget />}>
+                <Route index element={<BudgetMain />} />
                 <Route
-                  path="transactions"
+                  path="income"
                   element={<Transactions pageType="income" />}
                 />
                 <Route

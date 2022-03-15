@@ -16,9 +16,7 @@ interface ITransactionItemsList {
   filteredData: ItemData[];
   toggleRerender: () => void;
   pageType: TransactionType;
-  budgetData:
-    | { id: string; title: string; total: number; currentAmount: number }
-    | undefined;
+  budgetData: any;
 }
 
 const TransactionItemsList: React.FC<ITransactionItemsList> = ({
@@ -32,7 +30,7 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
     <Container>
       <TransactionsContainer>
         <TitleContainer>
-          <Title>{budgetData?.title} Transactions</Title>
+          <Title>{budgetData.title} Transactions</Title>
           <Button onClick={() => setDisplayAdder(true)}>
             <BsPlusCircle size="2rem" />
           </Button>

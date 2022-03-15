@@ -4,7 +4,7 @@ import { TransactionItemAdder, TransactionItemsList } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/TransactionMethods";
 import { ItemData } from "../../constants";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useOutletContext } from "react-router-dom";
 
 const PathContext = createContext<string>("");
 
@@ -27,7 +27,9 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
     setTransactionItems(transactions);
   };
 
-  const budgetData: any = useLocation();
+  const budgetData: any = useOutletContext();
+
+  console.log("transactions page", budgetData);
 
   useEffect(() => {
     retrieveData();
@@ -47,7 +49,6 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
               setDisplayAdder={setDisplayAdder}
               toggleRerender={toggleRerender}
               pageType={pageType}
-              budgetData={budgetData.state}
             />
           )}
         </AnimatePresence>
@@ -56,7 +57,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
           filteredData={transactionItems}
           toggleRerender={toggleRerender}
           pageType={pageType}
-          budgetData={budgetData.state}
+          budgetData={budgetData}
         />
       </Container>
     </PathContext.Provider>

@@ -35,11 +35,12 @@ export interface ItemData {
 }
 
 export interface IBudgetData {
-  _id: string;
+  _id?: string;
   title: string;
   total: number;
   currentAmount: number;
   created: boolean;
+  categories?: boolean;
 }
 
 export const months = [
