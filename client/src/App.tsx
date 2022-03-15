@@ -30,10 +30,9 @@ function App() {
             <>
               <Route path="/" element={<Home />} />
               {/* USING NESTED ROUTES  */}
-              <Route path="budget" element={<Budget />}>
-                <Route index element={<Transactions pageType="income" />} />
+              <Route path="budget/:budgetId" element={<Budget />}>
                 <Route
-                  path="transactions/:budgetId"
+                  path="transactions"
                   element={<Transactions pageType="income" />}
                 />
                 <Route

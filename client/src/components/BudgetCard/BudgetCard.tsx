@@ -45,7 +45,7 @@ const BudgetCard: React.FC<IBudgetCard> = ({
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
       $current={index === position}
       onClick={() =>
-        navigate(`/budget/transactions/${_id}`, {
+        navigate(`/budget/${_id}`, {
           state: { id: _id, title, total, currentAmount },
         })
       }
