@@ -26,6 +26,11 @@ export const BudgetCardContainer = styled(motion.div)<ActiveProp>`
   border-radius: 5px;
   opacity: ${(props) => (props.$current ? "1" : ".15")};
   z-index: ${(props) => (props.$current ? 1 : 0)};
+
+  &:hover {
+    cursor: pointer;
+    background-color: whitesmoke;
+  }
 `;
 
 export const BudgetTitle = styled.h1`
