@@ -84,7 +84,9 @@ const BudgetCard: React.FC<IBudgetCard> = ({
 
       <CreateBudgetButton
         active={created}
-        onClick={() => setDisplayBudgetAdder(true)}
+        onClick={() => {
+          setDisplayBudgetAdder(true);
+        }}
       >
         <BsPlusSquare size="2.5rem" />
       </CreateBudgetButton>

@@ -27,7 +27,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
     setTransactionItems(transactions);
   };
 
-  const budgetData: any = useOutletContext();
+  const budgetData = useOutletContext<any>();
 
   useEffect(() => {
     retrieveData();

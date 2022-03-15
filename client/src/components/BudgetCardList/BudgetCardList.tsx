@@ -7,12 +7,15 @@ import {
   GotoCurrent,
 } from "./BudgetCardList.styles";
 import { BudgetCard } from "../../components";
-import { IBudgetData } from "../../constants";
-import { getAllBudgets } from "../../API/BudgetMethods";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { IBudgetData } from "../../constants";
 
-const BudgetCardList: React.FC = () => {
-  const [budgets, setBudgets] = useState<Array<IBudgetData>>([]);
+interface IBudgetCardList {
+  budgets: IBudgetData[];
+  refetch: () => void;
+}
+
+const BudgetCardList: React.FC<IBudgetCardList> = ({ budgets, refetch }) => {
   const [position, setPosition] = useState<number>(12);
   const [rerender, setRerender] = useState<boolean>(true);
 
@@ -29,13 +32,8 @@ const BudgetCardList: React.FC = () => {
     }
   };
 
-  const retrieveAllBudgets = async () => {
-    const data = await getAllBudgets();
-    setBudgets(data);
-  };
-
   useEffect(() => {
-    retrieveAllBudgets();
+    refetch();
   }, [rerender]);
 
   return (

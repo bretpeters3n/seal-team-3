@@ -68,7 +68,7 @@ interface Transaction {
   _id: string;
 }
 
-interface Category {
+export interface ICategory {
   title: string;
   amount: number;
   transactions: Transaction[];
@@ -80,7 +80,7 @@ export interface IBudget {
   total: number;
   currentAmount: number;
   _id?: string;
-  categories?: Category[];
+  categories?: ICategory[];
   userId?: string;
   created: boolean;
 }
