@@ -26,17 +26,19 @@ export class TransactionController {
 
   // TRANSACTION METHODS
   // Submit a transaction
-  @Post('/postTransaction/:budgetID')
+  @Post('/postTransaction/:budgetID/:categoryID')
   async addTransaction(
     @GetUser() user: User,
     @Res() res: Response,
     @Body() transactionDTO: TransactionDTO,
-    @Param('budgetID', new ValidateObjectId()) budgetID: MongoDBID
+    @Param('budgetID', new ValidateObjectId()) budgetID: MongoDBID,
+    @Param('categoryID', new ValidateObjectId()) categoryID: MongoDBID
   ) {
     const newTransaction = await this.transactionServices.addTransaction(
       transactionDTO,
       user,
-      budgetID
+      budgetID,
+      categoryID
     );
     return res.status(HttpStatus.OK).json({
       message: 'Transaction has been successfully added!',
