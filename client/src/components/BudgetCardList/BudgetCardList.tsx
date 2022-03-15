@@ -37,7 +37,6 @@ const BudgetCardList: React.FC = () => {
   useEffect(() => {
     retrieveAllBudgets();
   }, [rerender]);
-  console.log(budgets);
 
   return (
     <Container>

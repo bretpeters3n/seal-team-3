@@ -12,8 +12,6 @@ interface ICategory {
 const BudgetMain: React.FC = () => {
   const budgetData: any = useOutletContext();
 
-  console.log("id", budgetData);
-
   return (
     <Container>
       <h1>Budget MAIN PAGE</h1>

@@ -29,8 +29,6 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
 
   const budgetData: any = useOutletContext();
 
-  console.log("transactions page", transactionItems);
-
   useEffect(() => {
     retrieveData();
   }, [rerender]);
