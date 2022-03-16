@@ -129,8 +129,8 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
               ))}
             </Select>
             <ErrorContainer>
-              {errors.amount && errors.amount?.message && (
-                <p>{errors.amount.message}</p>
+              {errors.category && errors.category?.message && (
+                <p>{errors.category.message}</p>
               )}
             </ErrorContainer>
           </InputGroup>

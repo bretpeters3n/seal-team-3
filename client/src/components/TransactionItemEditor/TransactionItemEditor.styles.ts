@@ -64,6 +64,7 @@ export const InputGroup = styled.div<InputBoxModifier>`
 export const Select = styled.select`
   margin-top: 0.5em;
   height: 35px;
+  border-radius: 5px;
 `;
 
 export const Label = styled.div`

@@ -3,7 +3,7 @@ import { Container } from "./Transactions.styles";
 import { TransactionItemAdder, TransactionItemsList } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/TransactionMethods";
-import { ITransaction } from "../../constants";
+import { ITransaction, IBudgetData } from "../../constants";
 import { useParams, useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
 
@@ -30,11 +30,13 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
 
   const toggleRerender = () => setRerender(!rerender);
 
-  const budgetData = useOutletContext<any>();
+  const budgetData = useOutletContext<IBudgetData>();
 
   useEffect(() => {
     refetch();
   }, [rerender]);
+
+  console.log(budgetData);
 
   if (isLoading) {
     return <div>Loading...</div>;

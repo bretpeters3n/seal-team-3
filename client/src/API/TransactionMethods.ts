@@ -97,27 +97,3 @@ export const editItem = async (
     }
   }
 };
-
-// export const getItem = async (itemId: string, type: TransactionType) => {
-//   try {
-//     const response = await axios.get(
-//       `${URL}/transactions/get${
-//         type === "expense" ? "Expense" : "Income"
-//       }/${itemId}`,
-//       {
-//         withCredentials: true,
-//         headers: {
-//           Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-//         },
-//       }
-//     );
-//     if (response) {
-//       // code if response is true
-//     }
-//   } catch (e) {
-//     const err = e as AxiosError;
-//     if (err.response?.data?.statusCode > 401) {
-//       alert(err.response?.data?.message);
-//     }
-//   }
-// };

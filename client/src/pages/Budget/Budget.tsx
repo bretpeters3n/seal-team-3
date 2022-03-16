@@ -7,7 +7,6 @@ import { getAllBudgets } from "../../API/BudgetMethods";
 import { IBudgetData } from "../../constants";
 
 const Budget = () => {
-  // const [selectedBudget, setSelectedBudget] = useState<IBudgetData | {}>({});
   const { budgetId } = useParams();
 
   const fetchAllBudgets = async () => {

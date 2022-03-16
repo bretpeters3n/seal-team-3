@@ -41,7 +41,7 @@ export interface IBudgetData {
   total: number;
   currentAmount: number;
   created: boolean;
-  categories?: boolean;
+  categories?: object[];
 }
 
 export const months = [
@@ -91,6 +91,7 @@ export const TransactionSchema = yup.object().shape({
   amount: yup
     .number()
     .typeError("must be a number")
+    .positive()
     .test("maxDigitsAfterDecimal", "up to 2 decimals only", (amount: any) =>
       /^\d+(\.\d{1,2})?$/.test(amount?.toString())
     )

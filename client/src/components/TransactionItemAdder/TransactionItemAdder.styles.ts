@@ -46,6 +46,14 @@ export const InputGroup = styled.div<InputBoxModifier>`
   flex: ${(props) => (props.long ? "2" : "1")};
   padding-bottom: 1em;
   position: relative;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Select = styled.select`
+  margin-top: 0.5em;
+  height: 35px;
+  border-radius: 5px;
 `;
 
 export const Label = styled.div`
@@ -70,8 +78,6 @@ export const Input = styled.input`
     border-radius: 3px;
   }
 `;
-
-export const Select = styled.select``;
 
 export const ErrorContainer = styled.div`
   color: red;

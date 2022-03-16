@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GrFormClose } from "react-icons/gr";
@@ -52,7 +52,6 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   toggleRerender,
   categoryId,
 }) => {
-  const [prevAmount, setPrevAmount] = useState<number>(amount);
   const budgetData: any = useOutletContext();
   const { budgetId } = useParams();
 
@@ -80,13 +79,12 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
     editBudget(budgetData[0]._id, {
       title: budgetData[0].title,
       total: budgetData[0].total,
-      // Have to fix this...this is not working correctly
+      // NEED TO FIX THIS
       currentAmount:
         pageType === "expense"
-          ? budgetData[0].currentAmount - (data.amount - prevAmount)
+          ? budgetData[0].currentAmount
           : budgetData[0].currentAmount,
     });
-    setPrevAmount(data.amount);
     setItemOptions(false);
     setDisplayItemEditor(false);
     toggleRerender();
