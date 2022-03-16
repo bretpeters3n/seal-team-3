@@ -9,6 +9,7 @@ import {
   Delete,
   Patch,
   UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
@@ -45,6 +46,22 @@ export class BudgetController {
   async getAllCreatedBudgets(@GetUser() user: User, @Res() res: Response) {
     const allBudgets = await this.budgetServices.getAllBudgets(user);
     return res.status(HttpStatus.OK).json(allBudgets);
+  }
+
+  // Fetch budget by ID
+  @Get('/getBudget/:budgetID')
+  async getBudgetById(
+    @GetUser() user: User,
+    @Res() res: Response,
+    @Param('budgetID', new ValidateObjectId()) budgetID: MongoDBID
+  ) {
+    const foundBudget = await this.budgetServices.getBudgetById(user, budgetID);
+    if (!foundBudget) {
+      throw new NotFoundException(
+        'Budget does not exist or cannot be found, check your ID!'
+      );
+    }
+    return res.status(HttpStatus.OK).json(foundBudget);
   }
 
   // Edit a budget using its ID
