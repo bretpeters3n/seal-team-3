@@ -28,7 +28,7 @@ import { useOutletContext, useParams } from "react-router-dom";
 interface FormInputs {
   title: string;
   amount: number;
-  category: string;
+  categoryId: string;
 }
 
 interface ITransactionItemAdder {
@@ -51,7 +51,6 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     handleSubmit,
     formState: { errors },
     reset,
-    getValues,
   } = useForm<FormInputs>({
     resolver: yupResolver(TransactionSchema),
   });
@@ -63,9 +62,10 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
       {
         title: data.title,
         amount: pageType === "expense" ? data.amount * -1 : data.amount,
+        categoryId: data.categoryId,
       },
       budgetId,
-      getValues("category")
+      data.categoryId
     );
     editBudget(budgetData[0]._id, {
       title: budgetData[0].title,
@@ -121,7 +121,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           </InputGroup>
           <InputGroup>
             <Label>Category</Label>
-            <Select {...register("category")}>
+            <Select {...register("categoryId")}>
               {budgetData[0].categories.map((category: any) => (
                 <option key={category.title} value={category._id}>
                   {category.title}
@@ -129,8 +129,8 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
               ))}
             </Select>
             <ErrorContainer>
-              {errors.category && errors.category?.message && (
-                <p>{errors.category.message}</p>
+              {errors.categoryId && errors.categoryId?.message && (
+                <p>{errors.categoryId.message}</p>
               )}
             </ErrorContainer>
           </InputGroup>

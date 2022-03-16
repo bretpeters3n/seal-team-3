@@ -28,9 +28,8 @@ import { useOutletContext, useParams } from "react-router-dom";
 interface FormInputs {
   title: string;
   amount: number;
-  category: string;
+  categoryId: string;
 }
-
 interface TargetItem {
   id: string;
   title: string;
@@ -39,9 +38,8 @@ interface TargetItem {
   setDisplayItemEditor: React.Dispatch<React.SetStateAction<boolean>>;
   setItemOptions: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
-  categoryId: string;
+  prevCategoryId: string;
 }
-
 const TransactionItemEditor: React.FC<TargetItem> = ({
   id,
   title,
@@ -50,16 +48,15 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   setDisplayItemEditor,
   setItemOptions,
   toggleRerender,
-  categoryId,
+  prevCategoryId,
 }) => {
   const budgetData: any = useOutletContext();
   const { budgetId } = useParams();
-
   const preloadedValues = {
     title: title,
     amount: pageType === "expense" ? amount * -1 : amount,
+    categoryId: prevCategoryId,
   };
-
   const {
     register,
     handleSubmit,
@@ -68,13 +65,13 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
     resolver: yupResolver(TransactionSchema),
     defaultValues: preloadedValues,
   });
-
   const onSubmit: SubmitHandler<FormInputs> = (
     data: TransactionTransferData
   ) => {
-    editItem(budgetId, categoryId, id, {
+    editItem(budgetId, prevCategoryId, id, {
       title: data.title,
       amount: pageType === "expense" ? data.amount * -1 : data.amount,
+      categoryId: data.categoryId,
     });
     editBudget(budgetData[0]._id, {
       title: budgetData[0].title,
@@ -124,7 +121,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
             </InputGroup>
             <InputGroup>
               <Label>Category</Label>
-              <Select {...register("category")}>
+              <Select {...register("categoryId")}>
                 {budgetData[0].categories.map((category: any) => (
                   <option key={category.title} value={category._id}>
                     {category.title}
@@ -132,8 +129,8 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
                 ))}
               </Select>
               <ErrorContainer>
-                {errors.amount && errors.amount?.message && (
-                  <p>{errors.amount.message}</p>
+                {errors.categoryId && errors.categoryId?.message && (
+                  <p>{errors.categoryId.message}</p>
                 )}
               </ErrorContainer>
             </InputGroup>

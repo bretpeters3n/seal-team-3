@@ -15,6 +15,7 @@ export interface UserInfoData extends LoginData {
 export interface TransactionTransferData {
   title: string;
   amount: number;
+  categoryId: string;
 }
 
 export interface BudgetTransferData {

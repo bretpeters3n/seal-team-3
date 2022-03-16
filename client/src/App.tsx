@@ -24,7 +24,6 @@ function App() {
       setUser(true);
     }
   }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">

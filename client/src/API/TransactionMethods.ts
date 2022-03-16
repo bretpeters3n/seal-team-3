@@ -12,6 +12,7 @@ export const addItem = async (
       {
         title: data.title,
         amount: data.amount,
+        categoryId: data.categoryId,
       },
       {
         withCredentials: true,
@@ -72,16 +73,17 @@ export const deleteItem = async (
 
 export const editItem = async (
   budgetId: BudgetIdType,
-  categoryId: string,
+  prevCategoryId: string,
   itemId: string,
   data: TransactionTransferData
 ) => {
   try {
     await axios.patch(
-      `${URL}/transactions/editTransaction/${budgetId}/${categoryId}/${itemId}`,
+      `${URL}/transactions/editTransaction/${budgetId}/${prevCategoryId}/${itemId}`,
       {
         title: data.title,
         amount: data.amount,
+        category_id: data.categoryId,
       },
       {
         withCredentials: true,
