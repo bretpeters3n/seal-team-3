@@ -23,6 +23,7 @@ import {
   TransactionType,
   TransactionSchema,
   ICategory,
+  IBudget,
 } from "../../constants";
 import { useOutletContext, useParams } from "react-router-dom";
 
@@ -45,7 +46,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
 }) => {
   const { budgetId } = useParams();
 
-  const budgetData: any = useOutletContext();
+  const budgetData: IBudget[] = useOutletContext();
 
   const {
     register,
@@ -68,14 +69,15 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
       budgetId,
       data.categoryId
     );
-    editBudget(budgetData[0]._id, {
-      title: budgetData[0].title,
-      total: budgetData[0].total,
-      currentAmount:
-        pageType === "expense"
-          ? budgetData[0].currentAmount + data.amount
-          : budgetData[0].currentAmount,
-    });
+    typeof budgetData[0]._id === "string" &&
+      editBudget(budgetData[0]._id, {
+        title: budgetData[0].title,
+        total: budgetData[0].total,
+        currentAmount:
+          pageType === "expense"
+            ? budgetData[0].currentAmount + data.amount
+            : budgetData[0].currentAmount,
+      });
     toggleRerender();
     reset();
   };
@@ -123,11 +125,12 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           <InputGroup>
             <Label>Category</Label>
             <Select {...register("categoryId")}>
-              {budgetData[0].categories.map((category: ICategory) => (
-                <option key={category.title} value={category._id}>
-                  {category.title}
-                </option>
-              ))}
+              {budgetData[0].categories &&
+                budgetData[0].categories.map((category: ICategory) => (
+                  <option key={category.title} value={category._id}>
+                    {category.title}
+                  </option>
+                ))}
             </Select>
             <ErrorContainer>
               {errors.categoryId && errors.categoryId?.message && (
