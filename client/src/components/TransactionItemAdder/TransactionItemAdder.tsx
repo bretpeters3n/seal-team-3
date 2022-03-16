@@ -22,6 +22,7 @@ import {
   TransactionTransferData,
   TransactionType,
   TransactionSchema,
+  ICategory,
 } from "../../constants";
 import { useOutletContext, useParams } from "react-router-dom";
 
@@ -122,7 +123,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           <InputGroup>
             <Label>Category</Label>
             <Select {...register("categoryId")}>
-              {budgetData[0].categories.map((category: any) => (
+              {budgetData[0].categories.map((category: ICategory) => (
                 <option key={category.title} value={category._id}>
                   {category.title}
                 </option>

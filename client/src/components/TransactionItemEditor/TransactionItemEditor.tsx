@@ -20,6 +20,7 @@ import {
   TransactionTransferData,
   TransactionType,
   TransactionSchema,
+  ICategory,
 } from "../../constants";
 import { editItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
@@ -122,7 +123,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
             <InputGroup>
               <Label>Category</Label>
               <Select {...register("categoryId")}>
-                {budgetData[0].categories.map((category: any) => (
+                {budgetData[0].categories.map((category: ICategory) => (
                   <option key={category.title} value={category._id}>
                     {category.title}
                   </option>
