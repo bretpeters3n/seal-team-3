@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GrFormClose } from "react-icons/gr";
@@ -21,6 +21,8 @@ import {
   TransactionSchema,
 } from "../../constants";
 import { editItem } from "../../API/TransactionMethods";
+import { editBudget } from "../../API/BudgetMethods";
+import { useOutletContext } from "react-router-dom";
 
 interface FormInputs {
   title: string;
@@ -46,10 +48,17 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   setItemOptions,
   toggleRerender,
 }) => {
+  const [prevAmount, setPrevAmount] = useState<number>(amount);
+
+  console.log(amount);
   const preloadedValues = {
     title: title,
-    amount: amount,
+    amount: pageType === "expense" ? amount * -1 : amount,
   };
+
+  const budgetData: any = useOutletContext();
+
+  console.log("current", budgetData[0].currentAmount);
 
   const {
     register,
@@ -68,6 +77,16 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
       title: data.title,
       amount: pageType === "expense" ? data.amount * -1 : data.amount,
     });
+    editBudget(budgetData[0]._id, {
+      title: budgetData[0].title,
+      total: budgetData[0].total,
+      // Have to fix this...this is not working correctly
+      currentAmount:
+        pageType === "expense"
+          ? budgetData[0].currentAmount - (data.amount - prevAmount)
+          : budgetData[0].currentAmount,
+    });
+    setPrevAmount(data.amount);
     setItemOptions(false);
     setDisplayItemEditor(false);
     toggleRerender();

@@ -17,12 +17,12 @@ import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
+import { editBudget } from "../../API/BudgetMethods";
 import {
   TransactionTransferData,
   TransactionType,
   TransactionSchema,
 } from "../../constants";
-import { editBudget } from "../../API/BudgetMethods";
 import { useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
@@ -68,10 +68,13 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
       budgetId,
       getValues("category")
     );
-    editBudget(budgetData.id, {
-      title: budgetData.title,
-      total: budgetData.total,
-      currentAmount: budgetData.currentAmount + parseFloat(getValues("title")),
+    editBudget(budgetData[0]._id, {
+      title: budgetData[0].title,
+      total: budgetData[0].total,
+      currentAmount:
+        pageType === "expense"
+          ? budgetData[0].currentAmount + data.amount
+          : budgetData[0].currentAmount,
     });
     toggleRerender();
     reset();
@@ -120,7 +123,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           <InputGroup>
             <Label>Category</Label>
             <Select {...register("category")}>
-              {budgetData.state.categories.map((category: any) => (
+              {budgetData[0].categories.map((category: any) => (
                 <option key={category.title} value={category._id}>
                   {category.title}
                 </option>

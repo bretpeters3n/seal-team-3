@@ -3,8 +3,9 @@ import { Container } from "./Transactions.styles";
 import { TransactionItemAdder, TransactionItemsList } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/TransactionMethods";
-import { ItemData } from "../../constants";
+import { ITransaction } from "../../constants";
 import { useParams, useOutletContext } from "react-router-dom";
+import { useQuery } from "react-query";
 
 const PathContext = createContext<string>("");
 
@@ -15,23 +16,32 @@ interface Transaction {
 const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
   const [rerender, setRerender] = useState<boolean>(false);
-  const [transactionItems, setTransactionItems] = useState<Array<ItemData>>([]);
-
   const { budgetId } = useParams();
 
-  const toggleRerender = () => setRerender(!rerender);
-
-  const retrieveData = async () => {
+  const fetchTransactions = async () => {
     const transactions = await getAllItems(budgetId);
-
-    setTransactionItems(transactions);
+    return transactions;
   };
+
+  const { data, isLoading, status, refetch } = useQuery(
+    "transactions",
+    fetchTransactions
+  );
+
+  const toggleRerender = () => setRerender(!rerender);
 
   const budgetData = useOutletContext<any>();
 
   useEffect(() => {
-    retrieveData();
+    refetch();
   }, [rerender]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (status === "error") {
+    return <div>Error...</div>;
+  }
 
   return (
     <PathContext.Provider value={pageType}>
@@ -52,8 +62,8 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
         </AnimatePresence>
         <TransactionItemsList
           setDisplayAdder={setDisplayAdder}
-          filteredData={transactionItems.filter(
-            (transaction) => transaction.type === pageType
+          filteredData={data.filter(
+            (transaction: ITransaction) => transaction.type === pageType
           )}
           toggleRerender={toggleRerender}
           pageType={pageType}

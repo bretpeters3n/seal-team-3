@@ -58,10 +58,10 @@ export const months = [
   "December",
 ] as const;
 
-interface Transaction {
+export interface ITransaction {
   title: string;
   amount: number;
-  type: "income" | "expense";
+  type: string;
   userId: string;
   budgetId: string;
   categoryId: string;
@@ -71,7 +71,7 @@ interface Transaction {
 export interface ICategory {
   title: string;
   amount: number;
-  transactions: Transaction[];
+  transactions: ITransaction[];
   _id: string;
 }
 
