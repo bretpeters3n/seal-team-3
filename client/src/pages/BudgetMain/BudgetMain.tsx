@@ -1,10 +1,10 @@
 import React from "react";
 import { Container } from "./BudgetMain.styles";
 import { useOutletContext } from "react-router-dom";
-import { ICategory } from "../../constants";
+import { ICategory, IBudget } from "../../constants";
 
 const BudgetMain: React.FC = () => {
-  const budgetData = useOutletContext<any>();
+  const budgetData: IBudget[] = useOutletContext();
 
   return (
     <Container>
@@ -13,9 +13,10 @@ const BudgetMain: React.FC = () => {
       <div>{budgetData[0].title}</div>
       <div>{budgetData[0].total}</div>
       <div>{budgetData[0].currentAmount}</div>
-      {budgetData[0].categories.map((category: ICategory) => (
-        <h2 key={category.title}>{category.title}</h2>
-      ))}
+      {budgetData[0].categories &&
+        budgetData[0].categories.map((category: ICategory) => (
+          <h2 key={category.title}>{category.title}</h2>
+        ))}
     </Container>
   );
 };

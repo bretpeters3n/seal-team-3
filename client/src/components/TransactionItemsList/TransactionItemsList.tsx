@@ -16,6 +16,7 @@ interface ITransactionItemsList {
   filteredData: ItemData[];
   toggleRerender: () => void;
   pageType: TransactionType;
+  displayAdder: boolean;
 }
 
 const TransactionItemsList: React.FC<ITransactionItemsList> = ({
@@ -23,10 +24,13 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
   filteredData,
   toggleRerender,
   pageType,
+  displayAdder,
 }) => {
   return (
     <Container>
-      <TransactionsContainer>
+      <TransactionsContainer
+        maxHeight={displayAdder ? "calc(100vh - 450px)" : "calc(100vh-70px)"}
+      >
         <TitleContainer>
           <Title>{pageType === "expense" ? "Expenses" : "Income"}</Title>
           <Button onClick={() => setDisplayAdder(true)}>

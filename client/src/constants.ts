@@ -85,6 +85,9 @@ export interface IBudget {
   categories?: ICategory[];
   userId?: string;
   created: boolean;
+  date_created?: string;
+  last_date_edited?: string;
+  __v?: number;
 }
 
 export const TransactionSchema = yup.object().shape({
