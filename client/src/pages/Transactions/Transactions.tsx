@@ -36,8 +36,6 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
     refetch();
   }, [rerender]);
 
-  console.log(budgetData);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
