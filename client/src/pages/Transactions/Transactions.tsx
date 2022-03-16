@@ -56,6 +56,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
           )}
           toggleRerender={toggleRerender}
           pageType={pageType}
+          displayAdder={displayAdder}
         />
       </Container>
     </PathContext.Provider>
