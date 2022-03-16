@@ -50,6 +50,8 @@ const TransactionItem: React.FC<Transaction> = ({
     minimumFractionDigits: 2,
   });
 
+  console.log(categoryId);
+
   return (
     <Container>
       {displayItemEditor && (

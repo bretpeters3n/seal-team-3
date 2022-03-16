@@ -14,6 +14,7 @@ import {
   FormButton,
   TitleContainer,
   Icon,
+  Select,
 } from "./TransactionItemEditor.styles";
 import {
   TransactionTransferData,
@@ -22,11 +23,12 @@ import {
 } from "../../constants";
 import { editItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
   amount: number;
+  category: string;
 }
 
 interface TargetItem {
@@ -51,16 +53,13 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   categoryId,
 }) => {
   const [prevAmount, setPrevAmount] = useState<number>(amount);
+  const budgetData: any = useOutletContext();
+  const { budgetId } = useParams();
 
-  console.log(amount);
   const preloadedValues = {
     title: title,
     amount: pageType === "expense" ? amount * -1 : amount,
   };
-
-  const budgetData: any = useOutletContext();
-
-  console.log("current", budgetData[0].currentAmount);
 
   const {
     register,
@@ -74,8 +73,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   const onSubmit: SubmitHandler<FormInputs> = (
     data: TransactionTransferData
   ) => {
-    // code to run on submit
-    editItem(id, {
+    editItem(budgetId, categoryId, id, {
       title: data.title,
       amount: pageType === "expense" ? data.amount * -1 : data.amount,
     });
@@ -120,6 +118,21 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
             <InputGroup>
               <Label>Amount</Label>
               <Input {...register("amount")} />
+              <ErrorContainer>
+                {errors.amount && errors.amount?.message && (
+                  <p>{errors.amount.message}</p>
+                )}
+              </ErrorContainer>
+            </InputGroup>
+            <InputGroup>
+              <Label>Category</Label>
+              <Select {...register("category")}>
+                {budgetData[0].categories.map((category: any) => (
+                  <option key={category.title} value={category._id}>
+                    {category.title}
+                  </option>
+                ))}
+              </Select>
               <ErrorContainer>
                 {errors.amount && errors.amount?.message && (
                   <p>{errors.amount.message}</p>

@@ -26,6 +26,7 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
   pageType,
   budgetData,
 }) => {
+  console.log(filteredData);
   return (
     <Container>
       <TransactionsContainer>

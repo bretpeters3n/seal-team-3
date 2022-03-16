@@ -71,12 +71,14 @@ export const deleteItem = async (
 };
 
 export const editItem = async (
+  budgetId: BudgetIdType,
+  categoryId: string,
   itemId: string,
   data: TransactionTransferData
 ) => {
   try {
     await axios.patch(
-      `${URL}/transactions/editTransaction/${itemId}`,
+      `${URL}/transactions/editTransaction/${budgetId}/${categoryId}/${itemId}`,
       {
         title: data.title,
         amount: data.amount,
