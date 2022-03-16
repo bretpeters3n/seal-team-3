@@ -108,6 +108,10 @@ export class TransactionServices {
         new: true,
       }
     );
+    editableTransaction.type =
+      transactionDTO.amount < 0
+        ? IncomeOrExpense.EXPENSE
+        : IncomeOrExpense.INCOME;
     editableTransaction.last_date_edited = dateStamp();
     const foundBudget = await this.budgetServices.getBudgetById(user, budgetID);
     const foundCategory = foundBudget.categories.find(
