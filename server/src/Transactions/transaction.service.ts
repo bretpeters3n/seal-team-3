@@ -39,12 +39,13 @@ export class TransactionServices {
     newTransaction.user_id = user._id;
     newTransaction.budget_id = budget_id;
     newTransaction.category_id = category_id;
-    const allBudgets = await this.budgetServices.getAllCreatedBudgets(user);
-    const foundBudget = allBudgets.find((budget) => budget._id == budget_id);
+    const foundBudget = await this.budgetServices.getBudgetById(
+      user,
+      budget_id
+    );
     const foundCategory = foundBudget.categories.find(
       (category) => category._id == category_id
     );
-    newTransaction.save();
     foundCategory.transactions.push({
       title: newTransaction.title,
       amount: incomingDTO.amount,
@@ -57,21 +58,21 @@ export class TransactionServices {
       user_id: user._id,
       budget_id,
       category_id,
+      _id: newTransaction._id,
     });
+    newTransaction.save();
     foundBudget.save();
     return newTransaction;
   }
 
   // async getTransaction(
   //   userID: MongoDBID,
-  //   transactionID: MongoDBID,
-  //   transactionType: IncomeOrExpense
+  //   transactionID: MongoDBID
   // ): Promise<TransactionInterface> {
-  //   const transaction =
-  //     transactionType === 'income'
-  //       ? await this.incomeModel.findById(transactionID).exec()
-  //       : await this.expenseModel.findById(transactionID).exec();
-  //   if (userID === transaction.user_id) {
+  //   const transaction = await this.transactionModel
+  //     .findById(transactionID)
+  //     .exec();
+  //   if (userID == transaction.user_id) {
   //     return transaction;
   //   }
   //   throw new UnauthorizedException('User must own transaction');
@@ -94,9 +95,12 @@ export class TransactionServices {
 
   async editTransaction(
     user: User,
+    budgetID: MongoDBID,
+    currentCategoryID: MongoDBID,
     transactionID: MongoDBID,
     transactionDTO: TransactionDTO
   ): Promise<TransactionInterface> {
+    // send the new categoryID with the amount and title
     const editableTransaction = await this.transactionModel.findByIdAndUpdate(
       transactionID,
       transactionDTO,
@@ -104,7 +108,25 @@ export class TransactionServices {
         new: true,
       }
     );
+    editableTransaction.type =
+      transactionDTO.amount < 0
+        ? IncomeOrExpense.EXPENSE
+        : IncomeOrExpense.INCOME;
     editableTransaction.last_date_edited = dateStamp();
+    const foundBudget = await this.budgetServices.getBudgetById(user, budgetID);
+    const foundCategory = foundBudget.categories.find(
+      (category) => category._id == currentCategoryID
+    );
+    foundCategory.transactions.forEach((transaction) => {
+      if (transaction._id.toString() === transactionID) {
+        transaction.title = editableTransaction.title;
+        transaction.amount = editableTransaction.amount;
+        transaction.type = editableTransaction.type;
+        transaction.last_date_edited = editableTransaction.last_date_edited;
+        transaction.category_id = editableTransaction.category_id;
+      }
+    });
+    foundBudget.save();
     if (editableTransaction === null) {
       throw new NotFoundException('Transaction does not exist!');
     } else if (user._id.toString() === editableTransaction.user_id) {
@@ -116,15 +138,31 @@ export class TransactionServices {
 
   async deleteTransaction(
     user: User,
+    budgetID: MongoDBID,
+    categoryID: MongoDBID,
     transactionID: MongoDBID
   ): Promise<
     TransactionInterface & {
       _id: MongoDBID;
     }
   > {
+    console.log('running');
+    const foundBudget = await this.budgetServices.getBudgetById(user, budgetID);
+    const foundCategory = foundBudget.categories.find(
+      (category) => category._id == categoryID
+    );
+    foundCategory.transactions.forEach((transaction) => {
+      if (transaction._id.toString() === transactionID) {
+        foundCategory.transactions.splice(
+          foundCategory.transactions.indexOf(transaction),
+          1
+        );
+      }
+    });
     const deletedtransaction = await this.transactionModel.findByIdAndRemove(
       transactionID
     );
+    foundBudget.save();
     if (deletedtransaction === null) {
       throw new NotFoundException('Transaction was already deleted.');
     } else if (user._id.toString() === deletedtransaction.user_id) {

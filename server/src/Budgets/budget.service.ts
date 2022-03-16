@@ -80,6 +80,17 @@ export class BudgetServices {
     }
   }
 
+  async getBudgetById(
+    user: User,
+    budgetID: MongoDBID
+  ): Promise<BudgetInterface> {
+    const foundBudget = await this.budgetModel.findById(budgetID).exec();
+    if (user._id.toString() === foundBudget.user_id) {
+      return foundBudget;
+    }
+    throw new UnauthorizedException('User must own budget');
+  }
+
   async editBudget(
     user: User,
     budgetID: MongoDBID,
