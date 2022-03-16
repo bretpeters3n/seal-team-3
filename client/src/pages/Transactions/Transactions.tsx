@@ -3,46 +3,35 @@ import { Container } from "./Transactions.styles";
 import { TransactionItemAdder, TransactionItemsList } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/TransactionMethods";
-import { ITransaction, IBudgetData } from "../../constants";
-import { useParams, useOutletContext } from "react-router-dom";
+import { ITransaction } from "../../constants";
+import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-
 const PathContext = createContext<string>("");
-
 interface Transaction {
   pageType: "income" | "expense";
 }
-
 const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
   const [rerender, setRerender] = useState<boolean>(false);
   const { budgetId } = useParams();
-
   const fetchTransactions = async () => {
     const transactions = await getAllItems(budgetId);
     return transactions;
   };
-
   const { data, isLoading, status, refetch } = useQuery(
     "transactions",
     fetchTransactions
   );
-
   const toggleRerender = () => setRerender(!rerender);
-
-  const budgetData = useOutletContext<IBudgetData>();
-
   useEffect(() => {
     refetch();
   }, [rerender]);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
   if (status === "error") {
     return <div>Error...</div>;
   }
-
   return (
     <PathContext.Provider value={pageType}>
       <Container
@@ -67,11 +56,9 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
           )}
           toggleRerender={toggleRerender}
           pageType={pageType}
-          budgetData={budgetData}
         />
       </Container>
     </PathContext.Provider>
   );
 };
-
 export default Transactions;
