@@ -11,33 +11,42 @@ import {
   Input,
   FormButton,
   ErrorContainer,
+  Select,
 } from "./TransactionItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
+import { editBudget } from "../../API/BudgetMethods";
 import {
   TransactionTransferData,
   TransactionType,
   TransactionSchema,
+  ICategory,
 } from "../../constants";
+import { useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
   amount: number;
+  categoryId: string;
 }
 
-interface TransactionAdder {
+interface ITransactionItemAdder {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
   pageType: TransactionType;
 }
 
-const TransactionItemAdder: React.FC<TransactionAdder> = ({
+const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   setDisplayAdder,
   toggleRerender,
   pageType,
 }) => {
+  const { budgetId } = useParams();
+
+  const budgetData: any = useOutletContext();
+
   const {
     register,
     handleSubmit,
@@ -50,7 +59,23 @@ const TransactionItemAdder: React.FC<TransactionAdder> = ({
   const onSubmit: SubmitHandler<FormInputs> = (
     data: TransactionTransferData
   ): void => {
-    addItem(data, pageType === "expense" ? "expense" : "income");
+    addItem(
+      {
+        title: data.title,
+        amount: pageType === "expense" ? data.amount * -1 : data.amount,
+        categoryId: data.categoryId,
+      },
+      budgetId,
+      data.categoryId
+    );
+    editBudget(budgetData[0]._id, {
+      title: budgetData[0].title,
+      total: budgetData[0].total,
+      currentAmount:
+        pageType === "expense"
+          ? budgetData[0].currentAmount + data.amount
+          : budgetData[0].currentAmount,
+    });
     toggleRerender();
     reset();
   };
@@ -92,6 +117,21 @@ const TransactionItemAdder: React.FC<TransactionAdder> = ({
             <ErrorContainer>
               {errors.amount && errors.amount?.message && (
                 <p>{errors.amount.message}</p>
+              )}
+            </ErrorContainer>
+          </InputGroup>
+          <InputGroup>
+            <Label>Category</Label>
+            <Select {...register("categoryId")}>
+              {budgetData[0].categories.map((category: ICategory) => (
+                <option key={category.title} value={category._id}>
+                  {category.title}
+                </option>
+              ))}
+            </Select>
+            <ErrorContainer>
+              {errors.categoryId && errors.categoryId?.message && (
+                <p>{errors.categoryId.message}</p>
               )}
             </ErrorContainer>
           </InputGroup>

@@ -15,6 +15,7 @@ export interface UserInfoData extends LoginData {
 export interface TransactionTransferData {
   title: string;
   amount: number;
+  categoryId: string;
 }
 
 export interface BudgetTransferData {
@@ -25,11 +26,14 @@ export interface BudgetTransferData {
 
 export type TransactionType = "income" | "expense";
 
+export type BudgetIdType = string | undefined;
+
 export interface ItemData {
   _id: string;
   title: string;
   amount: number;
   type: TransactionType;
+  category_id: string;
 }
 
 export interface IBudgetData {
@@ -38,6 +42,7 @@ export interface IBudgetData {
   total: number;
   currentAmount: number;
   created: boolean;
+  categories?: object[];
 }
 
 export const months = [
@@ -55,13 +60,39 @@ export const months = [
   "December",
 ] as const;
 
+export interface ITransaction {
+  title: string;
+  amount: number;
+  type: string;
+  userId: string;
+  budgetId: string;
+  categoryId: string;
+  _id: string;
+}
+
+export interface ICategory {
+  title: string;
+  amount: number;
+  transactions: ITransaction[];
+  _id: string;
+}
+
+export interface IBudget {
+  title: string;
+  total: number;
+  currentAmount: number;
+  _id?: string;
+  categories?: ICategory[];
+  userId?: string;
+  created: boolean;
+}
+
 export const TransactionSchema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
   amount: yup
     .number()
     .typeError("must be a number")
-    .positive("must be positive")
-    .min(0)
+    .positive()
     .test("maxDigitsAfterDecimal", "up to 2 decimals only", (amount: any) =>
       /^\d+(\.\d{1,2})?$/.test(amount?.toString())
     )

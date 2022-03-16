@@ -14,6 +14,7 @@ import {
 import { IBudgetData } from "../../constants";
 import { BsPlusSquare } from "react-icons/bs";
 import { BudgetAdder } from "../../components";
+import { useNavigate } from "react-router-dom";
 
 interface IBudgetCard {
   budget: IBudgetData;
@@ -24,13 +25,14 @@ interface IBudgetCard {
 }
 
 const BudgetCard: React.FC<IBudgetCard> = ({
-  budget: { _id, title, total, currentAmount, created },
+  budget: { _id, title, total, currentAmount, created, categories },
   index,
   position,
   setPosition,
   toggleRerender,
 }) => {
   const [displayBudgetAdder, setDisplayBudgetAdder] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   return (
     <BudgetCardContainer
@@ -41,8 +43,13 @@ const BudgetCard: React.FC<IBudgetCard> = ({
         top: `${(index - position) * 15 + 26}vh`,
       }}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
-      onClick={() => setPosition(index)}
       $current={index === position}
+      onClick={() =>
+        created &&
+        navigate(`/budget/${_id}`, {
+          state: { id: _id, title, total, currentAmount, categories },
+        })
+      }
     >
       <BudgetTitle>{title}</BudgetTitle>
 
@@ -76,7 +83,9 @@ const BudgetCard: React.FC<IBudgetCard> = ({
 
       <CreateBudgetButton
         active={created}
-        onClick={() => setDisplayBudgetAdder(true)}
+        onClick={() => {
+          setDisplayBudgetAdder(true);
+        }}
       >
         <BsPlusSquare size="2.5rem" />
       </CreateBudgetButton>

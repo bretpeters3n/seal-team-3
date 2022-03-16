@@ -3,36 +3,35 @@ import { Container } from "./Transactions.styles";
 import { TransactionItemAdder, TransactionItemsList } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/TransactionMethods";
-import { ItemData } from "../../constants";
-
+import { ITransaction } from "../../constants";
+import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 const PathContext = createContext<string>("");
-
 interface Transaction {
   pageType: "income" | "expense";
 }
-
 const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
-
   const [rerender, setRerender] = useState<boolean>(false);
-
-  const [incomeItems, setIncomeItems] = useState<Array<ItemData>>([]);
-  const [expenseItems, setExpenseItems] = useState<Array<ItemData>>([]);
-
-  const toggleRerender = () => setRerender(!rerender);
-
-  const retrieveData = async () => {
-    const expenseData = await getAllItems("expense");
-    const incomeData = await getAllItems("income");
-
-    setIncomeItems(incomeData);
-    setExpenseItems(expenseData);
+  const { budgetId } = useParams();
+  const fetchTransactions = async () => {
+    const transactions = await getAllItems(budgetId);
+    return transactions;
   };
-
+  const { data, isLoading, status, refetch } = useQuery(
+    "transactions",
+    fetchTransactions
+  );
+  const toggleRerender = () => setRerender(!rerender);
   useEffect(() => {
-    retrieveData();
+    refetch();
   }, [rerender]);
-
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (status === "error") {
+    return <div>Error...</div>;
+  }
   return (
     <PathContext.Provider value={pageType}>
       <Container
@@ -52,7 +51,9 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
         </AnimatePresence>
         <TransactionItemsList
           setDisplayAdder={setDisplayAdder}
-          filteredData={pageType === "income" ? incomeItems : expenseItems}
+          filteredData={data.filter(
+            (transaction: ITransaction) => transaction.type === pageType
+          )}
           toggleRerender={toggleRerender}
           pageType={pageType}
         />
@@ -60,5 +61,4 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
     </PathContext.Provider>
   );
 };
-
 export default Transactions;

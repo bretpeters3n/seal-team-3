@@ -14,19 +14,23 @@ import {
   FormButton,
   TitleContainer,
   Icon,
+  Select,
 } from "./TransactionItemEditor.styles";
 import {
   TransactionTransferData,
   TransactionType,
   TransactionSchema,
+  ICategory,
 } from "../../constants";
 import { editItem } from "../../API/TransactionMethods";
+import { editBudget } from "../../API/BudgetMethods";
+import { useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
   amount: number;
+  categoryId: string;
 }
-
 interface TargetItem {
   id: string;
   title: string;
@@ -35,8 +39,8 @@ interface TargetItem {
   setDisplayItemEditor: React.Dispatch<React.SetStateAction<boolean>>;
   setItemOptions: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
+  prevCategoryId: string;
 }
-
 const TransactionItemEditor: React.FC<TargetItem> = ({
   id,
   title,
@@ -45,12 +49,15 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   setDisplayItemEditor,
   setItemOptions,
   toggleRerender,
+  prevCategoryId,
 }) => {
+  const budgetData: any = useOutletContext();
+  const { budgetId } = useParams();
   const preloadedValues = {
     title: title,
-    amount: amount,
+    amount: pageType === "expense" ? amount * -1 : amount,
+    categoryId: prevCategoryId,
   };
-
   const {
     register,
     handleSubmit,
@@ -59,12 +66,23 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
     resolver: yupResolver(TransactionSchema),
     defaultValues: preloadedValues,
   });
-
   const onSubmit: SubmitHandler<FormInputs> = (
     data: TransactionTransferData
   ) => {
-    // code to run on submit
-    editItem(id, data, pageType);
+    editItem(budgetId, prevCategoryId, id, {
+      title: data.title,
+      amount: pageType === "expense" ? data.amount * -1 : data.amount,
+      categoryId: data.categoryId,
+    });
+    editBudget(budgetData[0]._id, {
+      title: budgetData[0].title,
+      total: budgetData[0].total,
+      // NEED TO FIX THIS
+      currentAmount:
+        pageType === "expense"
+          ? budgetData[0].currentAmount
+          : budgetData[0].currentAmount,
+    });
     setItemOptions(false);
     setDisplayItemEditor(false);
     toggleRerender();
@@ -99,6 +117,21 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
               <ErrorContainer>
                 {errors.amount && errors.amount?.message && (
                   <p>{errors.amount.message}</p>
+                )}
+              </ErrorContainer>
+            </InputGroup>
+            <InputGroup>
+              <Label>Category</Label>
+              <Select {...register("categoryId")}>
+                {budgetData[0].categories.map((category: ICategory) => (
+                  <option key={category.title} value={category._id}>
+                    {category.title}
+                  </option>
+                ))}
+              </Select>
+              <ErrorContainer>
+                {errors.categoryId && errors.categoryId?.message && (
+                  <p>{errors.categoryId.message}</p>
                 )}
               </ErrorContainer>
             </InputGroup>

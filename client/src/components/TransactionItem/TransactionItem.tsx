@@ -11,29 +11,34 @@ import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { deleteItem } from "../../API/TransactionMethods";
 import { TransactionType } from "../../constants";
 import { TransactionItemEditor } from "../../components";
+import { useParams } from "react-router-dom";
 
 interface Transaction {
-  id: string;
+  itemId: string;
   title: string;
   amount: number;
   toggleRerender: () => void;
   pageType: TransactionType;
+  categoryId: string;
 }
 
 const TransactionItem: React.FC<Transaction> = ({
-  id,
+  itemId,
   title,
   amount,
   toggleRerender,
   pageType,
+  categoryId,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
   const [displayItemEditor, setDisplayItemEditor] = useState<boolean>(false);
 
+  const { budgetId } = useParams();
+
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
   const handleDelete = () => {
-    deleteItem(id, pageType);
+    deleteItem(budgetId, categoryId, itemId);
     toggleRerender();
   };
 
@@ -47,10 +52,11 @@ const TransactionItem: React.FC<Transaction> = ({
     <Container>
       {displayItemEditor && (
         <TransactionItemEditor
-          id={id}
+          id={itemId}
           title={title}
           amount={amount}
           pageType={pageType}
+          prevCategoryId={categoryId}
           setDisplayItemEditor={setDisplayItemEditor}
           setItemOptions={setItemOptions}
           toggleRerender={toggleRerender}
@@ -60,9 +66,8 @@ const TransactionItem: React.FC<Transaction> = ({
         <ItemName>{title}</ItemName>
         <ItemAmount
           textColor={pageType === "income" ? "#25a244" : "#ff595e"}
-        >{`${currencyFormatter.format(amount)}`}</ItemAmount>
+        >{`${currencyFormatter.format(Math.abs(amount))}`}</ItemAmount>
       </ItemContainer>
-      {/* Item Options slides out on Click of each item */}
       {itemOptions && (
         <ItemOptionsContainer
           initial={{ x: 20, opacity: 0 }}
