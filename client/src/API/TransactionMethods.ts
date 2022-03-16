@@ -47,14 +47,21 @@ export const getAllItems = async (budgetId: BudgetIdType) => {
   }
 };
 
-export const deleteItem = async (itemId: string) => {
+export const deleteItem = async (
+  budgetId: BudgetIdType,
+  categoryId: string,
+  itemId: string
+) => {
   try {
-    await axios.delete(`${URL}/transactions/deleteTransaction/${itemId}`, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-      },
-    });
+    await axios.delete(
+      `${URL}/transactions/deleteTransaction/${budgetId}/${categoryId}/${itemId}`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        },
+      }
+    );
   } catch (e) {
     const err = e as AxiosError;
     if (err.response?.data?.statusCode > 401) {

@@ -39,8 +39,9 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
           {filteredData?.map((item) => (
             <TransactionItem
               key={item._id}
-              id={item._id}
+              itemId={item._id}
               title={item.title}
+              categoryId={item.category_id}
               amount={item.amount}
               toggleRerender={toggleRerender}
               pageType={pageType}

@@ -37,6 +37,7 @@ interface TargetItem {
   setDisplayItemEditor: React.Dispatch<React.SetStateAction<boolean>>;
   setItemOptions: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
+  categoryId: string;
 }
 
 const TransactionItemEditor: React.FC<TargetItem> = ({
@@ -47,6 +48,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   setDisplayItemEditor,
   setItemOptions,
   toggleRerender,
+  categoryId,
 }) => {
   const [prevAmount, setPrevAmount] = useState<number>(amount);
 

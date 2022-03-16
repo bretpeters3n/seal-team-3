@@ -11,29 +11,36 @@ import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { deleteItem } from "../../API/TransactionMethods";
 import { TransactionType } from "../../constants";
 import { TransactionItemEditor } from "../../components";
+import { useParams } from "react-router-dom";
 
 interface Transaction {
-  id: string;
+  itemId: string;
   title: string;
   amount: number;
   toggleRerender: () => void;
   pageType: TransactionType;
+  categoryId: string;
 }
 
 const TransactionItem: React.FC<Transaction> = ({
-  id,
+  itemId,
   title,
   amount,
   toggleRerender,
   pageType,
+  categoryId,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
   const [displayItemEditor, setDisplayItemEditor] = useState<boolean>(false);
 
+  const { budgetId } = useParams();
+
+  console.log(typeof budgetId);
+
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
   const handleDelete = () => {
-    deleteItem(id);
+    deleteItem(budgetId, categoryId, itemId);
     toggleRerender();
   };
 
@@ -47,10 +54,11 @@ const TransactionItem: React.FC<Transaction> = ({
     <Container>
       {displayItemEditor && (
         <TransactionItemEditor
-          id={id}
+          id={itemId}
           title={title}
           amount={amount}
           pageType={pageType}
+          categoryId={categoryId}
           setDisplayItemEditor={setDisplayItemEditor}
           setItemOptions={setItemOptions}
           toggleRerender={toggleRerender}

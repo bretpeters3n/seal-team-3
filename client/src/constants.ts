@@ -32,6 +32,7 @@ export interface ItemData {
   title: string;
   amount: number;
   type: TransactionType;
+  category_id: string;
 }
 
 export interface IBudgetData {
