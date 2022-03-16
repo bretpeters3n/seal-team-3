@@ -42,7 +42,6 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   toggleRerender,
   pageType,
 }) => {
-  // const [category, setCategory] = useState<string>("");
   const { budgetId } = useParams();
 
   const budgetData: any = useOutletContext();

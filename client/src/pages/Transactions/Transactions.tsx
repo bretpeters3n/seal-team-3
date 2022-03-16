@@ -43,8 +43,6 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
     return <div>Error...</div>;
   }
 
-  console.log("data", data);
-
   return (
     <PathContext.Provider value={pageType}>
       <Container

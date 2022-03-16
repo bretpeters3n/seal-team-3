@@ -35,8 +35,6 @@ const TransactionItem: React.FC<Transaction> = ({
 
   const { budgetId } = useParams();
 
-  console.log(typeof budgetId);
-
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
   const handleDelete = () => {
@@ -49,8 +47,6 @@ const TransactionItem: React.FC<Transaction> = ({
     currency: "USD",
     minimumFractionDigits: 2,
   });
-
-  console.log(categoryId);
 
   return (
     <Container>
