@@ -14,7 +14,6 @@ import logo from "../../assets/budgety_small_logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCancelCircle } from "react-icons/im";
 import { AiOutlineHome } from "react-icons/ai";
-// import { MdOutlineEventNote } from "react-icons/md";
 import { BiLogOut, BiLogIn } from "react-icons/bi";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import { logOut } from "../../API/AuthMethods";
@@ -31,10 +30,7 @@ interface Props {
 }
 
 const Navigation: React.FC<Props> = ({ user, setUser }) => {
-  // Sidebar state is being used to see whether sidebar is open or not
   const [sidebar, setSidebar] = useState<boolean>(false);
-
-  // Function to toggle sidebar on/off
   const toggleSidebar = () => setSidebar(!sidebar);
 
   return (
@@ -52,11 +48,6 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
                 <h2>Home</h2>
               </NavIcon>
             </SidebarWrapper>
-            {/* <SidebarWrapper>
-              <NavIcon to="/budget">
-                <h2>My Budget</h2>
-              </NavIcon>
-            </SidebarWrapper> */}
             <SidebarWrapper>
               <NavIcon
                 to="/"
@@ -109,12 +100,6 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
                 <h2>Home</h2>
               </NavIcon>
             </SidebarWrapper>
-            {/* <SidebarWrapper>
-              <NavIcon to="/budget" onClick={() => setSidebar(false)}>
-                <MdOutlineEventNote size="2rem" />
-                <h2>My Budget</h2>
-              </NavIcon>
-            </SidebarWrapper> */}
             <SidebarWrapper>
               <NavIcon
                 to="/"
