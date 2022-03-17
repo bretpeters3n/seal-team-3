@@ -3,34 +3,32 @@ import { Container } from "./Budget.styles";
 import { BudgetNavbar } from "../../components";
 import { Outlet, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getAllBudgets } from "../../API/BudgetMethods";
-import { IBudgetData } from "../../constants";
+import { getBudgetById } from "../../API/BudgetMethods";
+import { IBudget } from "../../constants";
 
 const Budget = () => {
   const { budgetId } = useParams();
-
-  const fetchAllBudgets = async () => {
-    const data = await getAllBudgets();
+  const fetchBudgetData = async () => {
+    const data: IBudget = await getBudgetById(budgetId!);
     return data;
   };
 
-  const { data, status, isLoading } = useQuery("budgets", fetchAllBudgets);
+  const { data, isLoading, isError } = useQuery("budget", fetchBudgetData);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (status === "error") {
+  if (isError) {
     return <div>Error...</div>;
   }
-  const selectedBudget = data.filter(
-    (budget: IBudgetData) => budget._id === budgetId
-  );
+
+  console.log("current", data?.currentAmount);
 
   return (
     <Container>
       <BudgetNavbar />
-      <Outlet context={selectedBudget} />
+      <Outlet context={data} />
     </Container>
   );
 };

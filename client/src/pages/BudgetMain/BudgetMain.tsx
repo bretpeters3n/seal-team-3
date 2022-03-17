@@ -4,17 +4,17 @@ import { useOutletContext } from "react-router-dom";
 import { ICategory, IBudget } from "../../constants";
 
 const BudgetMain: React.FC = () => {
-  const budgetData: IBudget[] = useOutletContext();
+  const budgetData: IBudget = useOutletContext();
 
   return (
     <Container>
       <h1>Budget MAIN PAGE</h1>
-      <div>{budgetData[0]._id}</div>
-      <div>{budgetData[0].title}</div>
-      <div>{budgetData[0].total}</div>
-      <div>{budgetData[0].currentAmount}</div>
-      {budgetData[0].categories &&
-        budgetData[0].categories.map((category: ICategory) => (
+      <div>{budgetData._id}</div>
+      <div>{budgetData.title}</div>
+      <div>{budgetData.total}</div>
+      <div>{budgetData.currentAmount}</div>
+      {budgetData.categories &&
+        budgetData.categories.map((category: ICategory) => (
           <h2 key={category.title}>{category.title}</h2>
         ))}
     </Container>

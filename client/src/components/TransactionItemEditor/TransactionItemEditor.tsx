@@ -52,7 +52,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   toggleRerender,
   prevCategoryId,
 }) => {
-  const budgetData: IBudget[] = useOutletContext();
+  const budgetData: IBudget = useOutletContext();
   const { budgetId } = useParams();
   const preloadedValues = {
     title: title,
@@ -75,15 +75,15 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
       amount: pageType === "expense" ? data.amount * -1 : data.amount,
       categoryId: data.categoryId,
     });
-    budgetData[0]._id &&
-      editBudget(budgetData[0]._id, {
-        title: budgetData[0].title,
-        total: budgetData[0].total,
+    budgetData._id &&
+      editBudget(budgetData._id, {
+        title: budgetData.title,
+        total: budgetData.total,
         // NEED TO FIX THIS
         currentAmount:
           pageType === "expense"
-            ? budgetData[0].currentAmount
-            : budgetData[0].currentAmount,
+            ? budgetData.currentAmount + amount + data.amount
+            : budgetData.currentAmount,
       });
     setItemOptions(false);
     setDisplayItemEditor(false);
@@ -125,8 +125,8 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
             <InputGroup>
               <Label>Category</Label>
               <Select {...register("categoryId")}>
-                {budgetData[0].categories &&
-                  budgetData[0].categories.map((category: ICategory) => (
+                {budgetData.categories &&
+                  budgetData.categories.map((category: ICategory) => (
                     <option key={category.title} value={category._id}>
                       {category.title}
                     </option>
