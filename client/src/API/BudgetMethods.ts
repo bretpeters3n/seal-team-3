@@ -75,3 +75,25 @@ export const getAllBudgets = async () => {
     }
   }
 };
+
+// GET Budget by Budget ID
+export const getBudgetById = async (budgetId: string) => {
+  try {
+    const data = await axios
+      .get(`${URL}/budgets/getBudget/${budgetId}`, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        },
+      })
+      .then((res) => res.data);
+    return data;
+  } catch (e) {
+    const err = e as AxiosError;
+    if (err.response?.data?.statusCode === 401) {
+      alert("Auth token may have expired");
+    } else if (err.response?.data?.statusCode > 401) {
+      alert(err.response?.data?.message);
+    }
+  }
+};

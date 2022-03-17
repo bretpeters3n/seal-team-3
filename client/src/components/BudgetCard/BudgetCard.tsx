@@ -46,6 +46,7 @@ const BudgetCard: React.FC<IBudgetCard> = ({
       $current={index === position}
       onClick={() =>
         created &&
+        position === index &&
         navigate(`/budget/${_id}`, {
           state: { id: _id, title, total, currentAmount, categories },
         })
@@ -71,8 +72,10 @@ const BudgetCard: React.FC<IBudgetCard> = ({
           </BudgetInfoContainer>
 
           <BudgetLinksContainer active={created}>
-            <BudgetLink to="/budget/income">Adjust Incomes</BudgetLink>
-            <BudgetLink to="/budget/expenses">Adjust Expenses</BudgetLink>
+            <BudgetLink to={`budget/${_id}/income`}>Adjust Incomes</BudgetLink>
+            <BudgetLink to={`budget/${_id}/expenses`}>
+              Adjust Expenses
+            </BudgetLink>
           </BudgetLinksContainer>
         </>
       ) : (

@@ -26,6 +26,7 @@ export const BudgetCardContainer = styled(motion.div)<ActiveProp>`
   border-radius: 5px;
   opacity: ${(props) => (props.$current ? "1" : ".15")};
   z-index: ${(props) => (props.$current ? 1 : 0)};
+  pointer-events: ${(props) => (props.$current ? "default" : "none")};
 
   &:hover {
     cursor: pointer;
@@ -75,6 +76,10 @@ export const BudgetLinksContainer = styled.div<ActiveProp>`
 export const BudgetLink = styled(Link)`
   font-weight: 700;
   color: #3200c0;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 export const CreateBudgetButton = styled.div<ActiveProp>`
