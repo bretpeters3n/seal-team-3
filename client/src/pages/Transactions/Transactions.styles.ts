@@ -14,6 +14,8 @@ export const GotoBudgetButton = styled.a`
   left: 20px;
   cursor: pointer;
   transition: 0.2s all ease;
+  font-weight: 800;
+  color: #3200c0;
 
   &:hover {
     transform: scale(1.05);
