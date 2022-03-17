@@ -59,7 +59,7 @@ export const CategoryContainer = styled.div`
 
 export const CategoryTitle = styled.div`
   width: 100%;
-  background-color: whitesmoke;
+  background-color: rgba(211, 174, 139, 0.4);
   padding: 0.5em;
   border-radius: 5px;
   display: flex;
@@ -71,7 +71,8 @@ export const TransactionRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0.5em;
+  padding: 0.5em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
 export const TransactionTitle = styled.div``;

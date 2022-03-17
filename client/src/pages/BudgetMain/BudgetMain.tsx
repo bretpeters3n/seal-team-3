@@ -65,7 +65,7 @@ const BudgetMain: React.FC = () => {
                   </TransactionRow>
                 ))
               ) : (
-                <p>Add a transaction</p>
+                <TransactionRow>Add a transaction</TransactionRow>
               )}
             </CategoryContainer>
           ))}
