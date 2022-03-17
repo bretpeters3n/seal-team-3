@@ -45,11 +45,11 @@ const BudgetCard: React.FC<IBudgetCard> = ({
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
       $current={index === position}
       onClick={() =>
-        created &&
-        position === index &&
-        navigate(`/budget/${_id}`, {
-          state: { id: _id, title, total, currentAmount, categories },
-        })
+        created && position === index
+          ? navigate(`/budget/${_id}`, {
+              state: { id: _id, title, total, currentAmount, categories },
+            })
+          : setPosition(index)
       }
     >
       <BudgetTitle>{title}</BudgetTitle>
