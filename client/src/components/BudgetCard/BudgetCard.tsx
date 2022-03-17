@@ -40,7 +40,7 @@ const BudgetCard: React.FC<IBudgetCard> = ({
       animate={{
         scale: index === position ? 1 : 0.8,
         rotate: 0,
-        top: `${(index - position) * 15 + 26}vh`,
+        top: `${(index - position) * 20 + 20}vh`,
       }}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
       $current={index === position}
