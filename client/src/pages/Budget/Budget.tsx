@@ -23,8 +23,6 @@ const Budget = () => {
     return <div>Error...</div>;
   }
 
-  console.log("current", data?.currentAmount);
-
   return (
     <Container>
       <BudgetNavbar />
