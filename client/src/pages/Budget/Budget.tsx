@@ -13,7 +13,10 @@ const Budget = () => {
     return data;
   };
 
-  const { data, isLoading, isError } = useQuery("budget", fetchBudgetData);
+  const { data, isLoading, isError, isFetching } = useQuery(
+    "budget",
+    fetchBudgetData
+  );
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -22,9 +25,11 @@ const Budget = () => {
   if (isError) {
     return <div>Error...</div>;
   }
+  console.log(sessionStorage.getItem("authToken"));
 
   return (
     <Container>
+      {isFetching && <h1>Updating Budget Data...</h1>}
       <BudgetNavbar />
       <Outlet context={data} />
     </Container>
