@@ -17,6 +17,7 @@ interface ITransactionItemsList {
   toggleRerender: () => void;
   pageType: TransactionType;
   displayAdder: boolean;
+  currentAmount: number;
 }
 
 const TransactionItemsList: React.FC<ITransactionItemsList> = ({
@@ -25,6 +26,7 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
   toggleRerender,
   pageType,
   displayAdder,
+  currentAmount,
 }) => {
   return (
     <Container>
@@ -42,7 +44,7 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
             <TransactionItem
               key={item._id}
               itemId={item._id}
-              title={item.title}
+              transactionTitle={item.title}
               categoryId={item.category_id}
               amount={item.amount}
               toggleRerender={toggleRerender}

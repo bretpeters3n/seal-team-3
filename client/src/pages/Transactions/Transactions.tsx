@@ -4,8 +4,9 @@ import { TransactionItemAdder, TransactionItemsList } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/TransactionMethods";
 import { ITransaction } from "../../constants";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
+
 const PathContext = createContext<string>("");
 interface Transaction {
   pageType: "income" | "expense";
@@ -18,6 +19,12 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
     const transactions = await getAllItems(budgetId);
     return transactions;
   };
+
+  const {
+    data: { currentAmount },
+    doRefetch,
+  } = useOutletContext<any>();
+
   const { data, isLoading, status, refetch } = useQuery(
     "transactions",
     fetchTransactions
@@ -25,6 +32,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const toggleRerender = () => setRerender(!rerender);
   const navigate = useNavigate();
   useEffect(() => {
+    doRefetch();
     refetch();
   }, [rerender]);
   if (isLoading) {
@@ -47,6 +55,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
               setDisplayAdder={setDisplayAdder}
               toggleRerender={toggleRerender}
               pageType={pageType}
+              doRefetch={doRefetch}
             />
           )}
         </AnimatePresence>
@@ -58,6 +67,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
           toggleRerender={toggleRerender}
           pageType={pageType}
           displayAdder={displayAdder}
+          currentAmount={currentAmount}
         />
         <GotoBudgetButton onClick={() => navigate(`/budget/${budgetId}`)}>
           Back to Budget

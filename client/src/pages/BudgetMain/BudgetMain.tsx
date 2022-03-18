@@ -15,7 +15,7 @@ import {
   CategoriesContainer,
 } from "./BudgetMain.styles";
 import { useOutletContext } from "react-router-dom";
-import { ICategory, IBudget } from "../../constants";
+import { ICategory } from "../../constants";
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -24,8 +24,10 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 });
 
 const BudgetMain: React.FC = () => {
-  const { title, total, currentAmount, categories }: IBudget =
-    useOutletContext();
+  // I know this shouldn't be typed any...but I couldn't figure out how to type this along with the other useOutletContext ones
+  const {
+    data: { title, currentAmount, total, categories },
+  } = useOutletContext<any>();
 
   return (
     <Container>

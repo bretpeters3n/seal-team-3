@@ -23,7 +23,6 @@ import {
   TransactionType,
   TransactionSchema,
   ICategory,
-  IBudget,
 } from "../../constants";
 import { useOutletContext, useParams } from "react-router-dom";
 
@@ -37,16 +36,20 @@ interface ITransactionItemAdder {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
   pageType: TransactionType;
+  doRefetch: () => void;
 }
 
 const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   setDisplayAdder,
   toggleRerender,
   pageType,
+  doRefetch,
 }) => {
   const { budgetId } = useParams();
 
-  const budgetData: IBudget = useOutletContext();
+  const {
+    data: { _id, title, currentAmount, total, categories },
+  } = useOutletContext<any>();
 
   const {
     register,
@@ -69,15 +72,14 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
       budgetId,
       data.categoryId
     );
-    typeof budgetData._id === "string" &&
-      editBudget(budgetData._id, {
-        title: budgetData.title,
-        total: budgetData.total,
+    typeof _id === "string" &&
+      editBudget(_id, {
+        title: title,
+        total: total,
         currentAmount:
-          pageType === "expense"
-            ? budgetData.currentAmount + data.amount
-            : budgetData.currentAmount,
+          pageType === "expense" ? currentAmount + data.amount : currentAmount,
       });
+    doRefetch();
     toggleRerender();
     reset();
   };
@@ -125,8 +127,8 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           <InputGroup>
             <Label>Category</Label>
             <Select {...register("categoryId")}>
-              {budgetData.categories &&
-                budgetData.categories.map((category: ICategory) => (
+              {categories &&
+                categories.map((category: ICategory) => (
                   <option key={category.title} value={category._id}>
                     {category.title}
                   </option>

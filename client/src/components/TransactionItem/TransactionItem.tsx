@@ -11,11 +11,12 @@ import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { deleteItem } from "../../API/TransactionMethods";
 import { TransactionType } from "../../constants";
 import { TransactionItemEditor } from "../../components";
-import { useParams } from "react-router-dom";
+import { useParams, useOutletContext } from "react-router-dom";
+import { editBudget } from "../../API/BudgetMethods";
 
 interface Transaction {
   itemId: string;
-  title: string;
+  transactionTitle: string;
   amount: number;
   toggleRerender: () => void;
   pageType: TransactionType;
@@ -24,7 +25,7 @@ interface Transaction {
 
 const TransactionItem: React.FC<Transaction> = ({
   itemId,
-  title,
+  transactionTitle,
   amount,
   toggleRerender,
   pageType,
@@ -32,6 +33,9 @@ const TransactionItem: React.FC<Transaction> = ({
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
   const [displayItemEditor, setDisplayItemEditor] = useState<boolean>(false);
+  const {
+    data: { _id, title, currentAmount, total },
+  } = useOutletContext<any>();
 
   const { budgetId } = useParams();
 
@@ -39,6 +43,12 @@ const TransactionItem: React.FC<Transaction> = ({
 
   const handleDelete = () => {
     deleteItem(budgetId, categoryId, itemId);
+    editBudget(_id, {
+      title: title,
+      total: total,
+      currentAmount:
+        pageType === "expense" ? currentAmount + amount : currentAmount,
+    });
     toggleRerender();
   };
 
@@ -53,7 +63,7 @@ const TransactionItem: React.FC<Transaction> = ({
       {displayItemEditor && (
         <TransactionItemEditor
           id={itemId}
-          title={title}
+          transactionTitle={transactionTitle}
           amount={amount}
           pageType={pageType}
           prevCategoryId={categoryId}
@@ -63,7 +73,7 @@ const TransactionItem: React.FC<Transaction> = ({
         />
       )}
       <ItemContainer onClick={toggleItemOptions}>
-        <ItemName>{title}</ItemName>
+        <ItemName>{transactionTitle}</ItemName>
         <ItemAmount
           textColor={pageType === "income" ? "#25a244" : "#ff595e"}
         >{`${currencyFormatter.format(Math.abs(amount))}`}</ItemAmount>
