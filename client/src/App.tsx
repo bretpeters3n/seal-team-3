@@ -18,6 +18,7 @@ const queryClient = new QueryClient();
 
 function App() {
   const [user, setUser] = useState<boolean>(false);
+  const [displayLoader, setDisplayLoader] = useState<boolean>(true);
 
   useEffect(() => {
     if (sessionStorage.getItem("authToken")) {
@@ -28,11 +29,23 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <Router>
-          <Navigation user={user} setUser={setUser} />
+          <Navigation
+            user={user}
+            setUser={setUser}
+            setDisplayLoader={setDisplayLoader}
+          />
           <Routes>
             {user ? (
               <>
-                <Route path="/" element={<Home />} />
+                <Route
+                  path="/"
+                  element={
+                    <Home
+                      displayLoader={displayLoader}
+                      setDisplayLoader={setDisplayLoader}
+                    />
+                  }
+                />
                 {/* USING NESTED ROUTES  */}
                 <Route path="budget/:budgetId" element={<Budget />}>
                   <Route index element={<BudgetMain />} />

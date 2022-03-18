@@ -27,9 +27,10 @@ const animationVariants = {
 interface Props {
   user: boolean;
   setUser: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisplayLoader: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Navigation: React.FC<Props> = ({ user, setUser }) => {
+const Navigation: React.FC<Props> = ({ user, setUser, setDisplayLoader }) => {
   const [sidebar, setSidebar] = useState<boolean>(false);
   const toggleSidebar = () => setSidebar(!sidebar);
 
@@ -54,6 +55,7 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
                 onClick={() => {
                   setUser(false);
                   setSidebar(false);
+                  setDisplayLoader(true);
                   logOut();
                 }}
                 id="no-style"
@@ -106,6 +108,7 @@ const Navigation: React.FC<Props> = ({ user, setUser }) => {
                 onClick={() => {
                   setUser(false);
                   setSidebar(false);
+                  setDisplayLoader(true);
                   logOut();
                 }}
                 id="no-style"
