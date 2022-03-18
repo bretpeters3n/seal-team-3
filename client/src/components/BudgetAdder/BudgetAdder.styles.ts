@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import CurrencyInput from "react-currency-input-field";
 
 interface InputBoxModifier {
   long?: boolean;
@@ -65,7 +66,7 @@ export const Label = styled.div`
   gap: 0.5em;
 `;
 
-export const Input = styled.input`
+export const Input = styled(CurrencyInput)`
   font-size: 1rem;
   padding: 0.5em 0.2em;
   outline: none;

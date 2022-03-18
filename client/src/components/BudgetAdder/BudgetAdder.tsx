@@ -19,7 +19,7 @@ import { CreateBudgetSchema } from "../../constants";
 import { createBudget } from "../../API/BudgetMethods";
 
 interface FormInputs {
-  total: number;
+  total: string;
 }
 
 interface IBudgetAdder {
@@ -44,9 +44,10 @@ const BudgetAdder: React.FC<IBudgetAdder> = ({
   });
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
+    const newTotal = data.total.replace("$", "").replace(",", "");
     createBudget({
       title,
-      total: data.total,
+      total: +newTotal,
       currentAmount,
     });
     setDisplayBudgetAdder(false);
@@ -69,7 +70,12 @@ const BudgetAdder: React.FC<IBudgetAdder> = ({
           <InputContainer>
             <InputGroup>
               <Label>Set a budget for the month:</Label>
-              <Input {...register("total")} />
+              <Input
+                placeholder="Please enter a budget amount"
+                prefix="$"
+                decimalScale={2}
+                {...register("total")}
+              />
               <ErrorContainer>
                 {errors.total && errors.total?.message && (
                   <p>{errors.total.message}</p>

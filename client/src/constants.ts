@@ -104,12 +104,7 @@ export const TransactionSchema = yup.object().shape({
 
 export const CreateBudgetSchema = yup.object().shape({
   total: yup
-    .number()
-    .typeError("must be a number")
-    .positive("must be positive")
-    .min(0)
-    .test("maxDigitsAfterDecimal", "up to 2 decimals only", (amount: any) =>
-      /^\d+(\.\d{1,2})?$/.test(amount?.toString())
-    )
+    .string()
+    .matches(/^\$(0|[1-9][0-9]{0,2})(,\d{3})*(\.\d{1,2})?$/)
     .required("field is required"),
 });
