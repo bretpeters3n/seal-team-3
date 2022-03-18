@@ -5,7 +5,12 @@ import { useQuery } from "react-query";
 import { getAllBudgets } from "../../API/BudgetMethods";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
-const Home = () => {
+interface IHome {
+  displayLoader: boolean;
+  setDisplayLoader: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Home: React.FC<IHome> = ({ displayLoader, setDisplayLoader }) => {
   const fetchAllBudgets = async () => {
     const data = await getAllBudgets();
     return data;
@@ -16,13 +21,13 @@ const Home = () => {
     {}
   );
 
-  const [displayLoader, setDisplayLoader] = useState<boolean>(true);
   const [position, setPosition] = useState<number>(12);
 
   useEffect(() => {
-    setTimeout(() => {
-      setDisplayLoader(false);
-    }, 50000);
+    displayLoader &&
+      setTimeout(() => {
+        setDisplayLoader(false);
+      }, 3000);
   }, []);
 
   const onDown = () => {
