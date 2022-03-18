@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   TotalBudgetBar,
@@ -14,9 +14,12 @@ import {
   TransactionAmount,
   CategoriesContainer,
   PercentageDisplay,
+  BudgetTitleContainer,
+  BudgetEditorButton,
 } from "./BudgetMain.styles";
 import { useOutletContext } from "react-router-dom";
 import { ICategory } from "../../constants";
+import { BudgetEditor } from "../../components";
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -27,10 +30,11 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 const BudgetMain: React.FC = () => {
   // I know this shouldn't be typed any...but I couldn't figure out how to type this along with the other useOutletContext ones
   const {
-    data: { title, currentAmount, total, categories },
+    data: { _id, title, currentAmount, total, categories },
+    doRefetch,
   } = useOutletContext<any>();
-
-  // const {doRefetch} = useOutletContext<any>();
+  const [displayBudgetEditor, setDisplayBudgetEditor] =
+    useState<boolean>(false);
 
   return (
     <Container
@@ -39,7 +43,12 @@ const BudgetMain: React.FC = () => {
       transition={{ duration: 0.5 }}
     >
       <BudgetCardContainer>
-        <BudgetTitle>{title}</BudgetTitle>
+        <BudgetTitleContainer>
+          <BudgetTitle>{title}</BudgetTitle>
+          <BudgetEditorButton onClick={() => setDisplayBudgetEditor(true)}>
+            Edit Budget
+          </BudgetEditorButton>
+        </BudgetTitleContainer>
         <TotalBudgetBar>
           <ExpenseBar
             percentage={Math.min((currentAmount / total) * 100, 100)}
@@ -84,6 +93,16 @@ const BudgetMain: React.FC = () => {
             </CategoryContainer>
           ))}
       </CategoriesContainer>
+      {displayBudgetEditor && (
+        <BudgetEditor
+          title={title}
+          setDisplayBudgetEditor={setDisplayBudgetEditor}
+          currentBudget={total}
+          currentAmount={currentAmount}
+          doRefetch={doRefetch}
+          budgetId={_id}
+        />
+      )}
     </Container>
   );
 };

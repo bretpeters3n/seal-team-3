@@ -30,7 +30,23 @@ export const BudgetCardContainer = styled.div`
   }
 `;
 
+export const BudgetTitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const BudgetTitle = styled.h1``;
+
+export const BudgetEditorButton = styled.a`
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s all ease;
+  color: #3200c0;
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
 
 export const TotalBudgetBar = styled.div`
   position: relative;
