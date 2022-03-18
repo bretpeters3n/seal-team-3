@@ -6,6 +6,7 @@ import { getAllItems } from "../../API/TransactionMethods";
 import { ITransaction } from "../../constants";
 import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
 const PathContext = createContext<string>("");
 interface Transaction {
@@ -25,7 +26,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
     doRefetch,
   } = useOutletContext<any>();
 
-  const { data, isLoading, status, refetch } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     "transactions",
     fetchTransactions
   );
@@ -38,7 +39,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  if (status === "error") {
+  if (isError) {
     return <div>Error...</div>;
   }
   return (
@@ -70,6 +71,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
           currentAmount={currentAmount}
         />
         <GotoBudgetButton onClick={() => navigate(`/budget/${budgetId}`)}>
+          <MdOutlineArrowBackIosNew />
           Back to Budget
         </GotoBudgetButton>
       </Container>

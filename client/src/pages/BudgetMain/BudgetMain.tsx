@@ -13,6 +13,7 @@ import {
   TransactionTitle,
   TransactionAmount,
   CategoriesContainer,
+  PercentageDisplay,
 } from "./BudgetMain.styles";
 import { useOutletContext } from "react-router-dom";
 import { ICategory } from "../../constants";
@@ -29,22 +30,33 @@ const BudgetMain: React.FC = () => {
     data: { title, currentAmount, total, categories },
   } = useOutletContext<any>();
 
+  // const {doRefetch} = useOutletContext<any>();
+
   return (
-    <Container>
+    <Container
+      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 500 }}
+      transition={{ duration: 0.5 }}
+    >
       <BudgetCardContainer>
         <BudgetTitle>{title}</BudgetTitle>
         <TotalBudgetBar>
           <ExpenseBar
             percentage={Math.min((currentAmount / total) * 100, 100)}
           />
+          <PercentageDisplay>{`${((currentAmount / total) * 100).toFixed(
+            2
+          )}%`}</PercentageDisplay>
         </TotalBudgetBar>
         <BudgetInfoContainer>
-          <BudgetInfo>{`$${currentAmount} of $${total}`}</BudgetInfo>
+          <BudgetInfo>{`${currencyFormatter.format(
+            currentAmount
+          )} of ${currencyFormatter.format(total)}`}</BudgetInfo>
           <BudgetInfo>
             {`${total - currentAmount < 0 ? "-" : ""}$${Math.abs(
               total - currentAmount
             )}`}
-            {total - currentAmount > 0 ? " left" : " over"}
+            {total - currentAmount >= 0 ? " left" : " over"}
           </BudgetInfo>
         </BudgetInfoContainer>
       </BudgetCardContainer>

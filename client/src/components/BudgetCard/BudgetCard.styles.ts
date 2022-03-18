@@ -49,6 +49,15 @@ export const TotalBudgetBar = styled.div`
   border-radius: 5px;
 `;
 
+export const PercentageDisplay = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 400;
+  z-index: 5;
+`;
+
 export const ExpenseBar = styled.div<ProgressProp>`
   position: absolute;
   background: ${(props) => (props.percentage >= 100 ? "#FF8080" : "#14FF00")};

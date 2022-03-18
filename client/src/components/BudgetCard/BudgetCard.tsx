@@ -10,6 +10,7 @@ import {
   BudgetLink,
   CreateBudgetButton,
   NoBudgetMessage,
+  PercentageDisplay,
 } from "./BudgetCard.styles";
 import { IBudgetData } from "../../constants";
 import { BsPlusSquare } from "react-icons/bs";
@@ -60,6 +61,9 @@ const BudgetCard: React.FC<IBudgetCard> = ({
             <ExpenseBar
               percentage={Math.min((currentAmount / total) * 100, 100)}
             />
+            <PercentageDisplay>{`${((currentAmount / total) * 100).toFixed(
+              2
+            )}%`}</PercentageDisplay>
           </TotalBudgetBar>
           <BudgetInfoContainer>
             <BudgetInfo>{`$${currentAmount} of $${total}`}</BudgetInfo>
