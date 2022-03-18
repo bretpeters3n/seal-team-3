@@ -21,7 +21,6 @@ import {
   TransactionType,
   TransactionSchema,
   ICategory,
-  IBudget,
 } from "../../constants";
 import { editItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
@@ -34,7 +33,7 @@ interface FormInputs {
 }
 interface TargetItem {
   id: string;
-  title: string;
+  transactionTitle: string;
   amount: number;
   pageType: TransactionType;
   setDisplayItemEditor: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,7 +43,7 @@ interface TargetItem {
 }
 const TransactionItemEditor: React.FC<TargetItem> = ({
   id,
-  title,
+  transactionTitle,
   amount,
   pageType,
   setDisplayItemEditor,
@@ -52,10 +51,14 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   toggleRerender,
   prevCategoryId,
 }) => {
-  const budgetData: IBudget = useOutletContext();
+  const {
+    data: { _id, title, currentAmount, total, categories },
+  } = useOutletContext<any>();
+
   const { budgetId } = useParams();
+
   const preloadedValues = {
-    title: title,
+    title: transactionTitle,
     amount: pageType === "expense" ? amount * -1 : amount,
     categoryId: prevCategoryId,
   };
@@ -75,15 +78,15 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
       amount: pageType === "expense" ? data.amount * -1 : data.amount,
       categoryId: data.categoryId,
     });
-    budgetData._id &&
-      editBudget(budgetData._id, {
-        title: budgetData.title,
-        total: budgetData.total,
+    _id &&
+      editBudget(_id, {
+        title: title,
+        total: total,
         // NEED TO FIX THIS
         currentAmount:
           pageType === "expense"
-            ? budgetData.currentAmount + amount + data.amount
-            : budgetData.currentAmount,
+            ? currentAmount + amount + data.amount
+            : currentAmount,
       });
     setItemOptions(false);
     setDisplayItemEditor(false);
@@ -125,8 +128,8 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
             <InputGroup>
               <Label>Category</Label>
               <Select {...register("categoryId")}>
-                {budgetData.categories &&
-                  budgetData.categories.map((category: ICategory) => (
+                {categories &&
+                  categories.map((category: ICategory) => (
                     <option key={category.title} value={category._id}>
                       {category.title}
                     </option>

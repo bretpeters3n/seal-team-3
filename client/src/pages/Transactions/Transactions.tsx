@@ -4,8 +4,10 @@ import { TransactionItemAdder, TransactionItemsList } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/TransactionMethods";
 import { ITransaction } from "../../constants";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
+
 const PathContext = createContext<string>("");
 interface Transaction {
   pageType: "income" | "expense";
@@ -18,19 +20,26 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
     const transactions = await getAllItems(budgetId);
     return transactions;
   };
-  const { data, isLoading, status, refetch } = useQuery(
+
+  const {
+    data: { currentAmount },
+    doRefetch,
+  } = useOutletContext<any>();
+
+  const { data, isLoading, isError, refetch } = useQuery(
     "transactions",
     fetchTransactions
   );
   const toggleRerender = () => setRerender(!rerender);
   const navigate = useNavigate();
   useEffect(() => {
+    doRefetch();
     refetch();
   }, [rerender]);
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  if (status === "error") {
+  if (isError) {
     return <div>Error...</div>;
   }
   return (
@@ -47,6 +56,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
               setDisplayAdder={setDisplayAdder}
               toggleRerender={toggleRerender}
               pageType={pageType}
+              doRefetch={doRefetch}
             />
           )}
         </AnimatePresence>
@@ -58,8 +68,10 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
           toggleRerender={toggleRerender}
           pageType={pageType}
           displayAdder={displayAdder}
+          currentAmount={currentAmount}
         />
         <GotoBudgetButton onClick={() => navigate(`/budget/${budgetId}`)}>
+          <MdOutlineArrowBackIosNew />
           Back to Budget
         </GotoBudgetButton>
       </Container>

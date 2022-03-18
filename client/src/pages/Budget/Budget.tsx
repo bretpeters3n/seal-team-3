@@ -13,7 +13,14 @@ const Budget = () => {
     return data;
   };
 
-  const { data, isLoading, isError } = useQuery("budget", fetchBudgetData);
+  const { data, isLoading, isError, isFetching, refetch } = useQuery(
+    "budget",
+    fetchBudgetData
+  );
+
+  const doRefetch = () => {
+    refetch();
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -25,8 +32,9 @@ const Budget = () => {
 
   return (
     <Container>
+      {isFetching && <h1>Updating Budget Data...</h1>}
       <BudgetNavbar />
-      <Outlet context={data} />
+      <Outlet context={{ data, doRefetch }} />
     </Container>
   );
 };
