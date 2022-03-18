@@ -37,7 +37,11 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
     refetch();
   }, [rerender]);
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Container>
+        <h1>Loading...</h1>
+      </Container>
+    );
   }
   if (isError) {
     return <div>Error...</div>;
@@ -70,7 +74,12 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
           displayAdder={displayAdder}
           currentAmount={currentAmount}
         />
-        <GotoBudgetButton onClick={() => navigate(`/budget/${budgetId}`)}>
+        <GotoBudgetButton
+          onClick={() => {
+            navigate(`/budget/${budgetId}`);
+            doRefetch();
+          }}
+        >
           <MdOutlineArrowBackIosNew />
           Back to Budget
         </GotoBudgetButton>

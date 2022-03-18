@@ -8,3 +8,4 @@ export { default as BudgetCardList } from "./BudgetCardList/BudgetCardList";
 export { default as BudgetCard } from "./BudgetCard/BudgetCard";
 export { default as BudgetAdder } from "./BudgetAdder/BudgetAdder";
 export { default as BudgetEditor } from "./BudgetEditor/BudgetEditor";
+export { default as Loading } from "./Loading/Loading";
