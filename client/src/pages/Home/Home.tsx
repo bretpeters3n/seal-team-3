@@ -24,10 +24,12 @@ const Home: React.FC<IHome> = ({ displayLoader, setDisplayLoader }) => {
   const [position, setPosition] = useState<number>(12);
 
   useEffect(() => {
-    displayLoader &&
-      setTimeout(() => {
+    if (displayLoader) {
+      const loaderTimer = setTimeout(() => {
         setDisplayLoader(false);
       }, 3000);
+      return () => clearTimeout(loaderTimer);
+    }
   }, []);
 
   const onDown = () => {
