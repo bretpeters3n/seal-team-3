@@ -46,7 +46,7 @@ const Navigation: React.FC<Props> = ({ user, setUser, setDisplayLoader }) => {
           <>
             <SidebarWrapper>
               <NavIcon to="/">
-                <h2>Home</h2>
+                <h2>Your Budgets</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
@@ -99,7 +99,7 @@ const Navigation: React.FC<Props> = ({ user, setUser, setDisplayLoader }) => {
             <SidebarWrapper>
               <NavIcon to="/" onClick={() => setSidebar(false)}>
                 <AiOutlineHome size="2rem" />
-                <h2>Home</h2>
+                <h2>Your Budgets</h2>
               </NavIcon>
             </SidebarWrapper>
             <SidebarWrapper>
