@@ -1,8 +1,12 @@
 import axios, { AxiosError } from "axios";
+import { NavigateFunction } from "react-router";
 import { URL, BudgetTransferData } from "../constants";
 
 // CREATE New Budget
-export const createBudget = async (data: BudgetTransferData) => {
+export const createBudget = async (
+  navigate: NavigateFunction,
+  data: BudgetTransferData
+) => {
   try {
     await axios.post(
       `${URL}/budgets/createBudget`,
@@ -20,7 +24,10 @@ export const createBudget = async (data: BudgetTransferData) => {
     );
   } catch (e) {
     const err = e as AxiosError;
-    if (err.response?.data?.statusCode > 401) {
+    if (err.response?.data?.statusCode === 401) {
+      alert("Auth token may have expired");
+      navigate("/login");
+    } else if (err.response?.data?.statusCode > 401) {
       alert(err.response?.data?.message);
     }
   }
@@ -28,6 +35,7 @@ export const createBudget = async (data: BudgetTransferData) => {
 
 // PATCH Budget by ID
 export const editBudget = async (
+  navigate: NavigateFunction,
   budgetId: string,
   data: BudgetTransferData
 ) => {
@@ -48,14 +56,17 @@ export const editBudget = async (
     );
   } catch (e) {
     const err = e as AxiosError;
-    if (err.response?.data?.statusCode > 401) {
+    if (err.response?.data?.statusCode === 401) {
+      alert("Auth token may have expired");
+      navigate("/login");
+    } else if (err.response?.data?.statusCode > 401) {
       alert(err.response?.data?.message);
     }
   }
 };
 
 // GET All Budgets
-export const getAllBudgets = async () => {
+export const getAllBudgets = async (navigate: NavigateFunction) => {
   try {
     const data = await axios
       .get(`${URL}/budgets/getAllBudgets`, {
@@ -70,6 +81,7 @@ export const getAllBudgets = async () => {
     const err = e as AxiosError;
     if (err.response?.data?.statusCode === 401) {
       alert("Auth token may have expired");
+      navigate("/login");
     } else if (err.response?.data?.statusCode > 401) {
       alert(err.response?.data?.message);
     }
@@ -77,7 +89,10 @@ export const getAllBudgets = async () => {
 };
 
 // GET Budget by Budget ID
-export const getBudgetById = async (budgetId: string) => {
+export const getBudgetById = async (
+  budgetId: string,
+  navigate: NavigateFunction
+) => {
   try {
     const data = await axios
       .get(`${URL}/budgets/getBudget/${budgetId}`, {
@@ -92,6 +107,7 @@ export const getBudgetById = async (budgetId: string) => {
     const err = e as AxiosError;
     if (err.response?.data?.statusCode === 401) {
       alert("Auth token may have expired");
+      navigate("/login");
     } else if (err.response?.data?.statusCode > 401) {
       alert(err.response?.data?.message);
     }

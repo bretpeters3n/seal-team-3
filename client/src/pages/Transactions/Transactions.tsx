@@ -16,8 +16,9 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const [displayAdder, setDisplayAdder] = useState<boolean>(false);
   const [rerender, setRerender] = useState<boolean>(false);
   const { budgetId } = useParams();
+  const navigate = useNavigate();
   const fetchTransactions = async () => {
-    const transactions = await getAllItems(budgetId);
+    const transactions = await getAllItems(budgetId, navigate);
     return transactions;
   };
 
@@ -31,7 +32,6 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
     fetchTransactions
   );
   const toggleRerender = () => setRerender(!rerender);
-  const navigate = useNavigate();
   useEffect(() => {
     doRefetch();
     refetch();

@@ -24,7 +24,7 @@ import {
 } from "../../constants";
 import { editItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
@@ -70,16 +70,24 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
     resolver: yupResolver(TransactionSchema),
     defaultValues: preloadedValues,
   });
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<FormInputs> = (
     data: TransactionTransferData
   ) => {
-    editItem(budgetId, prevCategoryId, id, {
-      title: data.title,
-      amount: pageType === "expense" ? data.amount * -1 : data.amount,
-      categoryId: data.categoryId,
-    });
+    editItem(
+      budgetId,
+      prevCategoryId,
+      id,
+      {
+        title: data.title,
+        amount: pageType === "expense" ? data.amount * -1 : data.amount,
+        categoryId: data.categoryId,
+      },
+      navigate
+    );
     _id &&
-      editBudget(_id, {
+      editBudget(navigate, _id, {
         title: title,
         total: total,
         // NEED TO FIX THIS

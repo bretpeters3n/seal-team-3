@@ -11,7 +11,7 @@ import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { deleteItem } from "../../API/TransactionMethods";
 import { TransactionType } from "../../constants";
 import { TransactionItemEditor } from "../../components";
-import { useParams, useOutletContext } from "react-router-dom";
+import { useParams, useOutletContext, useNavigate } from "react-router-dom";
 import { editBudget } from "../../API/BudgetMethods";
 
 interface Transaction {
@@ -41,9 +41,11 @@ const TransactionItem: React.FC<Transaction> = ({
 
   const toggleItemOptions = () => setItemOptions(!itemOptions);
 
+  const navigate = useNavigate();
+
   const handleDelete = () => {
-    deleteItem(budgetId, categoryId, itemId);
-    editBudget(_id, {
+    deleteItem(budgetId, categoryId, itemId, navigate);
+    editBudget(navigate, _id, {
       title: title,
       total: total,
       currentAmount:

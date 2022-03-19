@@ -1,15 +1,15 @@
 import React from "react";
 import { Container } from "./Budget.styles";
-import { BudgetNavbar } from "../../components";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getBudgetById } from "../../API/BudgetMethods";
 import { IBudget } from "../../constants";
 
 const Budget = () => {
   const { budgetId } = useParams();
+  const navigate = useNavigate();
   const fetchBudgetData = async () => {
-    const data: IBudget = await getBudgetById(budgetId!);
+    const data: IBudget = await getBudgetById(budgetId!, navigate);
     return data;
   };
 
@@ -32,7 +32,6 @@ const Budget = () => {
 
   return (
     <Container>
-      <BudgetNavbar />
       <Outlet context={{ data, doRefetch }} />
     </Container>
   );

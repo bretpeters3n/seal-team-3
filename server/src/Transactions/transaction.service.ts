@@ -146,7 +146,6 @@ export class TransactionServices {
       _id: MongoDBID;
     }
   > {
-    console.log('running');
     const foundBudget = await this.budgetServices.getBudgetById(user, budgetID);
     const foundCategory = foundBudget.categories.find(
       (category) => category._id == categoryID

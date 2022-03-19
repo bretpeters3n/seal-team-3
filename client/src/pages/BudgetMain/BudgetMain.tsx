@@ -16,6 +16,10 @@ import {
   PercentageDisplay,
   BudgetTitleContainer,
   BudgetEditorButton,
+  BudgetLinksContainer,
+  BudgetLink,
+  BudgetButton,
+  ButtonStyles,
 } from "./BudgetMain.styles";
 import { useOutletContext } from "react-router-dom";
 import { ICategory } from "../../constants";
@@ -69,6 +73,14 @@ const BudgetMain: React.FC = () => {
           </BudgetInfo>
         </BudgetInfoContainer>
       </BudgetCardContainer>
+      <BudgetLinksContainer>
+        <BudgetButton sx={ButtonStyles} variant="contained">
+          <BudgetLink to="income">Adjust Incomes</BudgetLink>
+        </BudgetButton>
+        <BudgetButton sx={ButtonStyles} variant="contained">
+          <BudgetLink to="expenses">Adjust Expenses</BudgetLink>
+        </BudgetButton>
+      </BudgetLinksContainer>
       <CategoriesContainer>
         {categories &&
           categories.map((category: ICategory) => (

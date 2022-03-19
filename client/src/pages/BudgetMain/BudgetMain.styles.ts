@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { device } from "../../utils/Breakpoints";
+import { NavLink } from "react-router-dom";
+import { Button } from "@mui/material";
 
 interface ProgressProp {
   percentage: number;
@@ -119,3 +121,44 @@ export const TransactionAmount = styled.div<ColorProp>`
   color: ${(props) => props.textColor};
   font-weight: 600;
 `;
+
+export const BudgetLinksContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+
+  @media ${device.desktop} {
+    justify-content: space-between;
+  }
+`;
+
+export const BudgetButton = styled(Button)`
+  background-color: #3200c0;
+`;
+
+export const BudgetLink = styled(NavLink)`
+  font-weight: 700;
+  font-size: 16px;
+  font-family: Urbanist;
+  color: #3200c0;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+export const ButtonStyles = {
+  "&.MuiButton-root": {
+    border: "2px #3200c0 solid",
+    textTransform: "none",
+    padding: "2px 8px",
+    "&:hover": {
+      backgroundColor: "#f2edff",
+    },
+  },
+  "&.MuiButton-contained": {
+    color: "#3200c0",
+    background: "#FFFFFF",
+  },
+};
