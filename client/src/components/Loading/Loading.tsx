@@ -36,7 +36,7 @@ const Loading = () => {
           <h4>Debt.com</h4>
           <Progress>
             <p style={{ marginBottom: "1em" }}>Loading your content...</p>
-            <CircularProgress />
+            <CircularProgress style={{ color: "#3200c0" }} />
           </Progress>
         </InfoSection>
       </LoadingContainer>
