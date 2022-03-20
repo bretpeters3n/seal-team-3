@@ -6,6 +6,7 @@ import { getAllItems } from "../../API/TransactionMethods";
 import { ITransaction } from "../../constants";
 import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
+import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const PathContext = createContext<string>("");
 interface Transaction {
@@ -79,7 +80,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
             doRefetch();
           }}
         >
-          &#11164; Back to Budget
+          <MdKeyboardArrowLeft size="2rem" /> Back to Budget
         </GotoBudgetButton>
       </Container>
     </PathContext.Provider>
