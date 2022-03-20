@@ -10,6 +10,9 @@
   "name": "seal-team-3",
   "description": "Group project w/ freeCodeCamp Dallas",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x"
+  },
   "main": "server/dist/main.js",
   "scripts": {
     "start": "node server/dist/main.js",
