@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 
 interface ProgressProp {
   percentage: number;
@@ -74,21 +73,6 @@ export const BudgetInfoContainer = styled.div`
 `;
 
 export const BudgetInfo = styled.h3``;
-
-export const BudgetLinksContainer = styled.div<ActiveProp>`
-  display: ${(props) => (props.active ? "flex" : "none")};
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const BudgetLink = styled(Link)`
-  font-weight: 700;
-  color: #3200c0;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
 
 export const CreateBudgetButton = styled.div<ActiveProp>`
   display: ${(props) => (props.active ? "none" : "flex")};
