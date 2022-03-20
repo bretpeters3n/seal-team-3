@@ -41,7 +41,7 @@ const BudgetCardList: React.FC<IBudgetCardList> = ({
       </Carousel>
 
       <GotoCurrent onClick={() => setPosition(12)}>
-        Goto Current <br /> Month&apos;s Budget
+        Go to Current <br /> Month&apos;s Budget
       </GotoCurrent>
     </Container>
   );
