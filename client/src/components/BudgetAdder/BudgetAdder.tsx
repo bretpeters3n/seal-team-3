@@ -73,7 +73,6 @@ const BudgetAdder: React.FC<IBudgetAdder> = ({
             <InputGroup>
               <Label>Set a budget for the month:</Label>
               <Input
-                autoComplete="off"
                 placeholder="Please enter a budget amount"
                 prefix="$"
                 decimalScale={2}
