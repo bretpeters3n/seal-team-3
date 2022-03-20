@@ -17,6 +17,7 @@ import {
 } from "./BudgetEditor.styles";
 import { CreateBudgetSchema } from "../../constants";
 import { editBudget } from "../../API/BudgetMethods";
+import { useNavigate } from "react-router";
 
 interface FormInputs {
   total: string;
@@ -51,9 +52,11 @@ const BudgetEditor: React.FC<IBudgetEditor> = ({
     defaultValues: preloadedValues,
   });
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     const newTotal = data.total.replace("$", "").replace(",", "");
-    editBudget(budgetId, {
+    editBudget(navigate, budgetId, {
       title,
       total: +newTotal,
       currentAmount,

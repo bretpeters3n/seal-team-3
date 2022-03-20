@@ -6,8 +6,6 @@ import {
   ExpenseBar,
   BudgetInfoContainer,
   BudgetInfo,
-  BudgetLinksContainer,
-  BudgetLink,
   CreateBudgetButton,
   NoBudgetMessage,
   PercentageDisplay,
@@ -34,15 +32,15 @@ const BudgetCard: React.FC<IBudgetCard> = ({
 }) => {
   const [displayBudgetAdder, setDisplayBudgetAdder] = useState<boolean>(false);
   const navigate = useNavigate();
-
+  const BudgetCardAnimation = {
+    scale: index === position ? 1 : 0.8,
+    rotate: 0,
+    top: `${(index - position) * 20 + 20}vh`,
+  };
   return (
     <BudgetCardContainer
       initial={{ scale: 0, rotate: -180 }}
-      animate={{
-        scale: index === position ? 1 : 0.8,
-        rotate: 0,
-        top: `${(index - position) * 20 + 20}vh`,
-      }}
+      animate={BudgetCardAnimation}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
       $current={index === position}
       onClick={() =>
@@ -74,13 +72,6 @@ const BudgetCard: React.FC<IBudgetCard> = ({
               {total - currentAmount > 0 ? " left" : " over"}
             </BudgetInfo>
           </BudgetInfoContainer>
-
-          <BudgetLinksContainer active={created}>
-            <BudgetLink to={`budget/${_id}/income`}>Adjust Incomes</BudgetLink>
-            <BudgetLink to={`budget/${_id}/expenses`}>
-              Adjust Expenses
-            </BudgetLink>
-          </BudgetLinksContainer>
         </>
       ) : (
         <NoBudgetMessage>

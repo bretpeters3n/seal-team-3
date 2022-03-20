@@ -17,6 +17,7 @@ import {
 } from "./BudgetAdder.styles";
 import { CreateBudgetSchema } from "../../constants";
 import { createBudget } from "../../API/BudgetMethods";
+import { useNavigate } from "react-router";
 
 interface FormInputs {
   total: string;
@@ -42,10 +43,11 @@ const BudgetAdder: React.FC<IBudgetAdder> = ({
   } = useForm<FormInputs>({
     resolver: yupResolver(CreateBudgetSchema),
   });
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     const newTotal = data.total.replace("$", "").replace(",", "");
-    createBudget({
+    createBudget(navigate, {
       title,
       total: +newTotal,
       currentAmount,

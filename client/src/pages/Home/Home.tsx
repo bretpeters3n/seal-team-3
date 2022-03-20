@@ -4,6 +4,7 @@ import { BudgetCardList, Loading } from "../../components";
 import { useQuery } from "react-query";
 import { getAllBudgets } from "../../API/BudgetMethods";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { useNavigate } from "react-router";
 
 interface IHome {
   displayLoader: boolean;
@@ -11,8 +12,9 @@ interface IHome {
 }
 
 const Home: React.FC<IHome> = ({ displayLoader, setDisplayLoader }) => {
+  const navigate = useNavigate();
   const fetchAllBudgets = async () => {
-    const data = await getAllBudgets();
+    const data = await getAllBudgets(navigate);
     return data;
   };
   const { data, isLoading, status, refetch } = useQuery(

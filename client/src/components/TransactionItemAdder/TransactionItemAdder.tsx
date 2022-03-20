@@ -24,7 +24,7 @@ import {
   TransactionSchema,
   ICategory,
 } from "../../constants";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
@@ -60,6 +60,8 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     resolver: yupResolver(TransactionSchema),
   });
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<FormInputs> = (
     data: TransactionTransferData
   ): void => {
@@ -70,10 +72,11 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
         categoryId: data.categoryId,
       },
       budgetId,
-      data.categoryId
+      data.categoryId,
+      navigate
     );
     typeof _id === "string" &&
-      editBudget(_id, {
+      editBudget(navigate, _id, {
         title: title,
         total: total,
         currentAmount:
