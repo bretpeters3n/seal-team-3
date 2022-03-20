@@ -47,8 +47,8 @@ const Loading = () => {
             <h4>{data[Math.floor(Math.random() * data.length)].author}</h4>
           )}
           <Progress>
-            <p style={{ marginBottom: "1em" }}>Retrieving your budgets...</p>
-            <CircularProgress />
+            <p style={{ marginBottom: "1em" }}>Loading your content...</p>
+            <CircularProgress style={{ color: "#3200c0" }} />
           </Progress>
         </InfoSection>
       </LoadingContainer>
