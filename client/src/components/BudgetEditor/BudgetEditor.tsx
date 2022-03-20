@@ -82,6 +82,7 @@ const BudgetEditor: React.FC<IBudgetEditor> = ({
             <InputGroup>
               <Label>Edit your budget for the month:</Label>
               <Input
+                autoComplete="off"
                 placeholder="Please enter a budget amount"
                 prefix="$"
                 decimalScale={2}
@@ -95,7 +96,7 @@ const BudgetEditor: React.FC<IBudgetEditor> = ({
             </InputGroup>
           </InputContainer>
 
-          <FormButton type="submit">Save</FormButton>
+          <FormButton type="button">Save</FormButton>
         </CreateBudgetForm>
       </EditorContainer>
     </Container>
