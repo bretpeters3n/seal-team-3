@@ -24,10 +24,10 @@ export const GotoCurrent = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 1;
   cursor: pointer;
   transition: 0.3s all ease;
   padding: 1em;
+  text-align: center;
 
   &:hover {
     transform: scale(1.1);
