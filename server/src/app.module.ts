@@ -7,7 +7,7 @@ import { TransactionModule } from './Transactions/transaction.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest-budgety', {
+    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://localhost/nest-budgety', {
       useNewUrlParser: true,
     }),
     AuthModule,

@@ -10,9 +10,12 @@
   "name": "seal-team-3",
   "description": "Group project w/ freeCodeCamp Dallas",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server/dist/main.js",
   "scripts": {
-    "start": "concurrently \"cd server && nest start\" \"cd client && npm run start\"",
+    "start": "node server/dist/main.js",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "build": "cd client && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
