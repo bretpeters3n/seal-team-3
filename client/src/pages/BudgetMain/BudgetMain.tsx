@@ -26,6 +26,7 @@ import {
 import { useOutletContext } from "react-router-dom";
 import { ICategory } from "../../constants";
 import { BudgetEditor } from "../../components";
+import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -49,7 +50,10 @@ const BudgetMain: React.FC = () => {
       transition={{ duration: 0.5 }}
     >
       <BackButtonContainer>
-        <BackButton to="/">&#11164; Back to Budgets</BackButton>
+        <BackButton to="/">
+          <MdKeyboardArrowLeft size="2rem" />
+          Back to Budgets
+        </BackButton>
       </BackButtonContainer>
       <BudgetCardContainer>
         <BudgetTitleContainer>

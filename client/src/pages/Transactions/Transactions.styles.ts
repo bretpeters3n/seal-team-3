@@ -11,7 +11,7 @@ export const Container = styled(motion.div)`
 
 export const GotoBudgetButton = styled.a`
   position: absolute;
-  top: -30px;
+  top: -40px;
   left: 20px;
   cursor: pointer;
   transition: 0.2s all ease;
