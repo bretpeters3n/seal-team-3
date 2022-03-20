@@ -108,8 +108,5 @@ export const TransactionSchema = yup.object().shape({
 });
 
 export const CreateBudgetSchema = yup.object().shape({
-  total: yup
-    .string()
-    .matches(/^\$(0|[1-9][0-9]{0,2})(,\d{3})*(\.\d{1,2})?$/)
-    .required("field is required"),
+  total: yup.string().required("field is required"),
 });

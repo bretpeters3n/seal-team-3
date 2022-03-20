@@ -6,11 +6,12 @@ export const Container = styled(motion.div)`
   max-width: 800px;
   margin: 0 auto;
   position: relative;
+  margin-top: 3em;
 `;
 
 export const GotoBudgetButton = styled.a`
   position: absolute;
-  bottom: -25px;
+  top: -30px;
   left: 20px;
   cursor: pointer;
   transition: 0.2s all ease;

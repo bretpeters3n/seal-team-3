@@ -60,7 +60,7 @@ const BudgetCard: React.FC<IBudgetCard> = ({
               percentage={Math.min((currentAmount / total) * 100, 100)}
             />
             <PercentageDisplay>{`${((currentAmount / total) * 100).toFixed(
-              2
+              0
             )}%`}</PercentageDisplay>
           </TotalBudgetBar>
           <BudgetInfoContainer>

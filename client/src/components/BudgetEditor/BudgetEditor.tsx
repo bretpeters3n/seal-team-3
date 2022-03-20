@@ -41,7 +41,7 @@ const BudgetEditor: React.FC<IBudgetEditor> = ({
   budgetId,
 }) => {
   const preloadedValues = {
-    total: currentBudget.toString(),
+    total: "$" + currentBudget.toString(),
   };
   const {
     register,
@@ -85,6 +85,7 @@ const BudgetEditor: React.FC<IBudgetEditor> = ({
                 placeholder="Please enter a budget amount"
                 prefix="$"
                 decimalScale={2}
+                autoComplete="off"
                 {...register("total")}
               />
               <ErrorContainer>

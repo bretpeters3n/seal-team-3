@@ -32,6 +32,11 @@ export const TitleContainer = styled.div`
   padding: 1em;
 `;
 
+export const NoTransactionsMessage = styled.div`
+  text-align: center;
+  padding: 1em 0;
+`;
+
 export const Title = styled.h1``;
 
 export const Button = styled.button`

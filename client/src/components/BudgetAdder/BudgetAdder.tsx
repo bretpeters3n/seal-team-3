@@ -76,6 +76,7 @@ const BudgetAdder: React.FC<IBudgetAdder> = ({
                 placeholder="Please enter a budget amount"
                 prefix="$"
                 decimalScale={2}
+                autoComplete="off"
                 {...register("total")}
               />
               <ErrorContainer>
@@ -86,7 +87,7 @@ const BudgetAdder: React.FC<IBudgetAdder> = ({
             </InputGroup>
           </InputContainer>
 
-          <FormButton type="button">Save</FormButton>
+          <FormButton type="submit">Save</FormButton>
         </CreateBudgetForm>
       </EditorContainer>
     </Container>
