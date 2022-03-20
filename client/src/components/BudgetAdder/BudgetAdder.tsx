@@ -86,7 +86,7 @@ const BudgetAdder: React.FC<IBudgetAdder> = ({
             </InputGroup>
           </InputContainer>
 
-          <FormButton type="submit">Save</FormButton>
+          <FormButton type="button">Save</FormButton>
         </CreateBudgetForm>
       </EditorContainer>
     </Container>
