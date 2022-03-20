@@ -26,6 +26,7 @@ export const createBudget = async (
     const err = e as AxiosError;
     if (err.response?.data?.statusCode === 401) {
       alert("Auth token may have expired");
+      sessionStorage.setItem("authToken", "");
       navigate("/login");
     } else if (err.response?.data?.statusCode > 401) {
       alert(err.response?.data?.message);
@@ -58,6 +59,7 @@ export const editBudget = async (
     const err = e as AxiosError;
     if (err.response?.data?.statusCode === 401) {
       alert("Auth token may have expired");
+      sessionStorage.setItem("authToken", "");
       navigate("/login");
     } else if (err.response?.data?.statusCode > 401) {
       alert(err.response?.data?.message);
@@ -81,6 +83,7 @@ export const getAllBudgets = async (navigate: NavigateFunction) => {
     const err = e as AxiosError;
     if (err.response?.data?.statusCode === 401) {
       alert("Auth token may have expired");
+      sessionStorage.setItem("authToken", "");
       navigate("/login");
     } else if (err.response?.data?.statusCode > 401) {
       alert(err.response?.data?.message);
@@ -107,6 +110,7 @@ export const getBudgetById = async (
     const err = e as AxiosError;
     if (err.response?.data?.statusCode === 401) {
       alert("Auth token may have expired");
+      sessionStorage.setItem("authToken", "");
       navigate("/login");
     } else if (err.response?.data?.statusCode > 401) {
       alert(err.response?.data?.message);

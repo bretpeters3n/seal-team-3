@@ -20,6 +20,8 @@ import {
   BudgetLink,
   BudgetButton,
   ButtonStyles,
+  BackButton,
+  BackButtonContainer,
 } from "./BudgetMain.styles";
 import { useOutletContext } from "react-router-dom";
 import { ICategory } from "../../constants";
@@ -46,6 +48,9 @@ const BudgetMain: React.FC = () => {
       initial={{ opacity: 0, y: 500 }}
       transition={{ duration: 0.5 }}
     >
+      <BackButtonContainer>
+        <BackButton to="/">&#11164; Back to Budgets</BackButton>
+      </BackButtonContainer>
       <BudgetCardContainer>
         <BudgetTitleContainer>
           <BudgetTitle>{title}</BudgetTitle>
@@ -75,35 +80,36 @@ const BudgetMain: React.FC = () => {
       </BudgetCardContainer>
       <BudgetLinksContainer>
         <BudgetButton sx={ButtonStyles} variant="contained">
-          <BudgetLink to="income">Adjust Incomes</BudgetLink>
+          <BudgetLink to="income">Incomes +/-</BudgetLink>
         </BudgetButton>
         <BudgetButton sx={ButtonStyles} variant="contained">
-          <BudgetLink to="expenses">Adjust Expenses</BudgetLink>
+          <BudgetLink to="expenses">Expenses +/-</BudgetLink>
         </BudgetButton>
       </BudgetLinksContainer>
       <CategoriesContainer>
         {categories &&
-          categories.map((category: ICategory) => (
-            <CategoryContainer key={category._id}>
-              <CategoryTitle>
-                <h2>{category.title}</h2>
-              </CategoryTitle>
-              {category.transactions.length !== 0 ? (
-                category.transactions.map((transaction) => (
-                  <TransactionRow key={transaction._id}>
-                    <TransactionTitle>{transaction.title}</TransactionTitle>
-                    <TransactionAmount
-                      textColor={transaction.amount > 0 ? "green" : "red"}
-                    >
-                      {currencyFormatter.format(transaction.amount)}
-                    </TransactionAmount>
-                  </TransactionRow>
-                ))
-              ) : (
-                <TransactionRow>Add a transaction</TransactionRow>
-              )}
-            </CategoryContainer>
-          ))}
+          categories.map(
+            (category: ICategory) =>
+              category.transactions.length !== 0 && (
+                <CategoryContainer key={category._id}>
+                  <CategoryTitle>
+                    <h2>{category.title}</h2>
+                  </CategoryTitle>
+                  {category.transactions.length !== 0 && (
+                    category.transactions.map((transaction) => (
+                      <TransactionRow key={transaction._id}>
+                        <TransactionTitle>{transaction.title}</TransactionTitle>
+                        <TransactionAmount
+                          textColor={transaction.amount > 0 ? "green" : "red"}
+                        >
+                          {currencyFormatter.format(transaction.amount)}
+                        </TransactionAmount>
+                      </TransactionRow>
+                    ))
+                  )}
+                </CategoryContainer>
+              )
+          )}
       </CategoriesContainer>
       {displayBudgetEditor && (
         <BudgetEditor

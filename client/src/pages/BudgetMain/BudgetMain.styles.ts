@@ -19,6 +19,20 @@ export const Container = styled(motion.div)`
   margin: 0 auto;
 `;
 
+export const BackButtonContainer = styled.div`
+  padding-bottom: 12px;
+`;
+
+export const BackButton = styled(NavLink)`
+  font-family: "Urbanist", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #3200c0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
 export const BudgetCardContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,7 +98,7 @@ export const BudgetInfoContainer = styled.div`
 
 export const BudgetInfo = styled.h3``;
 export const CategoriesContainer = styled.div`
-  margin-top: 2em;
+  margin-top: 1em;
 `;
 export const CategoryContainer = styled.div`
   display: flex;
@@ -126,7 +140,7 @@ export const BudgetLinksContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 14px;
+  margin-top: 1em;
 
   @media ${device.desktop} {
     justify-content: space-between;
@@ -152,7 +166,8 @@ export const ButtonStyles = {
   "&.MuiButton-root": {
     border: "2px #3200c0 solid",
     textTransform: "none",
-    padding: "2px 8px",
+    padding: "2px 20px",
+    borderRadius: "25px",
     "&:hover": {
       backgroundColor: "#f2edff",
     },
