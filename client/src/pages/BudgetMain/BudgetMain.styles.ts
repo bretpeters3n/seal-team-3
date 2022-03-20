@@ -74,11 +74,11 @@ export const TotalBudgetBar = styled.div`
 
 export const PercentageDisplay = styled.div`
   position: absolute;
+  font-size: 1.2rem;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   font-weight: 400;
-  z-index: 5;
 `;
 
 export const ExpenseBar = styled.div<ProgressProp>`
@@ -87,7 +87,6 @@ export const ExpenseBar = styled.div<ProgressProp>`
   border-radius: 5px;
   height: 30px;
   width: ${(props) => props.percentage}%;
-  z-index: 1;
 `;
 
 export const BudgetInfoContainer = styled.div`

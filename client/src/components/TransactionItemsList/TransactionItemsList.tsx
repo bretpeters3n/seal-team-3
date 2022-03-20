@@ -7,6 +7,7 @@ import {
   TitleContainer,
   Title,
   Button,
+  NoTransactionsMessage,
 } from "./TransactionItemsList.styles";
 import { AnimatePresence } from "framer-motion";
 import { ItemData, TransactionType } from "../../constants";
@@ -40,6 +41,11 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
           </Button>
         </TitleContainer>
         <AnimatePresence>
+          {filteredData.length < 1 && (
+            <NoTransactionsMessage>
+              <h2>No transactions yet</h2>
+            </NoTransactionsMessage>
+          )}
           {filteredData?.map((item) => (
             <TransactionItem
               key={item._id}

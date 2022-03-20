@@ -63,7 +63,7 @@ const BudgetMain: React.FC = () => {
             percentage={Math.min((currentAmount / total) * 100, 100)}
           />
           <PercentageDisplay>{`${((currentAmount / total) * 100).toFixed(
-            2
+            0
           )}%`}</PercentageDisplay>
         </TotalBudgetBar>
         <BudgetInfoContainer>
@@ -95,7 +95,7 @@ const BudgetMain: React.FC = () => {
                   <CategoryTitle>
                     <h2>{category.title}</h2>
                   </CategoryTitle>
-                  {category.transactions.length !== 0 && (
+                  {category.transactions.length !== 0 &&
                     category.transactions.map((transaction) => (
                       <TransactionRow key={transaction._id}>
                         <TransactionTitle>{transaction.title}</TransactionTitle>
@@ -105,8 +105,7 @@ const BudgetMain: React.FC = () => {
                           {currencyFormatter.format(transaction.amount)}
                         </TransactionAmount>
                       </TransactionRow>
-                    ))
-                  )}
+                    ))}
                 </CategoryContainer>
               )
           )}
