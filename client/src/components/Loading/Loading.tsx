@@ -12,28 +12,40 @@ import {
 } from "./Loading.styles";
 import LogoImg from "../../assets/budgety_logo_alt.png";
 import CircularProgress from "@mui/material/CircularProgress";
+import { getFinanceTips } from "../../API/FinancialTipMethods";
+import { useQuery } from "react-query";
+import { IFinanceTip } from "../../constants";
 
 const Loading = () => {
+  const fetchTips = async () => {
+    const data = await getFinanceTips();
+    return data;
+  };
+
+  const { data, isFetching } = useQuery<IFinanceTip[]>("tips", fetchTips);
+
+  if (isFetching) {
+    return null;
+  }
+
   return (
     <Container>
       <LoadingContainer>
-        {/* <CloseButton>
-          <IoMdCloseCircleOutline size="2rem" />
-        </CloseButton> */}
         <LogoSection>
           <Image src={LogoImg} alt="logo" />
           <Subtitle>Tips</Subtitle>
         </LogoSection>
         <DividerLine />
         <QuoteSection>
-          <h1>
-            &quot;Budget for the income you receive, not what you are suppose to
-            get.&quot;{" "}
-          </h1>
+          {data && (
+            <h1>{data[Math.floor(Math.random() * data.length)].title}</h1>
+          )}
         </QuoteSection>
         <DividerLine />
         <InfoSection>
-          <h4>Debt.com</h4>
+          {data && (
+            <h4>{data[Math.floor(Math.random() * data.length)].author}</h4>
+          )}
           <Progress>
             <p style={{ marginBottom: "1em" }}>Loading your content...</p>
             <CircularProgress style={{ color: "#3200c0" }} />

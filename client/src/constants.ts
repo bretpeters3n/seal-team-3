@@ -90,6 +90,11 @@ export interface IBudget {
   __v?: number;
 }
 
+export interface IFinanceTip {
+  title: string;
+  author: string;
+}
+
 export const TransactionSchema = yup.object().shape({
   title: yup.string().min(2).max(50).required("field is required"),
   amount: yup
