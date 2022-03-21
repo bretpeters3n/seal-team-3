@@ -16,7 +16,7 @@ export const Container = styled(motion.div)`
 
 export const LoadingContainer = styled(motion.div)`
   width: 95vw;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 200px);
   max-width: 600px;
   background: white;
   border-radius: 5px;

@@ -23,6 +23,12 @@ interface IBudgetCard {
   toggleRerender: () => void;
 }
 
+const currencyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+});
+
 const BudgetCard: React.FC<IBudgetCard> = ({
   budget: { _id, title, total, currentAmount, created, categories },
   index,
@@ -64,11 +70,13 @@ const BudgetCard: React.FC<IBudgetCard> = ({
             )}%`}</PercentageDisplay>
           </TotalBudgetBar>
           <BudgetInfoContainer>
-            <BudgetInfo>{`$${currentAmount} of $${total}`}</BudgetInfo>
+            <BudgetInfo>{`${currencyFormatter.format(
+              currentAmount
+            )} of ${currencyFormatter.format(total)}`}</BudgetInfo>
             <BudgetInfo>
-              {`${total - currentAmount < 0 ? "-" : ""}$${Math.abs(
-                total - currentAmount
-              )}`}
+              {`${
+                total - currentAmount < 0 ? "-" : ""
+              }${currencyFormatter.format(Math.abs(total - currentAmount))}`}
               {total - currentAmount > 0 ? " left" : " over"}
             </BudgetInfo>
           </BudgetInfoContainer>

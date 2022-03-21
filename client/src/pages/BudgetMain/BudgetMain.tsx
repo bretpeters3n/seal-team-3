@@ -75,8 +75,8 @@ const BudgetMain: React.FC = () => {
             currentAmount
           )} of ${currencyFormatter.format(total)}`}</BudgetInfo>
           <BudgetInfo>
-            {`${total - currentAmount < 0 ? "-" : ""}$${Math.abs(
-              total - currentAmount
+            {`${total - currentAmount < 0 ? "-" : ""}${currencyFormatter.format(
+              Math.abs(total - currentAmount)
             )}`}
             {total - currentAmount >= 0 ? " left" : " over"}
           </BudgetInfo>

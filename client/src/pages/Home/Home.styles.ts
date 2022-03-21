@@ -3,14 +3,17 @@ import { device } from "../../utils/Breakpoints";
 
 export const Container = styled.div`
   position: relative;
-  width: 100%;
+  width: 95%;
   max-width: 800px;
   height: calc(100vh - 90px);
   display: flex;
   align-items: center;
   margin: 0 auto;
+  margin-top: 5px;
   justify-content: center;
   user-select: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
 `;
 
 export const PageTitle = styled.h3`

@@ -15,20 +15,16 @@ import {
   TitleContainer,
   Icon,
   Select,
+  AmountInput,
 } from "./TransactionItemEditor.styles";
-import {
-  TransactionTransferData,
-  TransactionType,
-  TransactionSchema,
-  ICategory,
-} from "../../constants";
+import { TransactionType, TransactionSchema, ICategory } from "../../constants";
 import { editItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
-  amount: number;
+  amount: string;
   categoryId: string;
 }
 interface TargetItem {
@@ -59,7 +55,10 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
 
   const preloadedValues = {
     title: transactionTitle,
-    amount: pageType === "expense" ? amount * -1 : amount,
+    amount:
+      pageType === "expense"
+        ? "$" + (amount * -1).toString()
+        : "$" + amount.toString(),
     categoryId: prevCategoryId,
   };
   const {
@@ -72,16 +71,15 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   });
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormInputs> = (
-    data: TransactionTransferData
-  ) => {
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
+    const newTotal = data.amount.replace("$", "").replace(",", "");
     editItem(
       budgetId,
       prevCategoryId,
       id,
       {
         title: data.title,
-        amount: pageType === "expense" ? data.amount * -1 : data.amount,
+        amount: pageType === "expense" ? +newTotal * -1 : +newTotal,
         categoryId: data.categoryId,
       },
       navigate
@@ -93,7 +91,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
         // NEED TO FIX THIS
         currentAmount:
           pageType === "expense"
-            ? currentAmount + amount + data.amount
+            ? currentAmount + amount + +newTotal
             : currentAmount,
       });
     setItemOptions(false);
@@ -126,7 +124,12 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
             </InputGroup>
             <InputGroup>
               <Label>Amount</Label>
-              <Input {...register("amount")} />
+              <AmountInput
+                prefix="$"
+                decimalScale={2}
+                autoComplete="off"
+                {...register("amount")}
+              />
               <ErrorContainer>
                 {errors.amount && errors.amount?.message && (
                   <p>{errors.amount.message}</p>
