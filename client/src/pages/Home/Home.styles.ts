@@ -34,6 +34,7 @@ export const UpArrow = styled.div`
   z-index: 1;
   cursor: pointer;
   transition: 0.3s all ease;
+  color: #3200c0;
 
   &:hover {
     transform: scale(1.1);
@@ -46,6 +47,7 @@ export const DownArrow = styled.div`
   z-index: 1;
   cursor: pointer;
   transition: 0.3s all ease;
+  color: #3200c0;
 
   &:hover {
     transform: scale(1.1);

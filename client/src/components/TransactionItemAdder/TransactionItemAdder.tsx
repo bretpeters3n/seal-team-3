@@ -127,11 +127,25 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
             <Label>Category</Label>
             <Select {...register("categoryId")}>
               {categories &&
-                categories.map((category: ICategory) => (
-                  <option key={category.title} value={category._id}>
-                    {category.title}
-                  </option>
-                ))}
+                pageType === "income" &&
+                categories.map(
+                  (category: ICategory) =>
+                    category.title === "Income" && (
+                      <option key={category.title} value={category._id}>
+                        {category.title}
+                      </option>
+                    )
+                )}
+              {categories &&
+                pageType === "expense" &&
+                categories.map(
+                  (category: ICategory) =>
+                    category.title !== "Income" && (
+                      <option key={category.title} value={category._id}>
+                        {category.title}
+                      </option>
+                    )
+                )}
             </Select>
             <ErrorContainer>
               {errors.categoryId && errors.categoryId?.message && (
