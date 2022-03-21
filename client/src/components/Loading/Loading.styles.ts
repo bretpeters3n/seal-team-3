@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { device } from "../../utils/Breakpoints";
 
 export const Container = styled(motion.div)`
   width: 100vw;
@@ -24,16 +25,20 @@ export const LoadingContainer = styled(motion.div)`
   padding: 2em;
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  justify-content: space-between;
   align-items: center;
   position: relative;
   color: #542400;
+
+  @media ${device.desktop} {
+    min-height: 600px;
+  }
 `;
 
 export const LogoSection = styled.div``;
 
 export const Image = styled.img`
-  width: 180px;
+  width: 150px;
 `;
 
 export const Subtitle = styled.h3`
@@ -43,8 +48,12 @@ export const Subtitle = styled.h3`
 `;
 
 export const QuoteSection = styled.div`
-  text-align: center;
   background-color: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1em;
 `;
 
 export const InfoSection = styled.div`
@@ -52,25 +61,12 @@ export const InfoSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 90%;
 `;
 
 export const Progress = styled.div``;
 
-export const CloseButton = styled.div`
-  position: absolute;
-  right: 2em;
-  top: 2em;
-  transition: 0.2s all ease;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
-export const DividerLine = styled.span`
-  height: 8px;
+export const DividerLine = styled.div`
+  height: 5px;
   width: 40px;
   background-color: #cc9b6d;
   display: block;

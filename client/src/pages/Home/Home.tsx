@@ -29,7 +29,7 @@ const Home: React.FC<IHome> = ({ displayLoader, setDisplayLoader }) => {
     if (displayLoader) {
       const loaderTimer = setTimeout(() => {
         setDisplayLoader(false);
-      }, 3000);
+      }, 5000);
       return () => clearTimeout(loaderTimer);
     }
   }, []);
