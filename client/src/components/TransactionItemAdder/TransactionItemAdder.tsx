@@ -18,7 +18,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
-import { TransactionType, TransactionSchema, ICategory } from "../../constants";
+import {
+  TransactionType,
+  TransactionAddSchema,
+  ICategory,
+} from "../../constants";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
@@ -53,7 +57,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     reset,
     setFocus,
   } = useForm<FormInputs>({
-    resolver: yupResolver(TransactionSchema),
+    resolver: yupResolver(TransactionAddSchema),
   });
 
   const navigate = useNavigate();
