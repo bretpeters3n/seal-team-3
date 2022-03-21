@@ -1,5 +1,9 @@
 import React, { useState, useEffect, createContext } from "react";
-import { Container, GotoBudgetButton } from "./Transactions.styles";
+import {
+  Container,
+  GotoBudgetButton,
+  IncomeMessage,
+} from "./Transactions.styles";
 import { TransactionItemAdder, TransactionItemsList } from "../../components";
 import { AnimatePresence } from "framer-motion";
 import { getAllItems } from "../../API/TransactionMethods";
@@ -83,6 +87,11 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
         >
           <MdKeyboardArrowLeft size="2rem" /> Back to Budget
         </GotoBudgetButton>
+        {pageType === "income" && (
+          <IncomeMessage>
+            <p>**Income transactions will not affect the budget.**</p>
+          </IncomeMessage>
+        )}
       </Container>
     </PathContext.Provider>
   );
