@@ -71,9 +71,9 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   });
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    const newTotal = data.amount.replace("$", "").replace(",", "");
-    editItem(
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    const newTotal = await data.amount.replace("$", "").replace(",", "");
+    await editItem(
       budgetId,
       prevCategoryId,
       id,
@@ -85,7 +85,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
       navigate
     );
     _id &&
-      editBudget(navigate, _id, {
+      (await editBudget(navigate, _id, {
         title: title,
         total: total,
         // NEED TO FIX THIS
@@ -93,7 +93,7 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
           pageType === "expense"
             ? currentAmount + amount + +newTotal
             : currentAmount,
-      });
+      }));
     setItemOptions(false);
     setDisplayItemEditor(false);
     toggleRerender();

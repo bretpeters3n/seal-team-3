@@ -35,14 +35,14 @@ interface ITransactionItemAdder {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
   pageType: TransactionType;
-  doRefetch: () => void;
+  refetchBudget: () => void;
 }
 
 const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   setDisplayAdder,
   toggleRerender,
   pageType,
-  doRefetch,
+  refetchBudget,
 }) => {
   const { budgetId } = useParams();
 
@@ -62,8 +62,8 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormInputs> = (data): void => {
-    addItem(
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    await addItem(
       {
         title: data.title,
         amount: pageType === "expense" ? data.amount * -1 : data.amount,
@@ -74,16 +74,16 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
       navigate
     );
     typeof _id === "string" &&
-      editBudget(navigate, _id, {
+      (await editBudget(navigate, _id, {
         title: title,
         total: total,
         currentAmount:
           pageType === "expense"
             ? +currentAmount + +data.amount
             : +currentAmount,
-      });
-    doRefetch();
-    toggleRerender();
+      }));
+    await refetchBudget();
+    // toggleRerender();
     reset();
     setFocus("title");
   };

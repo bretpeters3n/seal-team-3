@@ -6,10 +6,8 @@ import {
 } from "./Transactions.styles";
 import { TransactionItemAdder, TransactionItemsList } from "../../components";
 import { AnimatePresence } from "framer-motion";
-import { getAllItems } from "../../API/TransactionMethods";
-import { ITransaction } from "../../constants";
+import { ICategory } from "../../constants";
 import { useParams, useNavigate, useOutletContext } from "react-router-dom";
-import { useQuery } from "react-query";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const PathContext = createContext<string>("");
@@ -21,35 +19,32 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
   const [rerender, setRerender] = useState<boolean>(false);
   const { budgetId } = useParams();
   const navigate = useNavigate();
-  const fetchTransactions = async () => {
-    const transactions = await getAllItems(budgetId, navigate);
-    return transactions;
-  };
 
   const {
-    data: { currentAmount },
-    doRefetch,
+    data: { currentAmount, categories },
+    refetch,
   } = useOutletContext<any>();
 
-  const { data, isLoading, isError, refetch } = useQuery(
-    "transactions",
-    fetchTransactions
-  );
+  const allIncomeTransactions = categories
+    ?.filter(
+      (category: ICategory) =>
+        category?.transactions?.length !== 0 && category.title === "Income"
+    )
+    .map((item: any) => item.transactions);
+
+  const allExpenseTransactions = categories
+    ?.filter(
+      (category: ICategory) =>
+        category?.transactions?.length !== 0 && category.title !== "Income"
+    )
+    .map((item: any) => item.transactions);
+
   const toggleRerender = () => setRerender(!rerender);
+
   useEffect(() => {
-    doRefetch();
     refetch();
   }, [rerender]);
-  if (isLoading) {
-    return (
-      <Container>
-        <h1>Loading...</h1>
-      </Container>
-    );
-  }
-  if (isError) {
-    return <div>Error...</div>;
-  }
+
   return (
     <PathContext.Provider value={pageType}>
       <Container
@@ -64,25 +59,27 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
               setDisplayAdder={setDisplayAdder}
               toggleRerender={toggleRerender}
               pageType={pageType}
-              doRefetch={doRefetch}
+              refetchBudget={refetch}
             />
           )}
         </AnimatePresence>
         <TransactionItemsList
           setDisplayAdder={setDisplayAdder}
-          filteredData={data.filter(
-            (transaction: ITransaction) => transaction.type === pageType
-          )}
+          filteredData={
+            pageType === "income"
+              ? allIncomeTransactions.flat()
+              : allExpenseTransactions.flat()
+          }
           toggleRerender={toggleRerender}
           pageType={pageType}
           displayAdder={displayAdder}
           currentAmount={currentAmount}
-          doRefetch={doRefetch}
+          refetchBudget={refetch}
         />
         <GotoBudgetButton
           onClick={() => {
             navigate(`/budget/${budgetId}`);
-            doRefetch();
+            refetch();
           }}
         >
           <MdKeyboardArrowLeft size="2rem" /> Back to Budget

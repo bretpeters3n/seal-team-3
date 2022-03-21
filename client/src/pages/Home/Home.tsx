@@ -13,10 +13,12 @@ interface IHome {
 
 const Home: React.FC<IHome> = ({ displayLoader, setDisplayLoader }) => {
   const navigate = useNavigate();
+
   const fetchAllBudgets = async () => {
     const data = await getAllBudgets(navigate);
     return data;
   };
+
   const { data, isLoading, status, refetch } = useQuery(
     "budgets",
     fetchAllBudgets,

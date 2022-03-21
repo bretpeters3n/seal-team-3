@@ -28,7 +28,7 @@ interface IBudgetEditor {
   currentBudget: number;
   setDisplayBudgetEditor: React.Dispatch<React.SetStateAction<boolean>>;
   currentAmount: number;
-  doRefetch: () => void;
+  refetchBudget: () => void;
   budgetId: string;
 }
 
@@ -37,7 +37,7 @@ const BudgetEditor: React.FC<IBudgetEditor> = ({
   currentBudget,
   setDisplayBudgetEditor,
   currentAmount,
-  doRefetch,
+  refetchBudget,
   budgetId,
 }) => {
   const preloadedValues = {
@@ -61,7 +61,7 @@ const BudgetEditor: React.FC<IBudgetEditor> = ({
       total: +newTotal,
       currentAmount,
     });
-    doRefetch();
+    refetchBudget();
     setDisplayBudgetEditor(false);
   };
 
