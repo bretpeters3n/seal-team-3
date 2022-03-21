@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Container, Carousel, GotoCurrent } from "./BudgetCardList.styles";
+import {
+  CarouselContainer,
+  Carousel,
+  CurrentButton,
+  MainContainer,
+} from "./BudgetCardList.styles";
 import { BudgetCard } from "../../components";
 
 import { IBudgetData } from "../../constants";
@@ -26,24 +31,25 @@ const BudgetCardList: React.FC<IBudgetCardList> = ({
   }, [rerender]);
 
   return (
-    <Container>
-      <Carousel>
-        {budgets.map((budget, index) => (
-          <BudgetCard
-            key={index}
-            budget={budget}
-            index={index}
-            position={position}
-            setPosition={setPosition}
-            toggleRerender={toggleRerender}
-          />
-        ))}
-      </Carousel>
-
-      <GotoCurrent onClick={() => setPosition(12)}>
-        Go to Current <br /> Month&apos;s Budget
-      </GotoCurrent>
-    </Container>
+    <MainContainer>
+      <CurrentButton onClick={() => setPosition(12)}>
+        Go to Current Month
+      </CurrentButton>
+      <CarouselContainer>
+        <Carousel>
+          {budgets.map((budget, index) => (
+            <BudgetCard
+              key={index}
+              budget={budget}
+              index={index}
+              position={position}
+              setPosition={setPosition}
+              toggleRerender={toggleRerender}
+            />
+          ))}
+        </Carousel>
+      </CarouselContainer>
+    </MainContainer>
   );
 };
 

@@ -1,7 +1,16 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { device } from "../../utils/Breakpoints";
 
-export const Container = styled.div`
+export const MainContainer = styled.div`
+  width: 100%;
+  height: calc(100vh - 90px);
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+export const CarouselContainer = styled.div`
   position: relative;
   width: 100%;
   height: 70%;
@@ -20,16 +29,26 @@ export const Carousel = styled(motion.div)`
   width: 100%;
 `;
 
-export const GotoCurrent = styled.div`
+export const CurrentButton = styled.div`
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 2px solid #3200c0;
+  color: #3200c0;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 65px;
+  right: 5px;
   cursor: pointer;
   transition: 0.3s all ease;
-  padding: 1em;
+  padding: 0.4em;
   text-align: center;
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  @media ${device.desktop} {
+    top: 65px;
+    right: 40px;
+    font-size: 1rem;
   }
 `;
