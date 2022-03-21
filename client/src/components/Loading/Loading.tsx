@@ -35,17 +35,17 @@ const Loading = () => {
           <Image src={LogoImg} alt="logo" />
           <Subtitle>Tips</Subtitle>
         </LogoSection>
-        <DividerLine />
         <QuoteSection>
+          <DividerLine />
           {data && (
-            <h1>{data[Math.floor(Math.random() * data.length)].title}</h1>
+            <h2>{data[Math.floor(Math.random() * data.length)].title}</h2>
           )}
-        </QuoteSection>
-        <DividerLine />
-        <InfoSection>
+          <DividerLine />
           {data && (
             <h4>{data[Math.floor(Math.random() * data.length)].author}</h4>
           )}
+        </QuoteSection>
+        <InfoSection>
           <Progress>
             <p style={{ marginBottom: "1em" }}>Loading your content...</p>
             <CircularProgress style={{ color: "#3200c0" }} />

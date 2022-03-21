@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { device } from "../../utils/Breakpoints";
 
 interface ProgressProp {
   percentage: number;
@@ -69,6 +70,14 @@ export const BudgetInfoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 0.7rem;
+
+  @media ${device.tablet} {
+    font-size: 1rem;
+  }
+  @media ${device.desktop} {
+    font-size: 1.1rem;
+  }
 `;
 
 export const BudgetInfo = styled.h3``;

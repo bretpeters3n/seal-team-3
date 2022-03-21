@@ -31,7 +31,7 @@ export const Carousel = styled(motion.div)`
 
 export const CurrentButton = styled.div`
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   border: 2px solid #3200c0;
   color: #3200c0;
   position: absolute;
@@ -44,6 +44,10 @@ export const CurrentButton = styled.div`
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  @media ${device.tablet} {
+    font-size: 0.9rem;
   }
 
   @media ${device.desktop} {

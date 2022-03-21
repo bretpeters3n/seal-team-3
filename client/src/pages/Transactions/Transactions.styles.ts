@@ -24,3 +24,9 @@ export const GotoBudgetButton = styled.a`
     transform: scale(1.05);
   }
 `;
+
+export const IncomeMessage = styled.div`
+  color: red;
+  font-size: 0.7rem;
+  text-align: center;
+`;

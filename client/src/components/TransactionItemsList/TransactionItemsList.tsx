@@ -19,6 +19,7 @@ interface ITransactionItemsList {
   pageType: TransactionType;
   displayAdder: boolean;
   currentAmount: number;
+  doRefetch: () => void;
 }
 
 const TransactionItemsList: React.FC<ITransactionItemsList> = ({
@@ -28,6 +29,7 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
   pageType,
   displayAdder,
   currentAmount,
+  doRefetch,
 }) => {
   return (
     <Container>
@@ -55,6 +57,7 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
               amount={item.amount}
               toggleRerender={toggleRerender}
               pageType={pageType}
+              doRefetch={doRefetch}
             />
           ))}
         </AnimatePresence>

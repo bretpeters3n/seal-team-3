@@ -21,6 +21,7 @@ interface Transaction {
   toggleRerender: () => void;
   pageType: TransactionType;
   categoryId: string;
+  doRefetch: () => void;
 }
 
 const TransactionItem: React.FC<Transaction> = ({
@@ -30,6 +31,7 @@ const TransactionItem: React.FC<Transaction> = ({
   toggleRerender,
   pageType,
   categoryId,
+  doRefetch,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
   const [displayItemEditor, setDisplayItemEditor] = useState<boolean>(false);
@@ -51,6 +53,7 @@ const TransactionItem: React.FC<Transaction> = ({
       currentAmount:
         pageType === "expense" ? currentAmount + amount : currentAmount,
     });
+    doRefetch();
     toggleRerender();
   };
 
