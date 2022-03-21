@@ -112,7 +112,7 @@ export const Button = styled.button`
 `;
 
 export const Question = styled(Link)`
-  color: blue;
+  color: #3200c0;
   text-align: center;
   font-size: 1rem;
 `;
