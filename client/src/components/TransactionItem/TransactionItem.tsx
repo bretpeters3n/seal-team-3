@@ -54,7 +54,6 @@ const TransactionItem: React.FC<Transaction> = ({
         pageType === "expense" ? currentAmount + amount : currentAmount,
     });
     await refetchBudget();
-    // toggleRerender();
   };
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {

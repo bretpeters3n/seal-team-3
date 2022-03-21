@@ -83,7 +83,6 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
             : +currentAmount,
       }));
     await refetchBudget();
-    // toggleRerender();
     reset();
     setFocus("title");
   };
