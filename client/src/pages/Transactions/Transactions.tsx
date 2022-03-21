@@ -73,6 +73,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
           pageType={pageType}
           displayAdder={displayAdder}
           currentAmount={currentAmount}
+          doRefetch={doRefetch}
         />
         <GotoBudgetButton
           onClick={() => {

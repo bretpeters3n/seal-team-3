@@ -79,7 +79,11 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
       });
     doRefetch();
     toggleRerender();
-    reset();
+    reset({
+      title: "",
+      amount: "",
+    });
+    setDisplayAdder(false);
   };
 
   return (
