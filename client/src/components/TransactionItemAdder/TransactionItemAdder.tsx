@@ -51,6 +51,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     handleSubmit,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm<FormInputs>({
     resolver: yupResolver(TransactionSchema),
   });
@@ -78,6 +79,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     doRefetch();
     toggleRerender();
     reset();
+    setFocus("title");
   };
 
   return (
