@@ -12,23 +12,19 @@ import {
   FormButton,
   ErrorContainer,
   Select,
+  AmountInput,
 } from "./TransactionItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
-import {
-  TransactionTransferData,
-  TransactionType,
-  TransactionSchema,
-  ICategory,
-} from "../../constants";
+import { TransactionType, TransactionSchema, ICategory } from "../../constants";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
-  amount: number;
+  amount: string;
   categoryId: string;
 }
 
@@ -62,13 +58,12 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormInputs> = (
-    data: TransactionTransferData
-  ): void => {
+  const onSubmit: SubmitHandler<FormInputs> = (data): void => {
+    const newTotal = data.amount.replace("$", "").replace(",", "");
     addItem(
       {
         title: data.title,
-        amount: pageType === "expense" ? data.amount * -1 : data.amount,
+        amount: pageType === "expense" ? +newTotal * -1 : +newTotal,
         categoryId: data.categoryId,
       },
       budgetId,
@@ -80,7 +75,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
         title: title,
         total: total,
         currentAmount:
-          pageType === "expense" ? currentAmount + data.amount : currentAmount,
+          pageType === "expense" ? currentAmount + +newTotal : currentAmount,
       });
     doRefetch();
     toggleRerender();
@@ -116,10 +111,11 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <Input
+            <AmountInput
+              prefix="$"
+              decimalScale={2}
+              autoComplete="off"
               {...register("amount")}
-              inputMode="numeric"
-              autoComplete="transaction-amount"
             />
             <ErrorContainer>
               {errors.amount && errors.amount?.message && (
