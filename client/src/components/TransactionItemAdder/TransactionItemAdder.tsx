@@ -74,7 +74,9 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
         title: title,
         total: total,
         currentAmount:
-          pageType === "expense" ? currentAmount + data.amount : currentAmount,
+          pageType === "expense"
+            ? +currentAmount + +data.amount
+            : +currentAmount,
       });
     doRefetch();
     toggleRerender();
