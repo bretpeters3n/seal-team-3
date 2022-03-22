@@ -17,8 +17,21 @@ export const TransactionsContainer = styled.div<StyleProp>`
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  overflow: scroll;
+  overflow-y: scroll;
   position: relative;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: whitesmoke;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+  }
 `;
 
 export const TitleContainer = styled.div`

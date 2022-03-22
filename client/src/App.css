@@ -1,9 +1,5 @@
 .App {
   width: 100%;
-  padding-bottom: 1em;
+  padding-bottom: 0.3em;
   overflow: hidden;
-}
-
-::-webkit-scrollbar {
-  display: none;
 }
