@@ -11,8 +11,14 @@ import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { deleteItem } from "../../API/TransactionMethods";
 import { TransactionType } from "../../constants";
 import { TransactionItemEditor } from "../../components";
-import { useParams, useOutletContext, useNavigate } from "react-router-dom";
+import {
+  useParams,
+  useOutletContext,
+  useNavigate,
+  NavigateFunction,
+} from "react-router-dom";
 import { editBudget } from "../../API/BudgetMethods";
+import { useQueryClient, useMutation } from "react-query";
 
 interface Transaction {
   itemId: string;
@@ -22,6 +28,13 @@ interface Transaction {
   pageType: TransactionType;
   categoryId: string;
   refetchBudget: () => void;
+}
+
+interface IParams {
+  budgetId: string | undefined;
+  categoryId: string;
+  itemId: string;
+  navigate: NavigateFunction;
 }
 
 const TransactionItem: React.FC<Transaction> = ({
@@ -34,6 +47,8 @@ const TransactionItem: React.FC<Transaction> = ({
   refetchBudget,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
+  const toggleItemOptions = () => setItemOptions(!itemOptions);
+
   const [displayItemEditor, setDisplayItemEditor] = useState<boolean>(false);
   const {
     data: { _id, title, currentAmount, total },
@@ -41,19 +56,30 @@ const TransactionItem: React.FC<Transaction> = ({
 
   const { budgetId } = useParams();
 
-  const toggleItemOptions = () => setItemOptions(!itemOptions);
-
   const navigate = useNavigate();
 
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useMutation<any, Error, IParams>(
+    async () => {
+      return await deleteItem(budgetId, categoryId, itemId, navigate);
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries("budget"),
+      onError: (err: any) => console.log(err),
+    }
+  );
+
   const handleDelete = async () => {
-    await deleteItem(budgetId, categoryId, itemId, navigate);
-    await editBudget(navigate, _id, {
-      title: title,
-      total: total,
-      currentAmount:
-        pageType === "expense" ? currentAmount + amount : currentAmount,
-    });
-    await refetchBudget();
+    try {
+      await mutateAsync({ budgetId, categoryId, itemId, navigate });
+      await editBudget(navigate, _id, {
+        title: title,
+        total: total,
+        currentAmount:
+          pageType === "expense" ? currentAmount + amount : currentAmount,
+      });
+      await refetchBudget();
+    } catch (error) {}
   };
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {
