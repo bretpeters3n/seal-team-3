@@ -3,7 +3,3 @@
   padding-bottom: 1em;
   overflow: hidden;
 }
-
-::-webkit-scrollbar {
-  display: none;
-}
