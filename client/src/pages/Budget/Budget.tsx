@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "./Budget.styles";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
@@ -18,9 +18,9 @@ const Budget = () => {
     fetchBudgetData
   );
 
-  const doRefetch = () => {
+  useEffect(() => {
     refetch();
-  };
+  }, [data]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -32,7 +32,7 @@ const Budget = () => {
 
   return (
     <Container>
-      <Outlet context={{ data, doRefetch }} />
+      <Outlet context={{ data, refetch }} />
     </Container>
   );
 };

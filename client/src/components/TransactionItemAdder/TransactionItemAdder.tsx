@@ -18,7 +18,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
-import { TransactionType, TransactionSchema, ICategory } from "../../constants";
+import {
+  TransactionType,
+  TransactionAddSchema,
+  ICategory,
+} from "../../constants";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
@@ -31,14 +35,14 @@ interface ITransactionItemAdder {
   setDisplayAdder: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRerender: () => void;
   pageType: TransactionType;
-  doRefetch: () => void;
+  refetchBudget: () => void;
 }
 
 const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   setDisplayAdder,
   toggleRerender,
   pageType,
-  doRefetch,
+  refetchBudget,
 }) => {
   const { budgetId } = useParams();
 
@@ -53,13 +57,13 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     reset,
     setFocus,
   } = useForm<FormInputs>({
-    resolver: yupResolver(TransactionSchema),
+    resolver: yupResolver(TransactionAddSchema),
   });
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormInputs> = (data): void => {
-    addItem(
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    await addItem(
       {
         title: data.title,
         amount: pageType === "expense" ? data.amount * -1 : data.amount,
@@ -70,14 +74,15 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
       navigate
     );
     typeof _id === "string" &&
-      editBudget(navigate, _id, {
+      (await editBudget(navigate, _id, {
         title: title,
         total: total,
         currentAmount:
-          pageType === "expense" ? currentAmount + data.amount : currentAmount,
-      });
-    doRefetch();
-    toggleRerender();
+          pageType === "expense"
+            ? +currentAmount + +data.amount
+            : +currentAmount,
+      }));
+    await refetchBudget();
     reset();
     setFocus("title");
   };

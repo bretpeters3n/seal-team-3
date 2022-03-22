@@ -21,7 +21,7 @@ interface Transaction {
   toggleRerender: () => void;
   pageType: TransactionType;
   categoryId: string;
-  doRefetch: () => void;
+  refetchBudget: () => void;
 }
 
 const TransactionItem: React.FC<Transaction> = ({
@@ -31,7 +31,7 @@ const TransactionItem: React.FC<Transaction> = ({
   toggleRerender,
   pageType,
   categoryId,
-  doRefetch,
+  refetchBudget,
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
   const [displayItemEditor, setDisplayItemEditor] = useState<boolean>(false);
@@ -45,16 +45,15 @@ const TransactionItem: React.FC<Transaction> = ({
 
   const navigate = useNavigate();
 
-  const handleDelete = () => {
-    deleteItem(budgetId, categoryId, itemId, navigate);
-    editBudget(navigate, _id, {
+  const handleDelete = async () => {
+    await deleteItem(budgetId, categoryId, itemId, navigate);
+    await editBudget(navigate, _id, {
       title: title,
       total: total,
       currentAmount:
         pageType === "expense" ? currentAmount + amount : currentAmount,
     });
-    doRefetch();
-    toggleRerender();
+    await refetchBudget();
   };
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {

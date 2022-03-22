@@ -38,7 +38,7 @@ const BudgetMain: React.FC = () => {
   // I know this shouldn't be typed any...but I couldn't figure out how to type this along with the other useOutletContext ones
   const {
     data: { _id, title, currentAmount, total, categories },
-    doRefetch,
+    refetch,
   } = useOutletContext<any>();
   const [displayBudgetEditor, setDisplayBudgetEditor] =
     useState<boolean>(false);
@@ -120,7 +120,7 @@ const BudgetMain: React.FC = () => {
           setDisplayBudgetEditor={setDisplayBudgetEditor}
           currentBudget={total}
           currentAmount={currentAmount}
-          doRefetch={doRefetch}
+          refetchBudget={refetch}
           budgetId={_id}
         />
       )}

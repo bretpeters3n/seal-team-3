@@ -19,7 +19,7 @@ interface ITransactionItemsList {
   pageType: TransactionType;
   displayAdder: boolean;
   currentAmount: number;
-  doRefetch: () => void;
+  refetchBudget: () => void;
 }
 
 const TransactionItemsList: React.FC<ITransactionItemsList> = ({
@@ -29,7 +29,7 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
   pageType,
   displayAdder,
   currentAmount,
-  doRefetch,
+  refetchBudget,
 }) => {
   return (
     <Container>
@@ -43,7 +43,7 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
           </Button>
         </TitleContainer>
         <AnimatePresence>
-          {filteredData.length < 1 && (
+          {filteredData?.length < 1 && (
             <NoTransactionsMessage>
               <h2>No transactions yet</h2>
             </NoTransactionsMessage>
@@ -57,7 +57,7 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
               amount={item.amount}
               toggleRerender={toggleRerender}
               pageType={pageType}
-              doRefetch={doRefetch}
+              refetchBudget={refetchBudget}
             />
           ))}
         </AnimatePresence>

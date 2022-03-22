@@ -100,6 +100,17 @@ export const TransactionSchema = yup.object().shape({
   amount: yup.string().required("field is required"),
 });
 
+export const TransactionAddSchema = yup.object().shape({
+  title: yup.string().min(2).max(50).required("field is required"),
+  amount: yup
+    .number()
+    .typeError("Must be a number")
+    .test("maxDigitsAfterDecimal", "up to 2 decimals only", (amount: any) =>
+      /^\d+(\.\d{1,2})?$/.test(amount?.toString())
+    )
+    .required("field is required"),
+});
+
 export const CreateBudgetSchema = yup.object().shape({
   total: yup.string().required("field is required"),
 });
