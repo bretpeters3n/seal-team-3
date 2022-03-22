@@ -48,14 +48,11 @@ const TransactionItem: React.FC<Transaction> = ({
 }) => {
   const [itemOptions, setItemOptions] = useState<boolean>(false);
   const toggleItemOptions = () => setItemOptions(!itemOptions);
-
   const [displayItemEditor, setDisplayItemEditor] = useState<boolean>(false);
   const {
     data: { _id, title, currentAmount, total },
   } = useOutletContext<any>();
-
   const { budgetId } = useParams();
-
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
