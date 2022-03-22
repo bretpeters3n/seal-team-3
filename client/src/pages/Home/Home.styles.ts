@@ -5,11 +5,10 @@ export const Container = styled.div`
   position: relative;
   width: 95%;
   max-width: 800px;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 120px);
   display: flex;
   align-items: center;
-  margin: 0 auto;
-  margin-top: 5px;
+  margin: 1em auto;
   justify-content: center;
   user-select: none;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

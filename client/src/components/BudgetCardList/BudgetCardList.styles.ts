@@ -35,7 +35,7 @@ export const CurrentButton = styled.div`
   border: 2px solid #3200c0;
   color: #3200c0;
   position: absolute;
-  top: 65px;
+  top: 80px;
   right: 5px;
   cursor: pointer;
   transition: 0.3s all ease;
@@ -51,7 +51,7 @@ export const CurrentButton = styled.div`
   }
 
   @media ${device.desktop} {
-    top: 65px;
+    top: 80px;
     right: 40px;
     font-size: 1rem;
   }

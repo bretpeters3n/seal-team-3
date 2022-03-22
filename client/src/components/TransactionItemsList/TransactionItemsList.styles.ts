@@ -17,7 +17,7 @@ export const TransactionsContainer = styled.div<StyleProp>`
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
 
   ::-webkit-scrollbar {
