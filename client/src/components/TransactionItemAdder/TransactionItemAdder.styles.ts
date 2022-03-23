@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import NumberFormat from "react-number-format";
 
 interface InputBoxModifier {
   long?: boolean;
@@ -78,33 +79,20 @@ export const Input = styled.input`
   }
 `;
 
-export const AmountInputGroup = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 0.5em;
-  overflow: hidden;
+export const AmountInput = styled(NumberFormat)`
+  font-size: 1rem;
+  padding: 0.5em 0.2em;
   border: none;
   outline: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 5px;
+  width: 100%;
+  transition: 0.3s ease all;
   margin-top: 0.5em;
-  padding: 0.5em 0.2em;
 
-  &:focus-within {
+  &:focus {
     box-shadow: 0 0 15px rgba(211, 174, 139, 1);
+    border-radius: 3px;
   }
-`;
-
-export const Prefix = styled.span`
-  color: #999;
-  font-weight: 700;
-`;
-
-export const AmountInput = styled.input`
-  flex-grow: 1;
-  border: none;
-  outline: none;
-  padding-left: 0.2em;
-  font-size: 1rem;
 `;
 
 export const ErrorContainer = styled.div`

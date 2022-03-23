@@ -105,9 +105,6 @@ export const TransactionAddSchema = yup.object().shape({
   amount: yup
     .number()
     .typeError("Must be a number")
-    .test("maxDigitsAfterDecimal", "up to 2 decimals only", (amount: any) =>
-      /^\d+(\.\d{1,2})?$/.test(amount?.toString())
-    )
     .required("field is required"),
 });
 

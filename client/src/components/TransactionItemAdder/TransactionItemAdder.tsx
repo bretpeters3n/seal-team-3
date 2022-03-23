@@ -12,12 +12,10 @@ import {
   FormButton,
   ErrorContainer,
   Select,
-  Prefix,
-  AmountInputGroup,
   AmountInput,
 } from "./TransactionItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
@@ -59,6 +57,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     formState: { errors },
     reset,
     setFocus,
+    control,
   } = useForm<FormInputs>({
     resolver: yupResolver(TransactionAddSchema),
   });
@@ -86,10 +85,12 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
             : +currentAmount,
       }));
     await refetchBudget();
-    reset();
+    reset({
+      title: "",
+      amount: 0,
+    });
     setFocus("title");
   };
-
   return (
     <Container
       initial={{ y: -20, opacity: 0 }}
@@ -119,10 +120,31 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <AmountInputGroup>
-              <Prefix>$</Prefix>
-              <AmountInput autoComplete="off" {...register("amount")} />
-            </AmountInputGroup>
+
+            <Controller
+              name="amount"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, onBlur, name, value, ref } }) => (
+                <AmountInput
+                  autoComplete="off"
+                  thousandSeparator={true}
+                  allowNegative={false}
+                  decimalSeparator="."
+                  decimalScale={2}
+                  fixedDecimalScale={true}
+                  prefix="$"
+                  type="text"
+                  displayType="input"
+                  onValueChange={(values) => onChange(values.floatValue)}
+                  name={name}
+                  value={value}
+                  onBlur={onBlur}
+                  ref={ref}
+                />
+              )}
+            />
+
             <ErrorContainer>
               {errors.amount && errors.amount?.message && (
                 <p>{errors.amount.message}</p>
