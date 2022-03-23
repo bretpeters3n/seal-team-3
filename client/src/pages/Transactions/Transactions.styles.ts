@@ -29,4 +29,7 @@ export const IncomeMessage = styled.div`
   color: red;
   font-size: 0.7rem;
   text-align: center;
+  position: absolute;
+  top: -25px;
+  right: 2em;
 `;
