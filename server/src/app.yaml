@@ -1,4 +1,4 @@
-runtime: nodejs14
+runtime: nodejs16
 
 env_variables:
   JWT_SECRET: "process.env.SECRET_KEY"
