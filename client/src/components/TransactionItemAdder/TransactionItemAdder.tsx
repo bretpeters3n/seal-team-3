@@ -58,6 +58,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     reset,
     setFocus,
     control,
+    clearErrors,
   } = useForm<FormInputs>({
     resolver: yupResolver(TransactionAddSchema),
   });
@@ -89,6 +90,9 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
       title: "",
       amount: "",
     });
+    setTimeout(() => {
+      clearErrors(["amount"]);
+    }, 10);
     setFocus("title");
   };
   return (
