@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   TitleContainer,
@@ -45,8 +45,9 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   pageType,
   refetchBudget,
 }) => {
+  const [amountErrorMessage, setAmountErrorMessage] = useState<boolean>(false);
   const { budgetId } = useParams();
-
+  const navigate = useNavigate();
   const {
     data: { _id, title, currentAmount, total, categories },
   } = useOutletContext<any>();
@@ -58,42 +59,41 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     reset,
     setFocus,
     control,
-    clearErrors,
   } = useForm<FormInputs>({
     resolver: yupResolver(TransactionAddSchema),
   });
 
-  const navigate = useNavigate();
-
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    await addItem(
-      {
-        title: data.title,
-        amount: pageType === "expense" ? +data.amount * -1 : +data.amount,
-        categoryId: data.categoryId,
-      },
-      budgetId,
-      data.categoryId,
-      navigate
-    );
-    typeof _id === "string" &&
-      (await editBudget(navigate, _id, {
-        title: title,
-        total: total,
-        currentAmount:
-          pageType === "expense"
-            ? +currentAmount + +data.amount
-            : +currentAmount,
-      }));
-    await refetchBudget();
-    reset({
-      title: "",
-      amount: "",
-    });
-    setTimeout(() => {
-      clearErrors(["amount"]);
-    }, 10);
-    setFocus("title");
+    if (+data.amount <= 0) {
+      setAmountErrorMessage(true);
+    } else {
+      await addItem(
+        {
+          title: data.title,
+          amount: pageType === "expense" ? +data.amount * -1 : +data.amount,
+          categoryId: data.categoryId,
+        },
+        budgetId,
+        data.categoryId,
+        navigate
+      );
+      typeof _id === "string" &&
+        (await editBudget(navigate, _id, {
+          title: title,
+          total: total,
+          currentAmount:
+            pageType === "expense"
+              ? +currentAmount + +data.amount
+              : +currentAmount,
+        }));
+      await refetchBudget();
+      reset({
+        title: "",
+        amount: "0",
+      });
+      setFocus("title");
+      setAmountErrorMessage(false);
+    }
   };
   return (
     <Container
@@ -154,6 +154,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
               {errors.amount && errors.amount?.message && (
                 <p>{errors.amount.message}</p>
               )}
+              {amountErrorMessage && <p>Must be &gt; $0</p>}
             </ErrorContainer>
           </InputGroup>
 

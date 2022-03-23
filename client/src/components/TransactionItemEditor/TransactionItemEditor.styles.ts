@@ -10,6 +10,7 @@ export const Container = styled(motion.div)`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
   position: fixed;
+  z-index: 2;
   top: 0;
   left: 0;
   display: flex;
@@ -18,7 +19,8 @@ export const Container = styled(motion.div)`
 `;
 
 export const EditorContainer = styled(motion.div)`
-  width: 500px;
+  width: 100%;
+  max-width: 600px;
   height: 300px;
   background: white;
   border-radius: 5px;
