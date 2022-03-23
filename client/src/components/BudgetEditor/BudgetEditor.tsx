@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GrFormClose } from "react-icons/gr";
 import {
@@ -9,7 +9,7 @@ import {
   InputContainer,
   InputGroup,
   Label,
-  Input,
+  AmountInput,
   ErrorContainer,
   FormButton,
   TitleContainer,
@@ -44,7 +44,7 @@ const BudgetEditor: React.FC<IBudgetEditor> = ({
     total: "$" + currentBudget.toString(),
   };
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<FormInputs>({
@@ -55,10 +55,9 @@ const BudgetEditor: React.FC<IBudgetEditor> = ({
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    const newTotal = data.total.replace("$", "").replace(",", "");
     editBudget(navigate, budgetId, {
       title,
-      total: +newTotal,
+      total: +data.total,
       currentAmount,
     });
     refetchBudget();
@@ -81,13 +80,33 @@ const BudgetEditor: React.FC<IBudgetEditor> = ({
           <InputContainer>
             <InputGroup>
               <Label>Edit your budget for the month:</Label>
-              <Input
-                placeholder="Please enter a budget amount"
-                prefix="$"
-                decimalScale={2}
-                autoComplete="off"
-                {...register("total")}
+
+              <Controller
+                name="total"
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { onChange, onBlur, name, value, ref } }) => (
+                  <AmountInput
+                    autoComplete="off"
+                    thousandSeparator={true}
+                    allowNegative={false}
+                    decimalSeparator="."
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    allowEmptyFormatting={true}
+                    placeholder="Please enter a budget amount"
+                    prefix="$ "
+                    type="text"
+                    displayType="input"
+                    onValueChange={(values) => onChange(values.floatValue)}
+                    name={name}
+                    value={value}
+                    onBlur={onBlur}
+                    ref={ref}
+                  />
+                )}
               />
+
               <ErrorContainer>
                 {errors.total && errors.total?.message && (
                   <p>{errors.total.message}</p>
