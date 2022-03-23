@@ -41,7 +41,7 @@ const BudgetCard: React.FC<IBudgetCard> = ({
   const BudgetCardAnimation = {
     scale: index === position ? 1 : 0.8,
     rotate: 0,
-    top: `${(index - position) * 20 + 25}vh`,
+    top: `${(index - position) * 20 + 23}vh`,
   };
   return (
     <BudgetCardContainer

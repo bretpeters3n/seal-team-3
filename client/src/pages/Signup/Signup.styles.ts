@@ -7,7 +7,7 @@ export const Container = styled(motion.div)`
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   gap: 2em;
