@@ -12,6 +12,7 @@ import {
   FormButton,
   ErrorContainer,
   Select,
+  AmountInput,
 } from "./TransactionItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -27,7 +28,7 @@ import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
-  amount: number;
+  amount: string;
   categoryId: string;
 }
 
@@ -63,10 +64,11 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    const newAmount = data.amount.replace("$", "").replace(",", "");
     await addItem(
       {
         title: data.title,
-        amount: pageType === "expense" ? data.amount * -1 : data.amount,
+        amount: pageType === "expense" ? +newAmount * -1 : +newAmount,
         categoryId: data.categoryId,
       },
       budgetId,
@@ -78,9 +80,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
         title: title,
         total: total,
         currentAmount:
-          pageType === "expense"
-            ? +currentAmount + +data.amount
-            : +currentAmount,
+          pageType === "expense" ? +currentAmount + +newAmount : +currentAmount,
       }));
     await refetchBudget();
     reset();
@@ -116,7 +116,13 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <Input autoComplete="off" {...register("amount")} />
+            <AmountInput
+              defaultValue={0}
+              prefix="$"
+              decimalScale={2}
+              autoComplete="off"
+              {...register("amount")}
+            />
             <ErrorContainer>
               {errors.amount && errors.amount?.message && (
                 <p>{errors.amount.message}</p>
