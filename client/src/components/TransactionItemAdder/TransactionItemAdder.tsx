@@ -12,9 +12,10 @@ import {
   FormButton,
   ErrorContainer,
   Select,
+  AmountInput,
 } from "./TransactionItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
@@ -27,7 +28,7 @@ import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
-  amount: number;
+  amount: string;
   categoryId: string;
 }
 
@@ -56,6 +57,8 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     formState: { errors },
     reset,
     setFocus,
+    control,
+    clearErrors,
   } = useForm<FormInputs>({
     resolver: yupResolver(TransactionAddSchema),
   });
@@ -66,7 +69,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     await addItem(
       {
         title: data.title,
-        amount: pageType === "expense" ? data.amount * -1 : data.amount,
+        amount: pageType === "expense" ? +data.amount * -1 : +data.amount,
         categoryId: data.categoryId,
       },
       budgetId,
@@ -83,10 +86,15 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
             : +currentAmount,
       }));
     await refetchBudget();
-    reset();
+    reset({
+      title: "",
+      amount: "",
+    });
+    setTimeout(() => {
+      clearErrors(["amount"]);
+    }, 10);
     setFocus("title");
   };
-
   return (
     <Container
       initial={{ y: -20, opacity: 0 }}
@@ -116,13 +124,39 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <Input autoComplete="off" {...register("amount")} />
+
+            <Controller
+              name="amount"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, onBlur, name, value, ref } }) => (
+                <AmountInput
+                  autoComplete="off"
+                  thousandSeparator={true}
+                  allowNegative={false}
+                  decimalSeparator="."
+                  decimalScale={2}
+                  fixedDecimalScale={true}
+                  allowEmptyFormatting={true}
+                  prefix="$ "
+                  type="text"
+                  displayType="input"
+                  onValueChange={(values) => onChange(values.floatValue)}
+                  name={name}
+                  value={value}
+                  onBlur={onBlur}
+                  ref={ref}
+                />
+              )}
+            />
+
             <ErrorContainer>
               {errors.amount && errors.amount?.message && (
                 <p>{errors.amount.message}</p>
               )}
             </ErrorContainer>
           </InputGroup>
+
           <InputGroup>
             <Label>Category</Label>
             <Select {...register("categoryId")}>
