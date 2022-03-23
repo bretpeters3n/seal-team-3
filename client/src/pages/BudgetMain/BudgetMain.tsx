@@ -27,12 +27,7 @@ import { useOutletContext } from "react-router-dom";
 import { ICategory } from "../../constants";
 import { BudgetEditor } from "../../components";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  minimumFractionDigits: 2,
-});
+import { currencyFormatter } from "../../utils/CurrencyFormat";
 
 const BudgetMain: React.FC = () => {
   // I know this shouldn't be typed any...but I couldn't figure out how to type this along with the other useOutletContext ones

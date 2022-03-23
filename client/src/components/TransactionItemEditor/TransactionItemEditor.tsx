@@ -1,5 +1,5 @@
-import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GrFormClose } from "react-icons/gr";
 import {
@@ -47,12 +47,12 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
   toggleRerender,
   prevCategoryId,
 }) => {
+  const [amountErrorMessage, setAmountErrorMessage] = useState<boolean>(false);
   const {
     data: { _id, title, currentAmount, total, categories },
   } = useOutletContext<any>();
-
+  const navigate = useNavigate();
   const { budgetId } = useParams();
-
   const preloadedValues = {
     title: transactionTitle,
     amount:
@@ -61,42 +61,46 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
         : "$" + amount.toString(),
     categoryId: prevCategoryId,
   };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm<FormInputs>({
     resolver: yupResolver(TransactionSchema),
     defaultValues: preloadedValues,
   });
-  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    const newTotal = await data.amount.replace("$", "").replace(",", "");
-    await editItem(
-      budgetId,
-      prevCategoryId,
-      id,
-      {
-        title: data.title,
-        amount: pageType === "expense" ? +newTotal * -1 : +newTotal,
-        categoryId: data.categoryId,
-      },
-      navigate
-    );
-    _id &&
-      (await editBudget(navigate, _id, {
-        title: title,
-        total: total,
-        // NEED TO FIX THIS
-        currentAmount:
-          pageType === "expense"
-            ? currentAmount + amount + +newTotal
-            : currentAmount,
-      }));
-    setItemOptions(false);
-    setDisplayItemEditor(false);
-    toggleRerender();
+    if (+data.amount <= 0) {
+      setAmountErrorMessage(true);
+    } else {
+      await editItem(
+        budgetId,
+        prevCategoryId,
+        id,
+        {
+          title: data.title,
+          amount: pageType === "expense" ? +data.amount * -1 : +data.amount,
+          categoryId: data.categoryId,
+        },
+        navigate
+      );
+      _id &&
+        (await editBudget(navigate, _id, {
+          title: title,
+          total: total,
+          currentAmount:
+            pageType === "expense"
+              ? currentAmount + amount + +data.amount
+              : currentAmount,
+        }));
+      setItemOptions(false);
+      setDisplayItemEditor(false);
+      toggleRerender();
+      setAmountErrorMessage(false);
+    }
   };
 
   return (
@@ -124,16 +128,37 @@ const TransactionItemEditor: React.FC<TargetItem> = ({
             </InputGroup>
             <InputGroup>
               <Label>Amount</Label>
-              <AmountInput
-                prefix="$"
-                decimalScale={2}
-                autoComplete="off"
-                {...register("amount")}
+
+              <Controller
+                name="amount"
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { onChange, onBlur, name, value, ref } }) => (
+                  <AmountInput
+                    autoComplete="off"
+                    thousandSeparator={true}
+                    allowNegative={false}
+                    decimalSeparator="."
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    allowEmptyFormatting={true}
+                    prefix="$ "
+                    type="text"
+                    displayType="input"
+                    onValueChange={(values) => onChange(values.floatValue)}
+                    name={name}
+                    value={value}
+                    onBlur={onBlur}
+                    ref={ref}
+                  />
+                )}
               />
+
               <ErrorContainer>
                 {errors.amount && errors.amount?.message && (
                   <p>{errors.amount.message}</p>
                 )}
+                {amountErrorMessage && <p>must be &gt; than $0</p>}
               </ErrorContainer>
             </InputGroup>
             <InputGroup>

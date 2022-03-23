@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   TitleContainer,
@@ -12,9 +12,10 @@ import {
   FormButton,
   ErrorContainer,
   Select,
+  AmountInput,
 } from "./TransactionItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addItem } from "../../API/TransactionMethods";
 import { editBudget } from "../../API/BudgetMethods";
@@ -27,7 +28,7 @@ import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
-  amount: number;
+  amount: string;
   categoryId: string;
 }
 
@@ -44,8 +45,9 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   pageType,
   refetchBudget,
 }) => {
+  const [amountErrorMessage, setAmountErrorMessage] = useState<boolean>(false);
   const { budgetId } = useParams();
-
+  const navigate = useNavigate();
   const {
     data: { _id, title, currentAmount, total, categories },
   } = useOutletContext<any>();
@@ -56,37 +58,43 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     formState: { errors },
     reset,
     setFocus,
+    control,
   } = useForm<FormInputs>({
     resolver: yupResolver(TransactionAddSchema),
   });
 
-  const navigate = useNavigate();
-
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    await addItem(
-      {
-        title: data.title,
-        amount: pageType === "expense" ? data.amount * -1 : data.amount,
-        categoryId: data.categoryId,
-      },
-      budgetId,
-      data.categoryId,
-      navigate
-    );
-    typeof _id === "string" &&
-      (await editBudget(navigate, _id, {
-        title: title,
-        total: total,
-        currentAmount:
-          pageType === "expense"
-            ? +currentAmount + +data.amount
-            : +currentAmount,
-      }));
-    await refetchBudget();
-    reset();
-    setFocus("title");
+    if (+data.amount <= 0) {
+      setAmountErrorMessage(true);
+    } else {
+      await addItem(
+        {
+          title: data.title,
+          amount: pageType === "expense" ? +data.amount * -1 : +data.amount,
+          categoryId: data.categoryId,
+        },
+        budgetId,
+        data.categoryId,
+        navigate
+      );
+      typeof _id === "string" &&
+        (await editBudget(navigate, _id, {
+          title: title,
+          total: total,
+          currentAmount:
+            pageType === "expense"
+              ? +currentAmount + +data.amount
+              : +currentAmount,
+        }));
+      await refetchBudget();
+      reset({
+        title: "",
+        amount: "0",
+      });
+      setFocus("title");
+      setAmountErrorMessage(false);
+    }
   };
-
   return (
     <Container
       initial={{ y: -20, opacity: 0 }}
@@ -116,13 +124,40 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <Input autoComplete="off" {...register("amount")} />
+
+            <Controller
+              name="amount"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, onBlur, name, value, ref } }) => (
+                <AmountInput
+                  autoComplete="off"
+                  thousandSeparator={true}
+                  allowNegative={false}
+                  decimalSeparator="."
+                  decimalScale={2}
+                  fixedDecimalScale={true}
+                  allowEmptyFormatting={true}
+                  prefix="$ "
+                  type="text"
+                  displayType="input"
+                  onValueChange={(values) => onChange(values.floatValue)}
+                  name={name}
+                  value={value}
+                  onBlur={onBlur}
+                  ref={ref}
+                />
+              )}
+            />
+
             <ErrorContainer>
               {errors.amount && errors.amount?.message && (
                 <p>{errors.amount.message}</p>
               )}
+              {amountErrorMessage && <p>Must be &gt; $0</p>}
             </ErrorContainer>
           </InputGroup>
+
           <InputGroup>
             <Label>Category</Label>
             <Select {...register("categoryId")}>

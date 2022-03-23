@@ -7,9 +7,12 @@ import { TransactionModule } from './Transactions/transaction.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest-budgety', {
-      useNewUrlParser: true,
-    }),
+    MongooseModule.forRoot(
+      'mongodb+srv://budgety-nestdb:budgetyDB@budgety-nestdb.1zmm4.mongodb.net/BudgetyNestApp?retryWrites=true&w=majority',
+      {
+        useNewUrlParser: true,
+      }
+    ),
     AuthModule,
     BudgetModule,
     TransactionModule,

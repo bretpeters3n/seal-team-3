@@ -34,7 +34,7 @@ const TransactionItemsList: React.FC<ITransactionItemsList> = ({
   return (
     <Container>
       <TransactionsContainer
-        maxHeight={displayAdder ? "calc(100vh - 450px)" : "calc(100vh-70px)"}
+        maxHeight={displayAdder ? "calc(100vh - 450px)" : "calc(100vh - 150px)"}
       >
         <TitleContainer>
           <Title>{pageType === "expense" ? "Expenses" : "Income"}</Title>
