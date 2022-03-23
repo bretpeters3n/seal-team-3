@@ -137,7 +137,8 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
                   decimalSeparator="."
                   decimalScale={2}
                   fixedDecimalScale={true}
-                  prefix="$"
+                  allowEmptyFormatting={true}
+                  prefix="$ "
                   type="text"
                   displayType="input"
                   onValueChange={(values) => onChange(values.floatValue)}
