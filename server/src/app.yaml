@@ -1,6 +1,7 @@
 runtime: nodejs16
 
 env_variables:
+  DB_KEY: "mongodb+srv://budgety-nestdb:budgetyDB@budgety-nestdb.1zmm4.mongodb.net/BudgetyNestApp?retryWrites=true&w=majority"
   JWT_SECRET: "process.env.SECRET_KEY"
 
 service: service1
