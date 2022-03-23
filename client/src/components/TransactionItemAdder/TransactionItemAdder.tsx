@@ -28,7 +28,7 @@ import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 interface FormInputs {
   title: string;
-  amount: number;
+  amount: string;
   categoryId: string;
 }
 
@@ -68,7 +68,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     await addItem(
       {
         title: data.title,
-        amount: pageType === "expense" ? data.amount * -1 : data.amount,
+        amount: pageType === "expense" ? +data.amount * -1 : +data.amount,
         categoryId: data.categoryId,
       },
       budgetId,
@@ -87,7 +87,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
     await refetchBudget();
     reset({
       title: "",
-      amount: 0,
+      amount: "",
     });
     setFocus("title");
   };
