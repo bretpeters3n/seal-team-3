@@ -12,6 +12,9 @@ import {
   FormButton,
   ErrorContainer,
   Select,
+  Prefix,
+  AmountInputGroup,
+  AmountInput,
 } from "./TransactionItemAdder.styles";
 import { MdOutlineCancel } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -116,13 +119,17 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
           </InputGroup>
           <InputGroup>
             <Label>Amount</Label>
-            <Input autoComplete="off" {...register("amount")} />
+            <AmountInputGroup>
+              <Prefix>$</Prefix>
+              <AmountInput autoComplete="off" {...register("amount")} />
+            </AmountInputGroup>
             <ErrorContainer>
               {errors.amount && errors.amount?.message && (
                 <p>{errors.amount.message}</p>
               )}
             </ErrorContainer>
           </InputGroup>
+
           <InputGroup>
             <Label>Category</Label>
             <Select {...register("categoryId")}>

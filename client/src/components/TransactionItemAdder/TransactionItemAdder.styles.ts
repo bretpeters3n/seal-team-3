@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import CurrencyInput from "react-currency-input-field";
 
 interface InputBoxModifier {
   long?: boolean;
@@ -66,7 +65,6 @@ export const Label = styled.div`
 export const Input = styled.input`
   font-size: 1rem;
   padding: 0.5em 0.2em;
-  outline: none;
   border: none;
   outline: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 5px;
@@ -80,21 +78,33 @@ export const Input = styled.input`
   }
 `;
 
-export const AmountInput = styled(CurrencyInput)`
-  font-size: 1rem;
-  padding: 0.5em 0.2em;
-  outline: none;
+export const AmountInputGroup = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 0.5em;
+  overflow: hidden;
   border: none;
   outline: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 5px;
-  width: 100%;
-  transition: 0.3s ease all;
   margin-top: 0.5em;
+  padding: 0.5em 0.2em;
 
-  &:focus {
+  &:focus-within {
     box-shadow: 0 0 15px rgba(211, 174, 139, 1);
-    border-radius: 3px;
   }
+`;
+
+export const Prefix = styled.span`
+  color: #999;
+  font-weight: 700;
+`;
+
+export const AmountInput = styled.input`
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding-left: 0.2em;
+  font-size: 1rem;
 `;
 
 export const ErrorContainer = styled.div`
