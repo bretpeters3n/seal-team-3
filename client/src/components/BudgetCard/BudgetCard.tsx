@@ -14,6 +14,7 @@ import { IBudgetData } from "../../constants";
 import { BsPlusSquare } from "react-icons/bs";
 import { BudgetAdder } from "../../components";
 import { useNavigate } from "react-router-dom";
+import { currencyFormatter } from "../../utils/CurrencyFormat";
 
 interface IBudgetCard {
   budget: IBudgetData;
@@ -22,12 +23,6 @@ interface IBudgetCard {
   setPosition: React.Dispatch<React.SetStateAction<number>>;
   toggleRerender: () => void;
 }
-
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  minimumFractionDigits: 2,
-});
 
 const BudgetCard: React.FC<IBudgetCard> = ({
   budget: { _id, title, total, currentAmount, created, categories },

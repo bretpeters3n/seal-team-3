@@ -19,6 +19,7 @@ import {
 } from "react-router-dom";
 import { editBudget } from "../../API/BudgetMethods";
 import { useQueryClient, useMutation } from "react-query";
+import { currencyFormatter } from "../../utils/CurrencyFormat";
 
 interface Transaction {
   itemId: string;
@@ -78,12 +79,6 @@ const TransactionItem: React.FC<Transaction> = ({
       await refetchBudget();
     } catch (error) {}
   };
-
-  const currencyFormatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  });
 
   return (
     <Container>
