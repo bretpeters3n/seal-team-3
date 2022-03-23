@@ -109,5 +109,9 @@ export const TransactionAddSchema = yup.object().shape({
 });
 
 export const CreateBudgetSchema = yup.object().shape({
-  total: yup.string().required("field is required"),
+  total: yup
+    .number()
+    .typeError("must be a number")
+    .moreThan(0, "must be more than $0")
+    .required("field is required"),
 });
