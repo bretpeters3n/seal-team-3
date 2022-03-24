@@ -1,7 +1,9 @@
 import * as yup from "yup";
 
 export const URL =
-  "https://budgety-nest.uc.r.appspot.com/" || "http://localhost:5000";
+  window.location.href === "http://localhost:3000"
+    ? "http://localhost:5000"
+    : "https://budgety-nest.uc.r.appspot.com/";
 
 export interface LoginData {
   email: string;
