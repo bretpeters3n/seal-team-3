@@ -10,7 +10,7 @@ server.get('/_ah/health', (req, res) => res.send('ok'));
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   app.enableCors({
-    origin: 'https://budgety-front.uc.r.appspot.com/',
+    origin: 'https://budgety-front.uc.r.appspot.com',
     credentials: true,
   });
   await app.listen(process.env.PORT);
