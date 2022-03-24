@@ -86,7 +86,7 @@ const Transactions: React.FC<Transaction> = ({ pageType }) => {
         </GotoBudgetButton>
         {pageType === "income" && (
           <IncomeMessage>
-            <p>*Income transactions will NOT affect the budget.*</p>
+            <p>*Income transactions will NOT affect budget*</p>
           </IncomeMessage>
         )}
       </Container>
