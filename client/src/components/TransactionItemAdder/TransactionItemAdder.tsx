@@ -64,7 +64,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
   });
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    if (+data.amount <= 0) {
+    if (+data.amount <= 0 || data.amount === undefined) {
       setAmountErrorMessage(true);
     } else {
       await addItem(
@@ -89,7 +89,7 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
       await refetchBudget();
       reset({
         title: "",
-        amount: "0",
+        amount: "",
       });
       setFocus("title");
       setAmountErrorMessage(false);
@@ -136,7 +136,6 @@ const TransactionItemAdder: React.FC<ITransactionItemAdder> = ({
                   allowNegative={false}
                   decimalSeparator="."
                   decimalScale={2}
-                  fixedDecimalScale={true}
                   allowEmptyFormatting={true}
                   prefix="$ "
                   type="text"
