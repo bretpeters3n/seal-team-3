@@ -9,6 +9,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
+    "deploy": "gcloud app deploy --quiet",
     "build": "rimraf dist && nest build",
     "gcp-build": "npm run build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
