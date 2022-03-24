@@ -28,8 +28,8 @@ export const GotoBudgetButton = styled.a`
 export const IncomeMessage = styled.div`
   color: red;
   font-size: 0.7rem;
-  text-align: center;
+  text-align: left;
   position: absolute;
-  top: -25px;
+  top: -35px;
   right: 2em;
 `;
