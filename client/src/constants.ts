@@ -1,6 +1,7 @@
 import * as yup from "yup";
 
-export const URL = "http://localhost:5000";
+export const URL =
+  "https://budgety-nest.uc.r.appspot.com/" || "http://localhost:5000";
 
 export interface LoginData {
   email: string;
