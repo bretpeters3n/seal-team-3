@@ -54,7 +54,7 @@
 # 🚀 Demo
 Here is a quick demo of the app. We hope you enjoy it.
 
-> [The Demo Link](https://www.heroku.com)
+> [The Demo Link](https://budgety-front.uc.r.appspot.com/)
 
 Liked it? Please give a ⭐️ to <b>Budgety</b> to build its triceps 💪 stronger.
 
@@ -65,7 +65,7 @@ Liked it? Please give a ⭐️ to <b>Budgety</b> to build its triceps 💪 stron
 # 💻 Use Budgety
 Please access Budgety using the URL:
 
-> https://heroku.com
+> https://budgety-front.uc.r.appspot.com/
 
 # 🔥 Features
 `Budgety` comes with a bundle of features already. You can do the followings with it:
