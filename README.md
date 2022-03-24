@@ -35,7 +35,7 @@
 </p>
 
 <p align="center">
-    <a href="https://heroku.com" target="blank">View Demo</a>
+    <a href="https://budgety-front.uc.r.appspot.com/" target="blank">View Demo</a>
     ·
     <a href="https://github.com/bretpeters3n/seal-team-3/issues/new/choose">Report Bug</a>
     ·
