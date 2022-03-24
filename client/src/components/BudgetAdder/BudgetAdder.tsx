@@ -43,7 +43,7 @@ const BudgetAdder: React.FC<IBudgetAdder> = ({
   } = useForm<FormInputs>({
     resolver: yupResolver(CreateBudgetSchema),
     defaultValues: {
-      total: "0",
+      total: "",
     },
   });
   const navigate = useNavigate();
@@ -86,7 +86,6 @@ const BudgetAdder: React.FC<IBudgetAdder> = ({
                     allowNegative={false}
                     decimalSeparator="."
                     decimalScale={2}
-                    fixedDecimalScale={true}
                     allowEmptyFormatting={true}
                     placeholder="Please enter a budget amount"
                     prefix="$ "
